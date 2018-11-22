@@ -19,3 +19,5 @@ postgraphile(pgClient, 'yourSchema', {
 ```
 
 fire open `PostGraphiQL` and look for `mutation { upsert<ModelName> { ... } }`
+
+this is a typescript-ified knock off of [the original upsert plugin](https://github.com/einarjegorov/graphile-upsert-plugin/blob/master/index.js)

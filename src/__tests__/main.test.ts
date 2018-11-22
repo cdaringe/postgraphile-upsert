@@ -35,7 +35,7 @@ create table bikes (
   `)
   const middleware = postgraphile(t.context.client, 'public', {
     graphiql: true,
-    appendPlugins: [PgMutationUpsertPlugin as any]
+    appendPlugins: [PgMutationUpsertPlugin]
   })
   const serverPort = await freeport()
   t.context.serverPort = serverPort

@@ -1,4 +1,4 @@
-import { Plugin } from 'postgraphile-core'
+import { Plugin } from 'graphile-build'
 
 export interface Options {
   pgExtendedTypes: boolean
@@ -190,11 +190,11 @@ const PgMutationUpsertPlugin: Plugin = builder => {
     ? sql.fragment`(
                             ${sql.join(sqlColumns, ', ')}
                           ) values(${sql.join(sqlValues, ', ')})
-                          ON CONFLICT (${sql.join(
+                          on conflict (${sql.join(
     sqlPrimaryKeys,
     ', '
-  )}) DO UPDATE
-                          SET ${sql.join(conflictUpdateArray, ', ')}`
+  )}) do update
+                          set ${sql.join(conflictUpdateArray, ', ')}`
     : sql.fragment`default values`
 } returning *`
 
