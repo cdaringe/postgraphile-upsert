@@ -1,0 +1,62 @@
+{
+  "name": "postgraphile-upsert",
+  "version": "0.0.0-development",
+  "main": "build/postgraphile-upsert.js",
+  "files": [
+    "build/postgraphile-upsert.js"
+  ],
+  "engines": {
+    "node": ">=8"
+  },
+  "author": "cdaringe <cdaringe@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/bluebird": "^3.5.24",
+    "@types/dockerode": "^2.5.9",
+    "@types/execa": "^0.9.0",
+    "@types/nanographql": "^2.0.1",
+    "@types/pg": "^7.4.11",
+    "ava": "1.0.0-rc.2",
+    "bluebird": "^3.5.3",
+    "dockerode": "^2.5.7",
+    "execa": "^1.0.0",
+    "freeport": "^1.0.5",
+    "husky": "^1.2.0",
+    "lint-staged": "^8.1.0",
+    "nanographql": "^2.0.0",
+    "node-fetch": "^2.3.0",
+    "pg": "^7.6.1",
+    "postgraphile": "^4.0.1",
+    "postgraphile-core": "4.1.0-rc.0",
+    "prettier-standard": "^8.0.1",
+    "typescript": "^3.1.6",
+    "semantic-release": "^15.12.1"
+  },
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier-standard '{src,test,scripts}/**/*.{js,jsx,ts,tsx}'",
+    "test": "ava build/**/*.test.js",
+    "semantic-release": "semantic-release"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "linters": {
+      "{src,test,scripts}/**/*.{js,jsx,ts,tsx}": [
+        "yarn format",
+        "git add"
+      ]
+    }
+  },
+  "ava": {
+    "babel": false,
+    "compileEnhancements": false
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cdaringe/postgraphile-upsert.git"
+  }
+}

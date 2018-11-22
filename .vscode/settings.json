@@ -1,0 +1,11 @@
+{
+  "emeraldwalk.runonsave": {
+    "autoClearConsole": true,
+    "commands": [
+      {
+        "match": "\\.ts$",
+        "cmd": "npx prettier-standard ${file}"
+      }
+    ]
+  }
+}
