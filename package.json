@@ -1,5 +1,6 @@
 {
   "name": "postgraphile-upsert",
+  "description": "add postgres upsert mutations to postgraphile",
   "version": "0.0.0-development",
   "main": "build/postgraphile-upsert.js",
   "files": [
@@ -58,5 +59,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/cdaringe/postgraphile-upsert.git"
-  }
+  },
+  "keywords": [
+    "postgres", "pg", "postgraphile", "upsert", "plugin", "mutation"
+  ]
 }
