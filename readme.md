@@ -1,4 +1,4 @@
-# postgraphile-upsert
+# postgraphile-upsert-plugin
 
 add postgres `upsert` mutations to [postgraphile](https://www.graphile.org/postgraphile)
 
