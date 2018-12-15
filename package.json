@@ -4,7 +4,8 @@
   "version": "0.0.0-semantically-released",
   "main": "build/postgraphile-upsert.js",
   "files": [
-    "build/postgraphile-upsert.js"
+    "build/*.js",
+    "build/*.ts"
   ],
   "engines": {
     "node": ">=8"
