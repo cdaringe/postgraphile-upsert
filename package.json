@@ -27,7 +27,7 @@
     "lint-staged": "^8.1.0",
     "nanographql": "^2.0.0",
     "node-fetch": "^2.3.0",
-    "pg": "^7.6.1",
+    "pg": "^7.8.0",
     "postgraphile": "^4.0.1",
     "postgraphile-core": "4.2.0",
     "prettier-standard": "^8.0.1",
