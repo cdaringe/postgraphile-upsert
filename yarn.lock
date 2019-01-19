@@ -5370,10 +5370,10 @@ prepend-http@^1.0.1:
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-1.0.4.tgz#d4f4562b0ce3696e41ac52d0e002e57a635dc6dc"
   integrity sha1-1PRWKwzjaW5BrFLQ4ALlemNdxtw=
 
-prettier-standard@^9.0.0:
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/prettier-standard/-/prettier-standard-9.0.0.tgz#640baaa5430865599c330e25873ae684379f800a"
-  integrity sha512-jAg94jCkONxKNOL8cSoblZ8nz3BmoCcFCcmtmvyR3y961kc9rE+YFNkt9+UiMeXBJh+ho9UMa2WOmL0PLe6VlQ==
+prettier-standard@^9.1.1:
+  version "9.1.1"
+  resolved "https://registry.yarnpkg.com/prettier-standard/-/prettier-standard-9.1.1.tgz#31926843d6d2b428fbecb3aceea59e872947d016"
+  integrity sha512-d23Hbdf7tIJ5qeEPEv+7B9cGGczJBOyq188kiKGPk/lvlrM3J8umWC8rR9LIbWmuMzbl5iDSL7kG1/wZgh3EYg==
   dependencies:
     find-up "^3.0.0"
     get-stdin "^6.0.0"
