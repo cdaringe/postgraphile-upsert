@@ -30,7 +30,7 @@
     "pg": "^7.6.1",
     "postgraphile": "^4.0.1",
     "postgraphile-core": "4.2.0",
-    "prettier-standard": "^9.0.0",
+    "prettier-standard": "^9.1.1",
     "typescript": "^3.1.6",
     "semantic-release": "^15.12.1"
   },
