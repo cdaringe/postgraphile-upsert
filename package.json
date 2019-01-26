@@ -29,7 +29,7 @@
     "node-fetch": "^2.3.0",
     "pg": "^7.6.1",
     "postgraphile": "^4.0.1",
-    "postgraphile-core": "4.2.0",
+    "postgraphile-core": "4.3.1",
     "prettier-standard": "^9.1.1",
     "typescript": "^3.1.6",
     "semantic-release": "^15.12.1"
