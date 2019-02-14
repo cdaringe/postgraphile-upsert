@@ -46,7 +46,8 @@ export async function purgeContainer (container: Docker.Container) {
 export const container = {
   async setup (ctx: any) {
     const port = await freeport()
-    if (!await imageExists(DB_IMAGE)) await execa('docker', ['pull', DB_IMAGE])
+    if (!(await imageExists(DB_IMAGE)))
+      await execa('docker', ['pull', DB_IMAGE])
     const container = await docker.createContainer({
       Image: DB_IMAGE,
       ExposedPorts: {
