@@ -13,6 +13,8 @@
   "author": "cdaringe <cdaringe@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@commitlint/cli": "^7.5.2",
+    "@commitlint/config-conventional": "^7.5.0",
     "@types/bluebird": "^3.5.24",
     "@types/dockerode": "^2.5.9",
     "@types/execa": "^0.9.0",
@@ -31,8 +33,8 @@
     "postgraphile": "^4.0.1",
     "postgraphile-core": "4.3.1",
     "prettier-standard": "^9.1.1",
-    "typescript": "^3.1.6",
-    "semantic-release": "^15.12.1"
+    "semantic-release": "^15.12.1",
+    "typescript": "^3.1.6"
   },
   "scripts": {
     "build": "tsc",
@@ -42,6 +44,7 @@
   },
   "husky": {
     "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-commit": "lint-staged"
     }
   },
@@ -62,6 +65,11 @@
     "url": "https://github.com/cdaringe/postgraphile-upsert.git"
   },
   "keywords": [
-    "postgres", "pg", "postgraphile", "upsert", "plugin", "mutation"
+    "postgres",
+    "pg",
+    "postgraphile",
+    "upsert",
+    "plugin",
+    "mutation"
   ]
 }
