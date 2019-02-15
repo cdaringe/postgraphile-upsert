@@ -1,4 +1,4 @@
-import { Plugin } from 'graphile-build'
+import { Plugin } from 'graphile-build' // eslint-disable-line no-unused-vars
 
 export interface Options {
   pgExtendedTypes: boolean
@@ -62,11 +62,11 @@ const PgMutationUpsertPlugin: Plugin = builder => {
                 },
                 ...(TableInput
                   ? {
-                      [inflection.tableFieldName(table)]: {
-                        description: `The \`${tableTypeName}\` to be upserted by this mutation.`,
-                        type: new GraphQLNonNull(TableInput)
-                      }
+                    [inflection.tableFieldName(table)]: {
+                      description: `The \`${tableTypeName}\` to be upserted by this mutation.`,
+                      type: new GraphQLNonNull(TableInput)
                     }
+                  }
                   : null)
               }
             },
@@ -127,7 +127,7 @@ const PgMutationUpsertPlugin: Plugin = builder => {
                     parsedResolveInfoFragment,
                     PayloadType
                   )
-                  const insertedRowAlias = sql.identifier(Symbol())
+                  const insertedRowAlias = sql.identifier(Symbol()) // eslint-disable-line
                   const query = queryFromResolveData(
                     insertedRowAlias,
                     insertedRowAlias,
@@ -183,20 +183,20 @@ const PgMutationUpsertPlugin: Plugin = builder => {
                   // SQL query for upsert mutations
                   const mutationQuery = sql.query`
                         insert into ${sql.identifier(
-                          table.namespace.name,
-                          table.name
-                        )} ${
-                    sqlColumns.length
-                      ? sql.fragment`(
+    table.namespace.name,
+    table.name
+  )} ${
+  sqlColumns.length
+    ? sql.fragment`(
                             ${sql.join(sqlColumns, ', ')}
                           ) values(${sql.join(sqlValues, ', ')})
                           on conflict (${sql.join(
-                            sqlPrimaryKeys,
-                            ', '
-                          )}) do update
+    sqlPrimaryKeys,
+    ', '
+  )}) do update
                           set ${sql.join(conflictUpdateArray, ', ')}`
-                      : sql.fragment`default values`
-                  } returning *`
+    : sql.fragment`default values`
+} returning *`
 
                   const rows = await viaTemporaryTable(
                     pgClient,

@@ -44,9 +44,8 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       # clean
       - run: docker network prune --force
-      # build
+      - run: yarn lint
       - run: yarn build
-      # test
       - run: yarn test
       - run:
           name: release

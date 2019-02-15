@@ -1,11 +1,11 @@
-import { container, DbContext } from './fixture/db'
+import { container, DbContext } from './fixture/db' // eslint-disable-line no-unused-vars
 import { createPool } from './fixture/client'
-import { createServer, Server } from 'http'
+import { createServer, Server } from 'http' // eslint-disable-line no-unused-vars
 import { freeport } from './fixture/freeport'
 import { PgMutationUpsertPlugin } from '../postgraphile-upsert'
-import { Pool } from 'pg'
+import { Pool } from 'pg' // eslint-disable-line no-unused-vars
 import { postgraphile } from 'postgraphile'
-import ava, { TestInterface } from 'ava'
+import ava, { TestInterface } from 'ava' // eslint-disable-line no-unused-vars
 import bluebird from 'bluebird'
 import nanographql = require('nanographql')
 
@@ -23,7 +23,7 @@ test.beforeEach(async t => {
   await container.setup(t.context)
   await bluebird.delay(5000)
   t.context.client = await createPool(t.context.dbConfig)
-  t.context.client.on('error', err => {})
+  t.context.client.on('error', err => {}) // eslint-disable-line
   await t.context.client.query(`
 create table bikes (
   id serial,
