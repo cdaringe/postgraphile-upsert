@@ -24,9 +24,13 @@ const PgMutationUpsertPlugin: Plugin = builder => {
       pgIntrospectionResultsByKind,
       pgQueryFromResolveData: queryFromResolveData,
       pgSql: sql,
-      pgViaTemporaryTable: viaTemporaryTable
+      pgViaTemporaryTable: viaTemporaryTable,
+      pgField
     } = build
-    const { scope: { isRootMutation }, fieldWithHooks } = context
+    const {
+      scope: { isRootMutation },
+      fieldWithHooks
+    } = context
     if (!isRootMutation) return fields
     return extend(
       fields,
@@ -56,14 +60,14 @@ const PgMutationUpsertPlugin: Plugin = builder => {
                     'An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client.',
                   type: GraphQLString
                 },
-                ...TableInput
+                ...(TableInput
                   ? {
-                    [inflection.tableFieldName(table)]: {
-                      description: `The \`${tableTypeName}\` to be upserted by this mutation.`,
-                      type: new GraphQLNonNull(TableInput)
+                      [inflection.tableFieldName(table)]: {
+                        description: `The \`${tableTypeName}\` to be upserted by this mutation.`,
+                        type: new GraphQLNonNull(TableInput)
+                      }
                     }
-                  }
-                  : null
+                  : null)
               }
             },
             {
@@ -78,22 +82,18 @@ const PgMutationUpsertPlugin: Plugin = builder => {
             {
               name: `Upsert${tableTypeName}Payload`,
               description: `The output of our upsert \`${tableTypeName}\` mutation.`,
-              fields: ({ recurseDataGeneratorsForField }) => {
+              fields: ({ fieldWithHooks }) => {
                 const tableName = inflection.tableFieldName(table)
-                recurseDataGeneratorsForField(tableName)
                 return {
                   clientMutationId: {
                     description:
                       'The exact same `clientMutationId` that was provided in the mutation input, unchanged and unused. May be used by a client to track mutations.',
                     type: GraphQLString
                   },
-                  [tableName]: {
+                  [tableName]: pgField(build, fieldWithHooks, tableName, {
                     description: `The \`${tableTypeName}\` that was upserted by this mutation.`,
-                    type: Table,
-                    resolve (data) {
-                      return data.data
-                    }
-                  }
+                    type: Table
+                  })
                 }
               }
             },
@@ -183,20 +183,20 @@ const PgMutationUpsertPlugin: Plugin = builder => {
                   // SQL query for upsert mutations
                   const mutationQuery = sql.query`
                         insert into ${sql.identifier(
-    table.namespace.name,
-    table.name
-  )} ${
-  sqlColumns.length
-    ? sql.fragment`(
+                          table.namespace.name,
+                          table.name
+                        )} ${
+                    sqlColumns.length
+                      ? sql.fragment`(
                             ${sql.join(sqlColumns, ', ')}
                           ) values(${sql.join(sqlValues, ', ')})
                           on conflict (${sql.join(
-    sqlPrimaryKeys,
-    ', '
-  )}) do update
+                            sqlPrimaryKeys,
+                            ', '
+                          )}) do update
                           set ${sql.join(conflictUpdateArray, ', ')}`
-    : sql.fragment`default values`
-} returning *`
+                      : sql.fragment`default values`
+                  } returning *`
 
                   const rows = await viaTemporaryTable(
                     pgClient,
