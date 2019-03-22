@@ -6,7 +6,7 @@ add postgres `upsert` mutations to [postgraphile](https://www.graphile.org/postg
 
 ## install
 
-`yarn add postgraphile-upsert`
+`yarn add postgraphile-upsert-plugin`
 
 ## usage
 
