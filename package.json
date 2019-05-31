@@ -14,7 +14,7 @@
   "license": "MIT",
   "devDependencies": {
     "@commitlint/cli": "^8.0.0",
-    "@commitlint/config-conventional": "^7.5.0",
+    "@commitlint/config-conventional": "^8.0.0",
     "@types/bluebird": "^3.5.24",
     "@types/dockerode": "^2.5.9",
     "@types/execa": "^0.9.0",
