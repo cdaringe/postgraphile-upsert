@@ -25,7 +25,7 @@
     "bluebird": "^3.5.3",
     "commitlint-circle": "^1.0.0",
     "dockerode": "^2.5.7",
-    "execa": "^1.0.0",
+    "execa": "^2.0.0",
     "freeport": "^1.0.5",
     "husky": "^2.0.0",
     "lint-staged": "^8.1.4",
