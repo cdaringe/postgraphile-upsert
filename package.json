@@ -20,7 +20,7 @@
     "@types/nanographql": "2.0.1",
     "@types/pg": "7.11.1",
     "@typescript-eslint/parser": "1.13.0",
-    "ava": "1.3.1",
+    "ava": "2.4.0",
     "bluebird": "3.5.5",
     "commitlint-circle": "1.0.0",
     "dockerode": "2.5.8",
