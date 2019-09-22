@@ -24,7 +24,7 @@
     "bluebird": "3.5.5",
     "commitlint-circle": "1.0.0",
     "dockerode": "2.5.8",
-    "execa": "2.0.3",
+    "execa": "2.0.4",
     "freeport": "1.0.5",
     "husky": "3.0.5",
     "lint-staged": "9.3.0",
