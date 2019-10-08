@@ -27,7 +27,7 @@
     "execa": "2.0.5",
     "freeport": "1.0.5",
     "husky": "3.0.8",
-    "lint-staged": "9.4.1",
+    "lint-staged": "9.4.2",
     "nanographql": "2.0.0",
     "node-fetch": "2.6.0",
     "pg": "7.12.1",
