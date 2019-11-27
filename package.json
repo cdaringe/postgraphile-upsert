@@ -33,7 +33,7 @@
     "pg": "7.12.1",
     "postgraphile": "4.4.4",
     "postgraphile-core": "4.5.0",
-    "prettier-standard": "13.0.6",
+    "prettier-standard": "15.0.1",
     "semantic-release": "15.13.31",
     "standard": "12.0.1",
     "typescript": "3.7.2"
