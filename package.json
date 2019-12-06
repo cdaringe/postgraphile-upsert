@@ -16,7 +16,7 @@
     "@commitlint/cli": "8.2.0",
     "@commitlint/config-conventional": "8.2.0",
     "@types/bluebird": "3.5.29",
-    "@types/dockerode": "2.5.20",
+    "@types/dockerode": "2.5.21",
     "@types/nanographql": "2.0.1",
     "@types/pg": "7.11.2",
     "@typescript-eslint/parser": "1.13.0",
