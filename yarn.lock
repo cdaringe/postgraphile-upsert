@@ -3711,10 +3711,10 @@ graphile-build-pg@4.4.5:
     pg-sql2 "4.4.5"
     postgres-interval "^1.2.0"
 
-graphile-build-pg@4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/graphile-build-pg/-/graphile-build-pg-4.5.0.tgz#de3cbc7fff3ed692ffae1f8b531d11a9999ef09c"
-  integrity sha512-zXLLk2PIKi2ehtyGzuGQTMMHk+WDOXw5Bo6Bi3BHbK+t2VAsIauliJA7nNgZ/5Ms2P0aE/FixxIBHxYAC5PS4Q==
+graphile-build-pg@4.5.3:
+  version "4.5.3"
+  resolved "https://registry.yarnpkg.com/graphile-build-pg/-/graphile-build-pg-4.5.3.tgz#13a584fb737b3a638d73cea1cfa4cca88dcf22a4"
+  integrity sha512-Sp3DC/PC9c8+dQkQ6FM5F2TwByWQIMX3TKpxm63SePFJfPdq2Lbl4mOjBxJykYf4Fh094MVAIz4Alz5a1yRBKw==
   dependencies:
     "@graphile/lru" "4.5.0"
     chalk "^2.4.2"
@@ -6702,13 +6702,13 @@ postgraphile-core@4.4.5:
     graphile-build "4.4.5"
     graphile-build-pg "4.4.5"
 
-postgraphile-core@4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/postgraphile-core/-/postgraphile-core-4.5.0.tgz#b25fa6d9f523669018ad81ab52f0005fdd72556d"
-  integrity sha512-1UE8XmYi2DO1yon1/3x/CJqZdQuFwvPDJ6t81pf2o/DPJJMRJpoNOhtG/KLxNA2NqYbXBEK+H0HGxJiAiFUkQg==
+postgraphile-core@4.5.3:
+  version "4.5.3"
+  resolved "https://registry.yarnpkg.com/postgraphile-core/-/postgraphile-core-4.5.3.tgz#60e7dfb50b9e958fb0a64a5b6b73091c3992da1e"
+  integrity sha512-DmE9JdQEMMJH0W+FVRGL/pO9zZzanuXE49+V+s2agLNjNlDFRFCNKnlUI2sA0PKTNJXilVAPQFpBifn1t74moA==
   dependencies:
     graphile-build "4.5.0"
-    graphile-build-pg "4.5.0"
+    graphile-build-pg "4.5.3"
 
 postgraphile@4.4.4:
   version "4.4.4"
