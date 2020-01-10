@@ -34,7 +34,7 @@
     "postgraphile": "4.4.4",
     "postgraphile-core": "4.5.3",
     "prettier-standard": "13.0.6",
-    "semantic-release": "16.0.0",
+    "semantic-release": "16.0.1",
     "standard": "12.0.1",
     "typescript": "3.7.4"
   },
