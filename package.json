@@ -13,7 +13,7 @@
   "author": "cdaringe <cdaringe@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@commitlint/cli": "8.3.4",
+    "@commitlint/cli": "8.3.5",
     "@commitlint/config-conventional": "8.3.4",
     "@types/bluebird": "3.5.29",
     "@types/dockerode": "2.5.21",
