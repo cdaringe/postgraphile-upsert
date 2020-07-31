@@ -43,14 +43,10 @@ test.beforeEach(async t => {
     )
   `)
 
-  await postgraphile(t.context.client, 'public', {
-    appendPlugins: [PgMutationUpsertPlugin],
-    exportGqlSchemaPath: './postgraphile.graphql'
-  })
-
   const middleware = postgraphile(t.context.client, 'public', {
     graphiql: true,
-    appendPlugins: [PgMutationUpsertPlugin]
+    appendPlugins: [PgMutationUpsertPlugin],
+    exportGqlSchemaPath: './postgraphile.graphql'
   })
   const serverPort = await freeport()
   t.context.serverPort = serverPort
