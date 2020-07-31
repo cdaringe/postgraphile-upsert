@@ -227,12 +227,12 @@ const PgMutationUpsertPlugin: Plugin = builder => {
 
                   // Figure out to which columns the unique constraints belong to
                   const uniqueKeys = uniqueConstraints.reduce(
-                    (acc, constraint) => {
-                      const keys = constraint.keyAttributeNums.map(num =>
+                    (acc, constraint) => [
+                      ...acc,
+                      ...constraint.keyAttributeNums.map(num =>
                         attributes.find(attr => attr.num === num)
                       )
-                      return [...acc, ...keys]
-                    },
+                    ],
                     []
                   )
 
@@ -271,16 +271,16 @@ const PgMutationUpsertPlugin: Plugin = builder => {
                         insert into ${sql.identifier(
     table.namespace.name,
     table.name
-  )} ${
+  )}
+                        ${
   sqlColumns.length
-    ? sql.fragment`(
-                            ${sql.join(sqlColumns, ', ')}
-                          ) values(${sql.join(sqlValues, ', ')})
-                          on conflict (${sql.join(
-    uniqueKeyColumns,
-    ',  '
-  )})  do update
-                          set ${sql.join(conflictUpdateArray, ', ')}`
+    ? sql.fragment`(${sql.join(sqlColumns, ', ')})
+                            values (${sql.join(sqlValues, ', ')})
+                            on conflict (${sql.join(uniqueKeyColumns, ', ')})
+                            do update set ${sql.join(
+    conflictUpdateArray,
+    ', '
+  )}`
     : sql.fragment`default values`
 } returning *`
 

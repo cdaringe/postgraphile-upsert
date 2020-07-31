@@ -9,13 +9,13 @@ Add postgres `upsert` mutations to [postgraphile](https://www.graphile.org/postg
 ### Install
 
 ```bash
-yarn add @fullstackio/postgraphile-upsert-plugin
+yarn add postgraphile-upsert-plugin
 ```
 
 ### CLI
 
 ```bash
-postgraphile --append-plugins @fullstackio/postgraphile-upsert-plugin:PgMutationUpsertPlugin
+postgraphile --append-plugins postgraphile-upsert-plugin:PgMutationUpsertPlugin
 ```
 
 See [here](https://www.graphile.org/postgraphile/extending/#loading-additional-plugins) for
@@ -28,7 +28,7 @@ const express = require("express");
 const { postgraphile } = require("postgraphile");
 const {
   PgMutationUpsertPlugin
-} = require("@fullstackio/postgraphile-upsert-plugin");
+} = require("postgraphile-upsert-plugin");
 
 const app = express();
 
@@ -78,6 +78,4 @@ mutation {
 ```
 
 ## Credits
-
-- This is a fork of the TypeScript [postgraphile-upsert-plugin](https://github.com/cdaringe/postgraphile-upsert)
-- Which itself is a fork of [the original upsert plugin](https://github.com/einarjegorov/graphile-upsert-plugin/blob/master/index.js)
+ - This is a typescript-ified knock off of [the original upsert plugin](https://github.com/einarjegorov/graphile-upsert-plugin/blob/master/index.js)

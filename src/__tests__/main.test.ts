@@ -1,15 +1,14 @@
-import { container, DbContext } from './fixture/db' // eslint-disable-line no-unused-vars
-import { createPool } from './fixture/client'
-import { createServer, Server } from 'http' // eslint-disable-line no-unused-vars
-import { freeport } from './fixture/freeport'
-import { PgMutationUpsertPlugin } from '../postgraphile-upsert'
-import { Pool } from 'pg' // eslint-disable-line no-unused-vars
-import { postgraphile } from 'postgraphile'
 import ava, { TestInterface } from 'ava' // eslint-disable-line no-unused-vars
 import bluebird from 'bluebird'
-import nanographql = require('nanographql')
-
-const fetch = require('node-fetch')
+import { createServer, Server } from 'http' // eslint-disable-line no-unused-vars
+import nanographql from 'nanographql'
+import fetch from 'node-fetch'
+import { Pool } from 'pg' // eslint-disable-line no-unused-vars
+import { postgraphile } from 'postgraphile'
+import { PgMutationUpsertPlugin } from '../postgraphile-upsert'
+import { createPool } from './fixture/client'
+import { container, DbContext } from './fixture/db' // eslint-disable-line no-unused-vars
+import { freeport } from './fixture/freeport'
 
 const test = ava as TestInterface<
   DbContext & {
@@ -25,22 +24,23 @@ test.beforeEach(async t => {
   t.context.client = await createPool(t.context.dbConfig)
   t.context.client.on('error', err => {}) // eslint-disable-line
   await t.context.client.query(`
-create table bikes (
-    id serial PRIMARY KEY,
-    "serialNumber" varchar UNIQUE NOT NULL,
-    weight real,
-    make varchar,
-    model varchar
-  )`)
+    create table bikes (
+        id serial PRIMARY KEY,
+        "serialNumber" varchar UNIQUE NOT NULL,
+        weight real,
+        make varchar,
+        model varchar
+      )
+  `)
   await t.context.client.query(`
-create table roles (
-  id serial PRIMARY KEY,
-  project varchar,
-  title varchar,
-  name varchar,
-  rank integer,
-  unique (project, title)
-)
+    create table roles (
+      id serial PRIMARY KEY,
+      project varchar,
+      title varchar,
+      name varchar,
+      rank integer,
+      unique (project, title)
+    )
   `)
 
   await postgraphile(t.context.client, 'public', {
@@ -77,82 +77,82 @@ const exec = async (t, query) => {
 test('test upsert crud', async t => {
   const all = async t => {
     const query = nanographql`
-    query {
-      allBikes(orderBy: SERIAL_NUMBER_ASC) {
-        edges {
-          node {
-            id
-            serialNumber
-            make
-            model
+      query {
+        allBikes(orderBy: SERIAL_NUMBER_ASC) {
+          edges {
+            node {
+              id
+              serialNumber
+              make
+              model
+            }
           }
         }
       }
-    }
-  `
+    `
     return exec(t, query)
   }
 
   const create1 = async t => {
     const query = nanographql`
-    mutation {
-      upsertBike(where: {
-        serialNumber: "abc123"
-      }, 
-      input: {
-        bike: {
+      mutation {
+        upsertBike(where: {
           serialNumber: "abc123"
-          weight: 25.6
-          make: "kona"
-          model: "cool-ie deluxe"
+        }, 
+        input: {
+          bike: {
+            serialNumber: "abc123"
+            weight: 25.6
+            make: "kona"
+            model: "cool-ie deluxe"
+          }
+        }) {
+          clientMutationId
         }
-      }) {
-        clientMutationId
       }
-    }
-  `
+    `
     return exec(t, query)
   }
 
   const create2 = async t => {
     const query = nanographql`
-    mutation {
-      upsertBike(where: {
-        serialNumber: "def456"
-      }, 
-      input: {
-        bike: {
+      mutation {
+        upsertBike(where: {
           serialNumber: "def456"
-          weight: 25.6
-          make: "honda"
-          model: "unicorn"
+        }, 
+        input: {
+          bike: {
+            serialNumber: "def456"
+            weight: 25.6
+            make: "honda"
+            model: "unicorn"
+          }
+        }) {
+          clientMutationId
         }
-      }) {
-        clientMutationId
       }
-    }
-  `
+    `
     return exec(t, query)
   }
 
   const update = async t => {
     const query = nanographql`
-    mutation {
-      upsertBike(where: {
-        serialNumber: "abc123"
-      }, 
-      input: {
-        bike: {
+      mutation {
+        upsertBike(where: {
           serialNumber: "abc123"
-          weight: 25.6
-          make: "schwinn"
-          model: "stingray"
+        }, 
+        input: {
+          bike: {
+            serialNumber: "abc123"
+            weight: 25.6
+            make: "schwinn"
+            model: "stingray"
+          }
+        }) {
+          clientMutationId
         }
-      }) {
-        clientMutationId
       }
-    }
-  `
+    `
     return exec(t, query)
   }
 
@@ -188,86 +188,86 @@ test('test upsert crud', async t => {
 test('test multi-column uniques', async t => {
   const all = async t => {
     const query = nanographql`
-    query {
-      allRoles(orderBy: RANK_ASC) {
-        edges {
-          node {
-            id
-            project
-            title
-            name
-            rank
+      query {
+        allRoles(orderBy: RANK_ASC) {
+          edges {
+            node {
+              id
+              project
+              title
+              name
+              rank
+            }
           }
         }
       }
-    }
-  `
+    `
     return exec(t, query)
   }
 
   const create1 = async t => {
     const query = nanographql`
-    mutation {
-      upsertRole(where: {
-        project: "sales",
-        title: "director"
-      }, 
-      input: {
-        role: {
+      mutation {
+        upsertRole(where: {
           project: "sales",
-          title: "director",
-          name: "jerry",
-          rank: 1
+          title: "director"
+        }, 
+        input: {
+          role: {
+            project: "sales",
+            title: "director",
+            name: "jerry",
+            rank: 1
+          }
+        }) {
+          clientMutationId
         }
-      }) {
-        clientMutationId
       }
-    }
-  `
+    `
     return exec(t, query)
   }
 
   const create2 = async t => {
     const query = nanographql`
-    mutation {
-      upsertRole(where: {
-        project: "sales",
-        title: "agent"
-      }, 
-      input: {
-        role: {
+      mutation {
+        upsertRole(where: {
           project: "sales",
-          title: "agent",
-          name: "frank",
-          rank: 2
+          title: "agent"
+        }, 
+        input: {
+          role: {
+            project: "sales",
+            title: "agent",
+            name: "frank",
+            rank: 2
+          }
+        }) {
+          clientMutationId
         }
-      }) {
-        clientMutationId
       }
-    }
-  `
+    `
     return exec(t, query)
   }
 
   const update = async t => {
     const query = nanographql`
-    mutation {
-      upsertRole(where: {
-        project: "sales",
-        title: "director"
-      }, 
-      input: {
-        role: {
+      mutation {
+        upsertRole(where: {
           project: "sales",
-          title: "director",
-          name: "frank",
-          rank: 1
+          title: "director"
+        }, 
+        input: {
+          role: {
+            project: "sales",
+            title: "director",
+            name: "frank",
+            rank: 1
+          }
+        }) {
+          clientMutationId
         }
-      }) {
-        clientMutationId
       }
-    }
-  `
+    `
     return exec(t, query)
   }
 
