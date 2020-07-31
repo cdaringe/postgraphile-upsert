@@ -53,6 +53,7 @@ export const container = {
     }
     const container = await docker.createContainer({
       Image: DB_IMAGE,
+      Env: ['POSTGRES_PASSWORD=postgres'],
       ExposedPorts: {
         '5432/tcp': {}
       },
