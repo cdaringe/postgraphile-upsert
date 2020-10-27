@@ -29,7 +29,7 @@
     "husky": "4.2.3",
     "lint-staged": "10.0.7",
     "nanographql": "2.0.0",
-    "node-fetch": "2.6.0",
+    "node-fetch": "2.6.1",
     "pg": "7.12.1",
     "postgraphile": "4.4.4",
     "postgraphile-core": "4.5.3",
