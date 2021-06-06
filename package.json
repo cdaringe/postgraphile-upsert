@@ -32,7 +32,7 @@
     "node-fetch": "2.6.0",
     "pg": "7.12.1",
     "postgraphile": "4.4.4",
-    "postgraphile-core": "4.5.3",
+    "postgraphile-core": "4.12.1",
     "prettier-standard": "13.0.6",
     "semantic-release": "17.0.3",
     "standard": "12.0.1",
