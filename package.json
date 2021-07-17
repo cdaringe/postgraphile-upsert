@@ -11,6 +11,9 @@
     "node": ">=8"
   },
   "author": "cdaringe <cdaringe@gmail.com>",
+  "contributors": [
+    "nmurray <nate@fullstack.io>"
+  ],
   "license": "MIT",
   "devDependencies": {
     "@commitlint/cli": "8.3.5",
