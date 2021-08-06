@@ -56,6 +56,7 @@ export const container = {
       ExposedPorts: {
         '5432/tcp': {}
       },
+      Env: ['POSTGRES_PASSWORD=postgres'],
       HostConfig: {
         AutoRemove: true,
         PortBindings: { '5432/tcp': [{ HostPort: port.toString() }] }

@@ -6,8 +6,8 @@ import { PgMutationUpsertPlugin } from '../postgraphile-upsert'
 import { Pool } from 'pg' // eslint-disable-line no-unused-vars
 import { postgraphile } from 'postgraphile'
 import ava, { TestInterface } from 'ava' // eslint-disable-line no-unused-vars
-import bluebird from 'bluebird'
 import nanographql = require('nanographql')
+import Bluebird = require('bluebird')
 
 const fetch = require('node-fetch')
 
@@ -21,7 +21,7 @@ const test = ava as TestInterface<
 
 test.beforeEach(async t => {
   await container.setup(t.context)
-  await bluebird.delay(5000)
+  await Bluebird.delay(5000)
   t.context.client = await createPool(t.context.dbConfig)
   t.context.client.on('error', err => {}) // eslint-disable-line
   await t.context.client.query(`
@@ -42,10 +42,8 @@ create table bikes (
   t.context.server = createServer(middleware).listen(serverPort)
 })
 
-test.afterEach(async t => {
-  t.context.client.end()
-  t.context.server.close()
-  await container.teardown(t.context)
+test.after(t => {
+  container.teardown(t.context).catch(() => {})
 })
 
 const all = async t => {
