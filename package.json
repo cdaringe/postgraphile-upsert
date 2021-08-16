@@ -21,7 +21,7 @@
     "@types/node": "16.4.13",
     "@types/pg": "8.6.1",
     "@types/wait-on": "5.3.1",
-    "@typescript-eslint/parser": "4.29.1",
+    "@typescript-eslint/parser": "4.29.2",
     "ava": "1.4.1",
     "bluebird": "3.7.2",
     "commitlint-circle": "1.0.0",
