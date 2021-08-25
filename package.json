@@ -28,7 +28,7 @@
     "dockerode": "3.3.0",
     "execa": "5.1.1",
     "freeport": "1.0.5",
-    "husky": "7.0.1",
+    "husky": "7.0.2",
     "nanographql": "2.0.0",
     "node-fetch": "2.6.1",
     "pg": "8.7.1",
