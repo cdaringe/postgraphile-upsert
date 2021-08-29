@@ -11,11 +11,11 @@ add postgres `upsert` mutations to [postgraphile](https://www.graphile.org/postg
 ## usage
 
 ```ts
-import { PgMutationUpsertPlugin } from 'postgraphile-upsert-plugin'
+import { PgMutationUpsertPlugin } from "postgraphile-upsert-plugin";
 
-postgraphile(pgClient, 'yourSchema', {
-  appendPlugins: [PgMutationUpsertPlugin as any]
-})
+postgraphile(pgClient, "yourSchema", {
+  appendPlugins: [PgMutationUpsertPlugin as any],
+});
 ```
 
 fire open `PostGraphiQL` and look for `mutation { upsert<ModelName> { ... } }`

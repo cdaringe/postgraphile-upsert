@@ -34,6 +34,7 @@
     "pg": "8.7.1",
     "postgraphile": "4.12.3",
     "postgraphile-core": "4.12.1",
+    "prettier": "2.3.2",
     "prettier-standard": "16.4.1",
     "semantic-release": "17.4.7",
     "standard": "16.0.3",
@@ -41,15 +42,11 @@
   },
   "scripts": {
     "build": "tsc",
-    "format": "prettier-standard '{src,test,scripts}/**/*.{ts,tsx}'",
+    "format": "prettier --write .",
     "test": "ava build/**/*.test.js",
     "semantic-release": "semantic-release",
-    "lint": "standard '{src,test,scripts}/**/*.{ts,tsx}' --fix"
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
+    "lint": "prettier --check .",
+    "prepare": "husky install"
   },
   "ava": {
     "babel": false,

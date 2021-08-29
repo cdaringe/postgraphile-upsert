@@ -13,9 +13,7 @@
         "${workspaceRoot}/build/__tests__/main.test.js"
         // "${file}"
       ],
-      "skipFiles": [
-        "<node_internals>/**/*.js"
-      ],
+      "skipFiles": ["<node_internals>/**/*.js"],
       "console": "externalTerminal",
       "env": {
         "DEBUG": "*"

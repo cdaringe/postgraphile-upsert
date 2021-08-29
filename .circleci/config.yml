@@ -6,9 +6,9 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - v1-nvm-{{ checksum ".nvmrc" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-nvm-
+            - v1-nvm-{{ checksum ".nvmrc" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-nvm-
       - run:
           name: Install node via .nvmrc
           command: |
@@ -32,9 +32,9 @@ jobs:
           command: npm install -g yarn
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
       - run:
           name: install
           command: NODE_ENV=development yarn

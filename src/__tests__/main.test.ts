@@ -1,29 +1,30 @@
-import { container, DbContext } from './fixture/db' // eslint-disable-line no-unused-vars
-import { createPool } from './fixture/client'
-import { createServer, Server } from 'http' // eslint-disable-line no-unused-vars
-import { freeport } from './fixture/freeport'
-import { PgMutationUpsertPlugin } from '../postgraphile-upsert'
-import { Pool } from 'pg' // eslint-disable-line no-unused-vars
-import { postgraphile } from 'postgraphile'
-import ava, { TestInterface } from 'ava' // eslint-disable-line no-unused-vars
-import nanographql = require('nanographql')
-import Bluebird = require('bluebird')
+import { container, DbContext } from "./fixture/db"; // eslint-disable-line no-unused-vars
+import { createPool } from "./fixture/client";
+import { createServer, Server } from "http"; // eslint-disable-line no-unused-vars
+import { freeport } from "./fixture/freeport";
+import { PgMutationUpsertPlugin } from "../postgraphile-upsert";
+import { Pool } from "pg"; // eslint-disable-line no-unused-vars
+import { postgraphile } from "postgraphile";
+import ava, { TestInterface } from "ava"; // eslint-disable-line no-unused-vars
+import nanographql = require("nanographql");
+import Bluebird = require("bluebird");
 
-const fetch = require('node-fetch')
+const fetch = require("node-fetch");
 
 const test = ava as TestInterface<
   DbContext & {
-    client: Pool
-    server: Server
-    serverPort: number
+    client: Pool;
+    server: Server;
+    serverPort: number;
+    middleware: ReturnType<typeof postgraphile>;
   }
->
+>;
 
-test.beforeEach(async t => {
-  await container.setup(t.context)
-  await Bluebird.delay(5000)
-  t.context.client = await createPool(t.context.dbConfig)
-  t.context.client.on('error', err => {}) // eslint-disable-line
+test.beforeEach(async (t) => {
+  await container.setup(t.context);
+  await Bluebird.delay(5000);
+  t.context.client = await createPool(t.context.dbConfig);
+  t.context.client.on("error", (err) => {}); // eslint-disable-line
   await t.context.client.query(`
 create table bikes (
   id serial,
@@ -32,21 +33,25 @@ create table bikes (
   model varchar,
   primary key (id)
 )
-  `)
-  const middleware = postgraphile(t.context.client, 'public', {
+  `);
+  const middleware = postgraphile(t.context.client, "public", {
     graphiql: true,
-    appendPlugins: [PgMutationUpsertPlugin]
-  })
-  const serverPort = await freeport()
-  t.context.serverPort = serverPort
-  t.context.server = createServer(middleware).listen(serverPort)
-})
+    appendPlugins: [PgMutationUpsertPlugin],
+  });
+  t.context.middleware = middleware;
+  const serverPort = await freeport();
+  t.context.serverPort = serverPort;
+  t.context.server = createServer(middleware).listen(serverPort);
+});
 
-test.after(t => {
-  container.teardown(t.context).catch(() => {})
-})
+test.afterEach(async (t) => {
+  t.context.client.on("error", () => null);
+  await t.context.middleware.release();
+  await new Promise((res) => t.context.server.close(res));
+  await container.teardown(t.context);
+});
 
-const all = async t => {
+const all = async (t) => {
   const query = nanographql`
     query {
       allBikes {
@@ -59,18 +64,18 @@ const all = async t => {
         }
       }
     }
-  `
+  `;
   const res = await fetch(`http://localhost:${t.context.serverPort}/graphql`, {
     body: query(),
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    method: 'POST'
-  })
-  return res.json()
-}
+    method: "POST",
+  });
+  return res.json();
+};
 
-const create = async t => {
+const create = async (t) => {
   const query = nanographql`
     mutation {
       upsertBike(input: {
@@ -83,19 +88,19 @@ const create = async t => {
         clientMutationId
       }
     }
-  `
+  `;
   await fetch(`http://localhost:${t.context.serverPort}/graphql`, {
     body: query(),
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    method: 'POST'
-  })
-}
+    method: "POST",
+  });
+};
 
-test('test upsert crud', async t => {
-  await create(t)
-  const res = await all(t)
-  t.is(res.data.allBikes.edges.length, 1)
-  t.is(res.data.allBikes.edges[0].node.make, 'kona')
-})
+test("test upsert crud", async (t) => {
+  await create(t);
+  const res = await all(t);
+  t.is(res.data.allBikes.edges.length, 1);
+  t.is(res.data.allBikes.edges[0].node.make, "kona");
+});
