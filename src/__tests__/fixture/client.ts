@@ -7,6 +7,5 @@ export async function createPool(config: DbContextDbConfig) {
     host: "localhost",
     ...config,
   });
-  await client.connect();
   return client;
 }
