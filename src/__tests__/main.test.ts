@@ -38,11 +38,11 @@ test.beforeEach(async (t) => {
   await t.context.client.query(`
     create table roles (
       id serial primary key,
-      project varchar,
+      project_name varchar,
       title varchar,
       name varchar,
       rank integer,
-      unique (project, title)
+      unique (project_name, title)
     )
   `);
   const middleware = postgraphile(t.context.client, "public", {
@@ -104,7 +104,7 @@ const fetchAllRoles = async (t: PluginExecutionContext) => {
       edges {
         node {
           id
-          project
+          projectName
           title
           name
           rank
@@ -142,12 +142,12 @@ test("upsert crud", async (t) => {
 
 test("upsert where clause", async (t) => {
   const upsertDirector = async ({
-    project = "sales",
+    projectName = "sales",
     title = "director",
     name = "jerry",
     rank = 1,
   }: {
-    project?: string;
+    projectName?: string;
     title?: string;
     name?: string;
     rank?: number;
@@ -155,12 +155,12 @@ test("upsert where clause", async (t) => {
     const query = nanographql(`
       mutation {
         upsertRole(where: {
-          project: "sales",
+          projectName: "sales",
           title: "director"
         }, 
         input: {
           role: {
-            project: "${project}",
+            projectName: "${projectName}",
             title: "${title}",
             name: "${name}",
             rank: ${rank}
@@ -177,7 +177,7 @@ test("upsert where clause", async (t) => {
     await upsertDirector({ name: "jerry" });
     const res = await fetchAllRoles(t);
     t.is(res.data.allRoles.edges.length, 1);
-    t.is(res.data.allRoles.edges[0].node.project, "sales");
+    t.is(res.data.allRoles.edges[0].node.projectName, "sales");
     t.is(res.data.allRoles.edges[0].node.title, "director");
     t.is(res.data.allRoles.edges[0].node.name, "jerry");
   }
@@ -186,7 +186,7 @@ test("upsert where clause", async (t) => {
     // update director
     await upsertDirector({ name: "frank", rank: 2 });
     const res = await fetchAllRoles(t);
-    t.is(res.data.allRoles.edges[0].node.project, "sales");
+    t.is(res.data.allRoles.edges[0].node.projectName, "sales");
     t.is(res.data.allRoles.edges[0].node.title, "director");
     t.is(res.data.allRoles.edges[0].node.name, "frank");
     t.is(res.data.allRoles.edges[0].node.rank, 2);
