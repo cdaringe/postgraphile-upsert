@@ -2,7 +2,7 @@ import { container, DbContext } from "./fixture/db"; // eslint-disable-line no-u
 import { createPool } from "./fixture/client";
 import { createServer, Server } from "http"; // eslint-disable-line no-unused-vars
 import { freeport } from "./fixture/freeport";
-import { PgMutationUpsertPlugin } from "../postgraphile-upsert";
+import PgMutationUpsertPlugin from "../postgraphile-upsert";
 import { Pool } from "pg"; // eslint-disable-line no-unused-vars
 import { postgraphile } from "postgraphile";
 import ava, { TestInterface } from "ava"; // eslint-disable-line no-unused-vars

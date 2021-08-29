@@ -1,10 +1,5 @@
 import { Plugin } from "graphile-build"; // eslint-disable-line no-unused-vars
 
-export interface Options {
-  pgExtendedTypes: boolean;
-  pgInflection: any;
-}
-
 const PgMutationUpsertPlugin: Plugin = (builder) => {
   builder.hook("GraphQLObjectType:fields", (fields, build, context) => {
     const {
@@ -226,4 +221,4 @@ const PgMutationUpsertPlugin: Plugin = (builder) => {
   });
 };
 
-export { PgMutationUpsertPlugin };
+export = PgMutationUpsertPlugin;
