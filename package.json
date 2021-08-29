@@ -72,5 +72,10 @@
     "ignore": [
       "**/*.d.ts"
     ]
+  },
+  "release": {
+    "branches": [
+      "main"
+    ]
   }
 }
