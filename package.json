@@ -10,6 +10,9 @@
   "engines": {
     "node": ">=8"
   },
+  "contributors": [
+    "nmurray <nate@fullstack.io>"
+  ],
   "author": "cdaringe <cdaringe@gmail.com>",
   "license": "MIT",
   "devDependencies": {
@@ -19,6 +22,7 @@
     "@types/dockerode": "3.2.7",
     "@types/nanographql": "2.0.1",
     "@types/node": "16.4.13",
+    "@types/node-fetch": "2.5.12",
     "@types/pg": "8.6.1",
     "@types/wait-on": "5.3.1",
     "@typescript-eslint/parser": "4.29.3",

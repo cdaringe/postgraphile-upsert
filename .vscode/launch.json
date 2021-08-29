@@ -9,12 +9,8 @@
       "request": "launch",
       "name": "ava - file",
       "program": "${workspaceRoot}/node_modules/ava/profile.js",
-      "args": [
-        "${workspaceRoot}/build/__tests__/main.test.js"
-        // "${file}"
-      ],
+      "args": ["${workspaceRoot}/build/__tests__/main.test.js"],
       "skipFiles": ["<node_internals>/**/*.js"],
-      "console": "externalTerminal",
       "env": {
         "DEBUG": "*"
       }
