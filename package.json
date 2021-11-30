@@ -36,7 +36,7 @@
     "nanographql": "2.0.0",
     "node-fetch": "2.6.6",
     "pg": "8.7.1",
-    "postgraphile": "4.12.5",
+    "postgraphile": "4.12.6",
     "postgraphile-core": "4.12.2",
     "prettier": "2.5.0",
     "prettier-standard": "16.4.1",
