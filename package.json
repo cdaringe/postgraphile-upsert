@@ -38,7 +38,7 @@
     "pg": "8.7.1",
     "postgraphile": "4.12.9",
     "postgraphile-core": "4.12.2",
-    "prettier": "2.5.1",
+    "prettier": "2.6.0",
     "prettier-standard": "16.4.1",
     "semantic-release": "19.0.2",
     "standard": "16.0.4",
