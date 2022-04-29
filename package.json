@@ -21,7 +21,7 @@
     "@types/bluebird": "3.5.36",
     "@types/dockerode": "3.3.8",
     "@types/nanographql": "2.0.1",
-    "@types/node": "16.11.31",
+    "@types/node": "16.11.32",
     "@types/node-fetch": "2.6.1",
     "@types/pg": "8.6.1",
     "@types/wait-on": "5.3.1",
