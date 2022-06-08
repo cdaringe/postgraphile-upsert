@@ -45,6 +45,11 @@ test.beforeEach(async (t) => {
       unique (project_name, title)
     )
   `);
+  await t.context.client.query(`
+      create table no_primary_keys(
+        name text
+      )
+  `)
   const middleware = postgraphile(t.context.client, "public", {
     graphiql: true,
     appendPlugins: [PgMutationUpsertPlugin],
@@ -79,6 +84,20 @@ const execGqlOp = (t: PluginExecutionContext, query: () => string) =>
     if (json.errors) throw new Error(JSON.stringify(json.errors));
     return json;
   });
+
+const fetchMutationTypes = async (t: PluginExecutionContext) => {
+  const query = nanographql`
+    query {
+      __type(name: "Mutation") {
+        name
+        fields {
+          name
+        }
+      }
+    }
+  `
+  return execGqlOp(t, query)
+}
 
 const fetchAllBikes = async (t: PluginExecutionContext) => {
   const query = nanographql`
@@ -132,6 +151,16 @@ const create = async (t: PluginExecutionContext) =>
   }
 `
   );
+
+test("ignores tables without primary keys", async (t) => {
+  await create(t)
+  const res = await fetchMutationTypes(t)
+  const upsertMutations = new Set(res.data.__type.fields.map(({ name }) => name).filter((name) => name.startsWith('upsert')))
+  t.assert(upsertMutations.size === 2)
+  t.assert(upsertMutations.has('upsertBike'))
+  t.assert(upsertMutations.has('upsertRole'))
+
+})
 
 test("upsert crud", async (t) => {
   await create(t);
