@@ -30,7 +30,7 @@
     "bluebird": "3.7.2",
     "commitlint-circle": "1.0.0",
     "dockerode": "3.3.2",
-    "execa": "5.1.1",
+    "execa": "6.1.0",
     "freeport": "1.0.5",
     "husky": "8.0.1",
     "nanographql": "2.0.0",
