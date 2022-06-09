@@ -34,7 +34,7 @@
     "freeport": "1.0.5",
     "husky": "8.0.1",
     "nanographql": "2.0.0",
-    "node-fetch": "2.6.7",
+    "node-fetch": "3.2.6",
     "pg": "8.7.1",
     "postgraphile": "4.12.9",
     "postgraphile-core": "4.12.2",
