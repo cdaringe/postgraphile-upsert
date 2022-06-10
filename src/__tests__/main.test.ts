@@ -1,11 +1,11 @@
-import { container, DbContext } from "./fixture/db"; // eslint-disable-line no-unused-vars
+import { container, DbContext } from "./fixture/db";
 import { createPool } from "./fixture/client";
-import { createServer, Server } from "http"; // eslint-disable-line no-unused-vars
+import { createServer, Server } from "http";
 import { freeport } from "./fixture/freeport";
 import { PgMutationUpsertPlugin } from "../postgraphile-upsert";
-import { Pool } from "pg"; // eslint-disable-line no-unused-vars
+import { Pool } from "pg";
 import { postgraphile } from "postgraphile";
-import ava, { TestFn, ExecutionContext } from "ava"; // eslint-disable-line no-unused-vars
+import ava, { TestFn, ExecutionContext } from "ava";
 import nanographql = require("nanographql");
 import Bluebird = require("bluebird");
 import fetch from "node-fetch";
@@ -25,7 +25,7 @@ test.beforeEach(async (t) => {
   await container.setup(t.context);
   await Bluebird.delay(5000);
   t.context.client = await createPool(t.context.dbConfig);
-  t.context.client.on("error", (err) => {}); // eslint-disable-line
+  t.context.client.on("error", (_err) => {});
   await t.context.client.query(`
     create table bikes (
       id serial,
@@ -63,9 +63,9 @@ test.beforeEach(async (t) => {
 
 test.afterEach(async (t) => {
   t.context.client.on("error", () => null);
+  container.teardown(t.context).catch(console.error);
   await t.context.middleware.release();
   await new Promise((res) => t.context.server.close(res));
-  await container.teardown(t.context);
 });
 
 const execGqlOp = (t: PluginExecutionContext, query: () => string) =>
