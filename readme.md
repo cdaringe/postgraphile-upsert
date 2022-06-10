@@ -9,7 +9,7 @@ Add postgres `upsert` mutations to [postgraphile](https://www.graphile.org/postg
 ### Install
 
 ```bash
-yarn add postgraphile-upsert-plugin
+pnpm install --save postgraphile-upsert-plugin
 ```
 
 ### CLI
