@@ -48,7 +48,7 @@
   "scripts": {
     "build": "tsc",
     "format": "prettier --write .",
-    "test": "ava build/**/*.test.js",
+    "test": "ava --timeout=2m build/**/*.test.js",
     "semantic-release": "semantic-release",
     "lint": "prettier --check .",
     "prepare": "husky install"
