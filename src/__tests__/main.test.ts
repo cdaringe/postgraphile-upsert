@@ -5,7 +5,7 @@ import { freeport } from "./fixture/freeport";
 import { PgMutationUpsertPlugin } from "../postgraphile-upsert";
 import { Pool } from "pg"; // eslint-disable-line no-unused-vars
 import { postgraphile } from "postgraphile";
-import ava, { TestInterface, ExecutionContext } from "ava"; // eslint-disable-line no-unused-vars
+import ava, { TestFn, ExecutionContext } from "ava"; // eslint-disable-line no-unused-vars
 import nanographql = require("nanographql");
 import Bluebird = require("bluebird");
 import fetch from "node-fetch";
@@ -19,7 +19,7 @@ type TestContext = DbContext & {
 
 type PluginExecutionContext = ExecutionContext<TestContext>;
 
-const test = ava as TestInterface<TestContext>;
+const test = ava as TestFn<TestContext>;
 
 test.beforeEach(async (t) => {
   await container.setup(t.context);
@@ -189,7 +189,7 @@ test("upsert where clause", async (t) => {
         upsertRole(where: {
           projectName: "sales",
           title: "director"
-        }, 
+        },
         input: {
           role: {
             projectName: "${projectName}",
