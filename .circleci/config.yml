@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 jobs:
   build:
     machine: true
@@ -28,26 +28,26 @@ jobs:
             - /opt/circleci/.nvm
           key: v1-nvm-{{ checksum ".nvmrc" }}
       - run:
-          name: install yarn
-          command: npm install -g yarn
+          name: install pnpm
+          command: npm install -g pnpm
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-{{ checksum "pnpm-lock.yaml" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
       - run:
           name: install
-          command: NODE_ENV=development yarn
+          command: NODE_ENV=development pnpm install
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+          key: v1-dependencies-{{ checksum "pnpm-lock.yaml" }}
       # clean
       - run: docker network prune --force
       - run: npx commitlint-circle
-      - run: yarn lint
-      - run: yarn build
-      - run: yarn test
+      - run: pnpm run lint
+      - run: pnpm run build
+      - run: pnpm run test
       - run:
           name: release
           command: npm run semantic-release || true
