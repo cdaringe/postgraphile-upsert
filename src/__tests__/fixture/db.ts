@@ -37,7 +37,7 @@ export async function purgeContainer(container: Docker.Container) {
     await containers.delete(container);
     try {
       await container.remove({ force: true });
-    } catch (err) {
+    } catch (err: { statusCode?: number }) {
       // if 404, we probably used the --rm flag on container launch. it's all good.
       if (!(err.statusCode === 404 || err.statusCode === 409)) {
         throw err; // eslint-disable-line
