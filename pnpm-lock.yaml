@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@commitlint/cli': 17.0.2
   '@commitlint/config-conventional': 17.0.2
+  '@timbeyer/commitlint-circle': ^4.1.1
   '@types/bluebird': 3.5.36
   '@types/dockerode': 3.3.9
   '@types/nanographql': 2.0.1
@@ -13,12 +14,12 @@ specifiers:
   '@typescript-eslint/parser': 5.27.1
   ava: 4.3.0
   bluebird: 3.7.2
-  commitlint-circle: 1.0.0
   dockerode: 3.3.2
+  eslint: ^8.15.0
   execa: 5.1.1
   freeport: 1.0.5
   graphile-build: 4.12.2
-  graphql: 16.5.0
+  graphql: 15.8.0
   husky: 8.0.1
   nanographql: 2.0.0
   node-fetch: 2.6.7
@@ -33,6 +34,7 @@ specifiers:
 devDependencies:
   '@commitlint/cli': 17.0.2
   '@commitlint/config-conventional': 17.0.2
+  '@timbeyer/commitlint-circle': 4.1.1_@commitlint+cli@17.0.2
   '@types/bluebird': 3.5.36
   '@types/dockerode': 3.3.9
   '@types/nanographql': 2.0.1
@@ -40,21 +42,21 @@ devDependencies:
   '@types/node-fetch': 2.6.1
   '@types/pg': 8.6.1
   '@types/wait-on': 5.3.1
-  '@typescript-eslint/parser': 5.27.1_typescript@4.3.5
+  '@typescript-eslint/parser': 5.27.1_gfymmbghv3rdpn7ib3kvuc5p6a
   ava: 4.3.0
   bluebird: 3.7.2
-  commitlint-circle: 1.0.0_@commitlint+cli@17.0.2
   dockerode: 3.3.2
+  eslint: 8.17.0
   execa: 5.1.1
   freeport: 1.0.5
-  graphile-build: 4.12.2_graphql@16.5.0
-  graphql: 16.5.0
+  graphile-build: 4.12.2_graphql@15.8.0
+  graphql: 15.8.0
   husky: 8.0.1
   nanographql: 2.0.0
   node-fetch: 2.6.7
   pg: 8.7.1
   postgraphile: 4.12.9
-  postgraphile-core: 4.12.2_graphql@16.5.0+pg@8.7.1
+  postgraphile-core: 4.12.2_graphql@15.8.0+pg@8.7.1
   prettier: 2.6.2
   semantic-release: 19.0.3
   standard: 17.0.0_cjv7yynhkuh3chidw5l5ybstmm
@@ -556,6 +558,21 @@ packages:
       - supports-color
     dev: true
 
+  /@timbeyer/commitlint-circle/4.1.1_@commitlint+cli@17.0.2:
+    resolution: {integrity: sha512-803TjrCij+xD5pil6aoRJGQumYZY/9B02o9pGx8b6gZ08k982LgBxoqsv/v4W59EogH1K7w275eHTuUOLEbn7A==}
+    hasBin: true
+    peerDependencies:
+      '@commitlint/cli': '>=9'
+    dependencies:
+      '@commitlint/cli': 17.0.2
+      '@octokit/rest': 15.18.3
+      execa: 0.10.0
+      tslib: 1.14.1
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+    dev: true
+
   /@tootallnate/once/2.0.0:
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}
     engines: {node: '>= 10'}
@@ -673,7 +690,7 @@ packages:
       '@types/node': 16.11.39
     dev: true
 
-  /@typescript-eslint/parser/5.27.1_typescript@4.3.5:
+  /@typescript-eslint/parser/5.27.1_gfymmbghv3rdpn7ib3kvuc5p6a:
     resolution: {integrity: sha512-7Va2ZOkHi5NP+AZwb5ReLgNF6nWLGTeUJfxdkVUAPPSaAdbWNnFZzLZ4EGGmmiCTg+AwlbE1KyUYTBglosSLHQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
@@ -687,6 +704,7 @@ packages:
       '@typescript-eslint/types': 5.27.1
       '@typescript-eslint/typescript-estree': 5.27.1_typescript@4.3.5
       debug: 4.3.4
+      eslint: 8.17.0
       typescript: 4.3.5
     transitivePeerDependencies:
       - supports-color
@@ -1299,21 +1317,6 @@ packages:
     resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
     dev: true
 
-  /commitlint-circle/1.0.0_@commitlint+cli@17.0.2:
-    resolution: {integrity: sha512-YuwyQLM0NnbWN0Rt1dloQiw8kMcZGr1QVhyecYkV0pR1YOmc4QHwIM+c/2E7VxU8lzbI2gW0/2fRvOLAXJi5mQ==}
-    hasBin: true
-    peerDependencies:
-      '@commitlint/cli': ^7.0.0
-    dependencies:
-      '@commitlint/cli': 17.0.2
-      '@octokit/rest': 15.18.3
-      execa: 0.10.0
-      tslib: 1.14.1
-    transitivePeerDependencies:
-      - encoding
-      - supports-color
-    dev: true
-
   /common-path-prefix/3.0.0:
     resolution: {integrity: sha512-QE33hToZseCH3jS0qN96O/bSh3kaw/h+Tq7ngyY9eWDUnTlTNUyqfqvCXioLe5Na5jFsL78ra/wuBU4iuEgd4w==}
     dev: true
@@ -1326,7 +1329,7 @@ packages:
     dev: true
 
   /concat-map/0.0.1:
-    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
     dev: true
 
   /concordance/5.0.4:
@@ -1861,7 +1864,7 @@ packages:
       eslint-import-resolver-webpack:
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 5.27.1_typescript@4.3.5
+      '@typescript-eslint/parser': 5.27.1_gfymmbghv3rdpn7ib3kvuc5p6a
       debug: 3.2.7
       eslint-import-resolver-node: 0.3.6
       find-up: 2.1.0
@@ -1890,7 +1893,7 @@ packages:
       '@typescript-eslint/parser':
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 5.27.1_typescript@4.3.5
+      '@typescript-eslint/parser': 5.27.1_gfymmbghv3rdpn7ib3kvuc5p6a
       array-includes: 3.1.5
       array.prototype.flat: 1.3.0
       debug: 2.6.9
@@ -2492,26 +2495,6 @@ packages:
       - supports-color
     dev: true
 
-  /graphile-build-pg/4.12.2_graphql@16.5.0+pg@8.7.1:
-    resolution: {integrity: sha512-4zWS7yb2L3afNpzADX9iBc2do4UOd3abiHd/WG0ao8lharU4YxEDS5qKlE2/2s+gSNqW2okKXEuI1/ci9DXVbw==}
-    engines: {node: '>=8.6'}
-    peerDependencies:
-      pg: '>=6.1.0 <9'
-    dependencies:
-      '@graphile/lru': 4.11.0
-      chalk: 2.4.2
-      debug: 4.3.4
-      graphile-build: 4.12.2_graphql@16.5.0
-      jsonwebtoken: 8.5.1
-      lodash: 4.17.21
-      lru-cache: 4.1.5
-      pg: 8.7.1
-      pg-sql2: 4.12.1_pg@8.7.1
-    transitivePeerDependencies:
-      - graphql
-      - supports-color
-    dev: true
-
   /graphile-build/4.12.2_graphql@15.8.0:
     resolution: {integrity: sha512-UqomiSnWPj4pjO6Q6PzT1YeH96k7e0JzCBI3X8kkELG+PP2BOQCNE5e+xLJvohJmUr0YBTgflPQo7P1ZESPwww==}
     engines: {node: '>=8.6'}
@@ -2523,26 +2506,6 @@ packages:
       debug: 4.3.4
       graphql: 15.8.0
       graphql-parse-resolve-info: 4.12.0_graphql@15.8.0
-      iterall: 1.3.0
-      lodash: 4.17.21
-      lru-cache: 5.1.1
-      pluralize: 7.0.0
-      semver: 6.3.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
-  /graphile-build/4.12.2_graphql@16.5.0:
-    resolution: {integrity: sha512-UqomiSnWPj4pjO6Q6PzT1YeH96k7e0JzCBI3X8kkELG+PP2BOQCNE5e+xLJvohJmUr0YBTgflPQo7P1ZESPwww==}
-    engines: {node: '>=8.6'}
-    peerDependencies:
-      graphql: '>=0.9 <0.14 || ^14.0.2 || ^15.4.0'
-    dependencies:
-      '@graphile/lru': 4.11.0
-      chalk: 2.4.2
-      debug: 4.3.4
-      graphql: 16.5.0
-      graphql-parse-resolve-info: 4.12.0_graphql@16.5.0
       iterall: 1.3.0
       lodash: 4.17.21
       lru-cache: 5.1.1
@@ -2581,19 +2544,6 @@ packages:
       - supports-color
     dev: true
 
-  /graphql-parse-resolve-info/4.12.0_graphql@16.5.0:
-    resolution: {integrity: sha512-sQyJeWCzFQwLj8SdgrWeAQG46Nc+VLxof91/AtvEVdbvFCvb+S6OoA4OtIp5OpWBrFo+JzW6LIKifNHXtRKPpA==}
-    engines: {node: '>=8.6'}
-    peerDependencies:
-      graphql: '>=0.9 <0.14 || ^14.0.2 || ^15.4.0'
-    dependencies:
-      debug: 4.3.4
-      graphql: 16.5.0
-      tslib: 2.4.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
   /graphql-ws/5.9.0_graphql@15.8.0:
     resolution: {integrity: sha512-CXv0l0nI1bgChwl4Rm+BqNOAKwL/C9T2N8RfmTkhQ38YLFdUXCi2WNW4oFp8BJP+t75nCLzjHHgR04sP1oF02w==}
     engines: {node: '>=10'}
@@ -2606,11 +2556,6 @@ packages:
   /graphql/15.8.0:
     resolution: {integrity: sha512-5gghUc24tP9HRznNpV2+FIoq3xKkj5dTQqf4v0CpdPbFVwFkWoxOM+o+2OC9ZSvjEMTjfmG9QT+gcvggTwW1zw==}
     engines: {node: '>= 10.x'}
-    dev: true
-
-  /graphql/16.5.0:
-    resolution: {integrity: sha512-qbHgh8Ix+j/qY+a/ZcJnFQ+j8ezakqPiHwPiZhV/3PgGlgf96QMBB5/f2rkiC9sgLoy/xvT6TSiaf2nTHJh5iA==}
-    engines: {node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0}
     dev: true
 
   /handlebars/4.7.7:
@@ -4120,22 +4065,6 @@ packages:
       - supports-color
     dev: true
 
-  /postgraphile-core/4.12.2_graphql@16.5.0+pg@8.7.1:
-    resolution: {integrity: sha512-+2OWlPVsMAVjYRMBSI/CT4GUB0mkSmPKGopKapfvhW40SCUBiPB/kqTylX2viRRnN8FuZtS3cRaTPiWr1K+DIg==}
-    engines: {node: '>=8.6'}
-    peerDependencies:
-      graphql: '>=0.9 <0.14 || ^14.0.2 || ^15.4.0'
-      pg: '>=6.1.0 <9'
-    dependencies:
-      graphile-build: 4.12.2_graphql@16.5.0
-      graphile-build-pg: 4.12.2_graphql@16.5.0+pg@8.7.1
-      graphql: 16.5.0
-      pg: 8.7.1
-      tslib: 2.4.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
   /postgraphile/4.12.9:
     resolution: {integrity: sha512-4yxCleFqLH3o0eyM1ybMDCyDJvKNsYQ/d7VKtU8l62B12iNNL/xGipYYoYrLkEdEQdXlOwRxXxagRrvbZU1nIw==}
     engines: {node: '>=8.6'}
@@ -4926,7 +4855,7 @@ packages:
     dev: true
 
   /text-table/0.2.0:
-    resolution: {integrity: sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=}
+    resolution: {integrity: sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==}
     dev: true
 
   /through/2.3.8:
@@ -5160,7 +5089,7 @@ packages:
     dev: true
 
   /url-template/2.0.8:
-    resolution: {integrity: sha1-/FZaPMy/93MMd19WQflVV5FDnyE=}
+    resolution: {integrity: sha512-XdVKMF4SJ0nP/O7XIPB0JwAEuT9lDIYnNsK8yGVe43y0AWoKeJNdv3ZNWh7ksJ6KqQFjOO6ox/VEitLnaVNufw==}
     dev: true
 
   /util-deprecate/1.0.2:
