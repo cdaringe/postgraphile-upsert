@@ -30,7 +30,6 @@ export async function imageExists(imageName: string) {
 }
 
 export async function purgeContainer(container: Docker.Container) {
-  debugger;
   try {
     await container.kill();
   } finally {
