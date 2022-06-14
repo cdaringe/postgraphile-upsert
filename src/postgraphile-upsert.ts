@@ -223,25 +223,104 @@ export const PgMutationUpsertPlugin: Plugin = (builder) => {
                     );
 
                   // Figure out to which columns the unique constraints belong to
-                  const uniqueKeys = uniqueConstraints.reduce(
-                    (acc, constraint) => [
-                      ...acc,
-                      ...constraint.keyAttributeNums.map((num) =>
-                        attributes.find((attr) => attr.num === num)
-                      ),
-                    ],
-                    []
+                  const constraintColumns: { [key: string]: any[] } =
+                    uniqueConstraints.reduce(
+                      (acc, constraint) => ({
+                        ...acc,
+                        [constraint.name]: new Set(
+                          constraint.keyAttributeNums.map((num) =>
+                            attributes.find((attr) => attr.num === num)
+                          )
+                        ),
+                      }),
+                      {}
+                    );
+
+                  const upsertedColumns: Set<string> = new Set(
+                    attributes.filter((attr) => {
+                      if (
+                        Object.prototype.hasOwnProperty.call(
+                          inputData,
+                          fieldName
+                        )
+                      ) {
+                        return attr.name;
+                      }
+                    })
                   );
+
+                  // Depending on whether a where clause was passed, we want to determine which
+                  // constraint to use in the upsert ON CONFLICT cause.
+                  // If where clause: Check for the first constraint that the where clause provides all matching unique columns
+                  // If no where clause: Check for the first constraint that our upsert columns provides all matching unique columns
+                  //     or default to primary key constraint (existing functionality).
+                  const primaryKeyConstraint = uniqueConstraints.find(
+                    (con) => con.type === "p"
+                  );
+                  const matchingConstraint = where
+                    ? Object.entries(constraintColumns).find(([_, columns]) =>
+                        [...columns].every(
+                          (col) =>
+                            where[inflection.camelCase(col.name)] !== undefined
+                        )
+                      )
+                    : Object.entries(constraintColumns).find(([_, columns]) =>
+                        [...columns].every((col) =>
+                          upsertedColumns.has(col.name)
+                        )
+                      ) ??
+                      Object.entries(constraintColumns).find(
+                        ([key]) => key === primaryKeyConstraint.name
+                      );
+
+                  if (!matchingConstraint) {
+                    throw new Error(
+                      `Unable to determine upsert unique constraint for given upserted columns: ${[
+                        ...upsertedColumns,
+                      ].join(", ")}`
+                    );
+                  }
+
+                  const [constraintName] = matchingConstraint;
 
                   // Loop thru columns and "SQLify" them
                   attributes.forEach((attr) => {
+                    // where clause should override any "input" for the matching column to be a true upsert
+                    let hasWhereClauseValue = false;
+                    let whereClauseValue = undefined;
+                    if (
+                      where &&
+                      Object.prototype.hasOwnProperty.call(
+                        where,
+                        inflection.camelCase(attr.name)
+                      )
+                    ) {
+                      whereClauseValue = where[inflection.camelCase(attr.name)];
+                      hasWhereClauseValue = true;
+                    }
+
+                    // Do we have a value for the field in input?
                     const fieldName = inflection.column(attr);
-                    const val = inputData[fieldName];
                     if (
                       Object.prototype.hasOwnProperty.call(inputData, fieldName)
                     ) {
+                      const val = inputData[fieldName];
+
+                      // The user passed a where clause condition value that does not match the upsert input value for the same property
+                      if (hasWhereClauseValue && whereClauseValue !== val) {
+                        throw new Error(
+                          `Value passed in the input for ${fieldName} does not match the where clause value.`
+                        );
+                      }
+
                       sqlColumns.push(sql.identifier(attr.name));
                       sqlValues.push(gql2pg(val, attr.type, attr.typeModifier));
+                    } else if (hasWhereClauseValue) {
+                      // If it was ommitted in the input, we should add it
+                      sqlColumns.push(sql.identifier(attr.name));
+                      sqlValues.push(
+                        gql2pg(whereClauseValue, attr.type, attr.typeModifier)
+                      );
                     }
                   });
 
@@ -252,16 +331,6 @@ export const PgMutationUpsertPlugin: Plugin = (builder) => {
                         col.names[0]
                       )} = excluded.${sql.identifier(col.names[0])}`
                   );
-
-                  const uniqueKeyColumns = uniqueKeys
-                    .map((attr) => {
-                      if (!where) return sql.identifier(attr.name);
-                      const whereValue = where[inflection.camelCase(attr.name)];
-                      if (whereValue) {
-                        return sql.fragment`${sql.identifier(attr.name)}`;
-                      }
-                    })
-                    .filter(Boolean);
 
                   // SQL query for upsert mutations
                   // see: http://www.postgresqltutorial.com/postgresql-upsert/
@@ -274,7 +343,9 @@ export const PgMutationUpsertPlugin: Plugin = (builder) => {
                           sqlColumns.length
                             ? sql.fragment`(${sql.join(sqlColumns, ", ")})
                             values (${sql.join(sqlValues, ", ")})
-                            on conflict (${sql.join(uniqueKeyColumns, ", ")})
+                            on conflict on constraint ${sql.identifier(
+                              constraintName
+                            )}
                             do update set ${sql.join(
                               conflictUpdateArray,
                               ", "
