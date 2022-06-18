@@ -25,7 +25,7 @@ test.beforeEach(async (t) => {
   await container.setup(t.context);
   await Bluebird.delay(5000);
   t.context.client = await createPool(t.context.dbConfig);
-  t.context.client.on("error", (_err) => {});
+  t.context.client.on("error", () => null);
   await t.context.client.query(`
     create table bikes (
       id serial,
@@ -34,7 +34,7 @@ test.beforeEach(async (t) => {
       model varchar,
       serial_key varchar,
       primary key (id),
-      CONSTRAINT serial_weight_unique UNIQUE (serial_key, weight)
+      constraint serial_weight_unique unique (serial_key, weight)
     )
   `);
   await t.context.client.query(`
@@ -138,7 +138,7 @@ const fetchAllRoles = async (t: PluginExecutionContext) => {
 
 const create = async (
   t: PluginExecutionContext,
-  extraProperties: { [key: string]: any } = {}
+  extraProperties: { [key: string]: unknown } = {}
 ) => {
   const mutation = `mutation {
     upsertBike(input: {
@@ -259,9 +259,9 @@ test("throws an error if input values differ from where clause values", async (t
 
     await execGqlOp(t, query);
     t.fail("Mutation should fail if values differ");
-  } catch (e: any) {
+  } catch (e: unknown) {
     t.truthy(
-      (e.message as string).includes(
+      (e instanceof Error ? e.message : `${e}`).includes(
         "Value passed in the input for serialKey does not match the where clause value."
       )
     );

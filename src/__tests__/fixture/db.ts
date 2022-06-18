@@ -1,6 +1,7 @@
 import { freeport } from "./freeport";
 import Docker from "dockerode";
 import execa from "execa";
+// import type { ExecutionContext } from "ava";
 
 const DB_IMAGE = "postgres:11-alpine";
 
@@ -29,6 +30,9 @@ export async function imageExists(imageName: string) {
   }
 }
 
+const isStatusCodeError = (x: unknown): x is { statusCode: number } =>
+  !!x && Number.isFinite((x as { statusCode: number }).statusCode);
+
 export async function purgeContainer(container: Docker.Container) {
   try {
     await container.kill();
@@ -36,11 +40,8 @@ export async function purgeContainer(container: Docker.Container) {
     await containers.delete(container);
     try {
       await container.remove({ force: true });
-    } catch (err: any) {
-      const statusCode =
-        err && err.statusCode && typeof err.statusCode === "number"
-          ? err.statusCode
-          : 0;
+    } catch (err: unknown) {
+      const statusCode = isStatusCodeError(err) ? err.statusCode : 0;
       // if 404, we probably used the --rm flag on container launch. it's all good.
       if (!(statusCode === 404 || statusCode === 409)) {
         throw err; // eslint-disable-line
@@ -50,7 +51,7 @@ export async function purgeContainer(container: Docker.Container) {
 }
 
 export const container = {
-  async setup(ctx: any) {
+  async setup(ctx: DbContext) {
     const port = await freeport();
     if (!(await imageExists(DB_IMAGE))) {
       await execa("docker", ["pull", DB_IMAGE]);
