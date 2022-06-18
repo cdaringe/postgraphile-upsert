@@ -30,6 +30,7 @@
     "@typescript-eslint/parser": "5.27.1",
     "ava": "4.3.0",
     "bluebird": "3.7.2",
+    "c8": "7.11.3",
     "dockerode": "3.3.2",
     "eslint": "^8.17.0",
     "execa": "5.1.1",
@@ -53,7 +54,7 @@
   "scripts": {
     "build": "tsc",
     "format": "prettier --write .",
-    "test": "ava --timeout=2m",
+    "test": "c8 -r=lcov -r=text-summary ava --timeout=2m",
     "semantic-release": "semantic-release",
     "lint": "prettier --check . && eslint '**/*.{ts,js}'",
     "prepare": "husky install"

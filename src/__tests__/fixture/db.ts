@@ -1,7 +1,6 @@
 import { freeport } from "./freeport";
 import Docker from "dockerode";
 import execa from "execa";
-// import type { ExecutionContext } from "ava";
 
 const DB_IMAGE = "postgres:11-alpine";
 

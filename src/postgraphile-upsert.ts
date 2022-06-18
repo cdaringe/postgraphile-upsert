@@ -1,5 +1,5 @@
 import { Build, Context, Plugin } from "graphile-build";
-import type { Constraint, PgTable } from "./types";
+import type { Attribute, Constraint, PgTable } from "./types";
 import type {
   GraphQLFieldConfigMap,
   GraphQLObjectType,
@@ -229,7 +229,13 @@ function createUpsertField({
               type: new GraphQLNonNull(InputType),
             },
           },
-          async resolve(_data, { where, input }, { pgClient }, resolveInfo) {
+          async resolve(
+            _data,
+            { where: whereRaw, input },
+            { pgClient },
+            resolveInfo
+          ) {
+            const where: Record<string, string | number | null> = whereRaw;
             const parsedResolveInfoFragment = parseResolveInfo(resolveInfo);
             const resolveData = getDataFromParsedResolveInfoFragment(
               parsedResolveInfoFragment,
@@ -254,25 +260,29 @@ function createUpsertField({
             );
 
             // Store attributes (columns) for easy access
-            const attributes = pgIntrospectionResultsByKind.attribute.filter(
-              (attr) => attr.classId === table.id
-            );
-
-            // Figure out to which columns the unique constraints belong to
-            const constraintColumns: { [key: string]: unknown[] } =
-              uniqueConstraints.reduce(
-                (acc, constraint) => ({
-                  ...acc,
-                  [constraint.name]: new Set(
-                    constraint.keyAttributeNums.map((num) =>
-                      attributes.find((attr) => attr.num === num)
-                    )
-                  ),
-                }),
-                {}
+            const attributes: Attribute[] =
+              pgIntrospectionResultsByKind.attribute.filter(
+                (attr) => attr.classId === table.id
               );
 
-            const upsertedColumns: Set<string> = new Set(
+            // Figure out which columns the unique constraints belong to
+            const constraintColumns = uniqueConstraints.reduce<{
+              [key: string]: Set<Attribute>;
+            }>(
+              (acc, constraint) => ({
+                ...acc,
+                [constraint.name]: new Set(
+                  constraint.keyAttributeNums.map((num) => {
+                    const match = attributes.find((attr) => attr.num === num);
+                    assert(match, `no attribute found for ${num}`);
+                    return match;
+                  })
+                ),
+              }),
+              {}
+            );
+
+            const upsertedColumns: Set<Attribute> = new Set(
               attributes.filter((attr) => {
                 if (
                   Object.prototype.hasOwnProperty.call(inputData, upsertFnName)
