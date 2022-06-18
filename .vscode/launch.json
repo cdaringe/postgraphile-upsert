@@ -8,8 +8,10 @@
       "type": "node",
       "request": "launch",
       "name": "ava - file",
-      "program": "${workspaceRoot}/node_modules/ava/profile.js",
-      "args": ["${workspaceRoot}/build/__tests__/main.test.js"],
+      "program": "${workspaceFolder}/node_modules/ava/entrypoints/cli.mjs",
+      "args": ["--serial", "${file}"],
+      "outputCapture": "std",
+      "console": "integratedTerminal", // optional
       "skipFiles": ["<node_internals>/**/*.js"],
       "env": {
         "DEBUG": "*"
