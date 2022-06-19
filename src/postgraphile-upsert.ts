@@ -254,7 +254,7 @@ function createUpsertField({
               {}
             );
 
-            const sqlColumns: unknown[] = [];
+            const sqlColumns: { names: string[] }[] = [];
             const sqlValues: unknown[] = [];
             const inputData: Record<string, unknown> =
               input[inflection.tableFieldName(table)];
