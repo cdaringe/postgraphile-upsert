@@ -32,9 +32,9 @@ test.beforeEach(async (t) => {
       weight real,
       make varchar,
       model varchar,
-      serial_key varchar,
+      serial_number varchar,
       primary key (id),
-      constraint serial_weight_unique unique (serial_key, weight)
+      constraint serial_weight_unique unique (serial_number, weight)
     )
   `);
   await t.context.client.query(`
@@ -140,15 +140,25 @@ const create = async (
   t: PluginExecutionContext,
   extraProperties: { [key: string]: unknown } = {}
 ) => {
+  const defaultRecordFields = {
+    make: '"kona"',
+    model: '"kula deluxe"',
+    weight: 0.0,
+  };
+  const bikeQueryStr = Object.entries(
+    Object.entries(extraProperties).reduce((record, [k, v]) => {
+      return {
+        ...record,
+        [k]: v,
+      };
+    }, defaultRecordFields)
+  )
+    .map(([property, value]) => `${property}: ${value}`)
+    .join("\n");
   const mutation = `mutation {
     upsertBike(input: {
       bike: {
-        weight: 0.0
-        make: "kona"
-        model: "cool-ie deluxe"
-        ${Object.entries(extraProperties)
-          .map(([property, value]) => `${property}: ${value}`)
-          .join("\n")}
+        ${bikeQueryStr}
       }
     }) {
       clientMutationId
@@ -178,25 +188,37 @@ test("upsert crud - match primary key constraint", async (t) => {
 });
 
 test("upsert crud - match unique constraint", async (t) => {
-  await create(t, { serialKey: '"123"' }); // test upsert without where clause
+  await create(t, { serialNumber: '"123"' }); // test upsert without where clause
   const res = await fetchAllBikes(t);
   t.is(res.data.allBikes.edges.length, 1);
   t.is(res.data.allBikes.edges[0].node.make, "kona");
 });
 
-test("Ensure valid values are included (i.e. 0.0 for numerics)", async (t) => {
-  await create(t, { serialKey: '"123"' });
+test("upsert crud - update on unique constraint", async (t) => {
+  await create(t, { weight: 20, serialNumber: '"123"' }); // test upsert without where clause
+  await create(t, {
+    model: '"updated_model"',
+    weight: 20,
+    serialNumber: '"123"',
+  }); // test upsert without where clause
+  const res = await fetchAllBikes(t);
+  t.is(res.data.allBikes.edges.length, 1);
+  t.is(res.data.allBikes.edges[0].node.model, "updated_model");
+});
+
+test("ensure valid values are included (i.e. 0.0 for numerics)", async (t) => {
+  await create(t, { serialNumber: '"123"' });
   const query = nanographql(`
     mutation {
       upsertBike(where: {
         weight: 0.0,
-        serialKey: "123"
+        serialNumber: "123"
       },
       input: {
         bike: {
-          model: "cool-ie deluxe v2"
+          model: "kula deluxe v2"
           weight: 0.0,
-          serialKey: "123"
+          serialNumber: "123"
         }
       }) {
         clientMutationId
@@ -207,22 +229,22 @@ test("Ensure valid values are included (i.e. 0.0 for numerics)", async (t) => {
   await execGqlOp(t, query);
   const res = await fetchAllBikes(t);
   t.is(res.data.allBikes.edges.length, 1);
-  t.is(res.data.allBikes.edges[0].node.model, "cool-ie deluxe v2");
+  t.is(res.data.allBikes.edges[0].node.model, "kula deluxe v2");
 });
 
 test("Includes where clause values if ommitted from input", async (t) => {
-  await create(t, { serialKey: '"123"' });
+  await create(t, { serialNumber: '"123"' });
 
-  // Hit unique key with weight/serialKey, but omit from input entry
+  // Hit unique key with weight/serialNumber, but omit from input entry
   const query = nanographql(`
     mutation {
       upsertBike(where: {
         weight: 0.0,
-        serialKey: "123"
+        serialNumber: "123"
       },
       input: {
         bike: {
-          model: "cool-ie deluxe v2"
+          model: "kula deluxe v2"
         }
       }) {
         clientMutationId
@@ -233,23 +255,23 @@ test("Includes where clause values if ommitted from input", async (t) => {
   await execGqlOp(t, query);
   const res = await fetchAllBikes(t);
   t.is(res.data.allBikes.edges.length, 1);
-  t.is(res.data.allBikes.edges[0].node.model, "cool-ie deluxe v2");
+  t.is(res.data.allBikes.edges[0].node.model, "kula deluxe v2");
 });
 
 test("throws an error if input values differ from where clause values", async (t) => {
   try {
-    await create(t, { serialKey: '"123"' });
+    await create(t, { serialNumber: '"123"' });
     const query = nanographql(`
       mutation {
         upsertBike(where: {
           weight: 0.0,
-          serialKey: "123"
+          serialNumber: "123"
         },
         input: {
           bike: {
-            model: "cool-ie deluxe v2"
+            model: "kula deluxe v2"
             weight: 0.0,
-            serialKey: "1234"
+            serialNumber: "1234"
           }
         }) {
           clientMutationId
@@ -262,7 +284,7 @@ test("throws an error if input values differ from where clause values", async (t
   } catch (e: unknown) {
     t.truthy(
       (e instanceof Error ? e.message : `${e}`).includes(
-        "Value passed in the input for serialKey does not match the where clause value."
+        "Value passed in the input for serialNumber does not match the where clause value."
       )
     );
   }
