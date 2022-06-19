@@ -29,7 +29,7 @@ specifiers:
   pg: 8.7.1
   postgraphile: 4.12.9
   postgraphile-core: 4.12.2
-  prettier: 2.6.2
+  prettier: 2.7.1
   prettier-plugin-organize-imports: 3.0.0
   semantic-release: 19.0.3
   standard: 17.0.0
@@ -65,8 +65,8 @@ devDependencies:
   pg: 8.7.1
   postgraphile: 4.12.9
   postgraphile-core: 4.12.2_graphql@15.8.0+pg@8.7.1
-  prettier: 2.6.2
-  prettier-plugin-organize-imports: 3.0.0_g47lo3dtan6dqg53xyqnwdvl2u
+  prettier: 2.7.1
+  prettier-plugin-organize-imports: 3.0.0_m45foewvcfsdou4sykfm4d3sxa
   semantic-release: 19.0.3
   standard: 17.0.0_cjv7yynhkuh3chidw5l5ybstmm
   ts-node: 10.8.1_cgz6fhn6dwpvalyt3khjed4wwi
@@ -4348,18 +4348,18 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
-  /prettier-plugin-organize-imports/3.0.0_g47lo3dtan6dqg53xyqnwdvl2u:
+  /prettier-plugin-organize-imports/3.0.0_m45foewvcfsdou4sykfm4d3sxa:
     resolution: {integrity: sha512-juSCJs5TMOqGGPaN/A/1xzWFzRPH2LG1LPLCr64dzKaVnPafJdtgDNmDVlU+8A4LbQzVJg0DTvgA8swBuIUhlg==}
     peerDependencies:
       prettier: '>=2.0'
       typescript: '>=2.9'
     dependencies:
-      prettier: 2.6.2
+      prettier: 2.7.1
       typescript: 4.3.5
     dev: true
 
-  /prettier/2.6.2:
-    resolution: {integrity: sha512-PkUpF+qoXTqhOeWL9fu7As8LXsIUZ1WYaJiY/a7McAQzxjk82OF0tibkFXVCDImZtWxbvojFjerkiLb0/q8mew==}
+  /prettier/2.7.1:
+    resolution: {integrity: sha512-ujppO+MkdPqoVINuDFDRLClm7D78qbDt0/NR+wp5FqEZOoTNAjPHWj17QRhu7geIHJfcNhRk1XVQmF8Bp3ye+g==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true
