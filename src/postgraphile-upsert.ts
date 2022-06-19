@@ -7,6 +7,8 @@ import type {
 } from "graphql";
 import assert from "assert";
 
+type Primitive = string | number | null;
+
 export const PgMutationUpsertPlugin: Plugin = (builder) => {
   builder.hook("GraphQLObjectType:fields", (fields, build, context) => {
     const {
@@ -55,6 +57,9 @@ export const PgMutationUpsertPlugin: Plugin = (builder) => {
     return extend(fields, upsertFieldsByName);
   });
 };
+
+const hasOwnProperty = (x: unknown, key: string) =>
+  Object.prototype.hasOwnProperty.call(x, key);
 
 function createUpsertField({
   allUniqueConstraints,
@@ -235,7 +240,7 @@ function createUpsertField({
             { pgClient },
             resolveInfo
           ) {
-            const where: Record<string, string | number | null> = whereRaw;
+            const where: Record<string, Primitive> = whereRaw;
             const parsedResolveInfoFragment = parseResolveInfo(resolveInfo);
             const resolveData = getDataFromParsedResolveInfoFragment(
               parsedResolveInfoFragment,
@@ -266,7 +271,7 @@ function createUpsertField({
               );
 
             // Figure out which columns the unique constraints belong to
-            const constraintColumns = uniqueConstraints.reduce<{
+            const columnsByConstraintName = uniqueConstraints.reduce<{
               [key: string]: Set<Attribute>;
             }>(
               (acc, constraint) => ({
@@ -282,16 +287,6 @@ function createUpsertField({
               {}
             );
 
-            const upsertedColumns: Set<Attribute> = new Set(
-              attributes.filter((attr) => {
-                if (
-                  Object.prototype.hasOwnProperty.call(inputData, upsertFnName)
-                ) {
-                  return attr.name;
-                }
-              })
-            );
-
             // Depending on whether a where clause was passed, we want to determine which
             // constraint to use in the upsert ON CONFLICT cause.
             // If where clause: Check for the first constraint that the where clause provides all matching unique columns
@@ -300,23 +295,26 @@ function createUpsertField({
             const primaryKeyConstraint = uniqueConstraints.find(
               (con) => con.type === "p"
             );
+            const inputDataKeys = new Set(Object.keys(inputData));
             const matchingConstraint = where
-              ? Object.entries(constraintColumns).find(([, columns]) =>
+              ? Object.entries(columnsByConstraintName).find(([, columns]) =>
                   [...columns].every(
-                    (col) => where[inflection.camelCase(col.name)] !== undefined
+                    (col) => inflection.camelCase(col.name) in where
                   )
                 )
-              : Object.entries(constraintColumns).find(([, columns]) =>
-                  [...columns].every((col) => upsertedColumns.has(col.name))
+              : Object.entries(columnsByConstraintName).find(([, columns]) =>
+                  [...columns].every((col) =>
+                    inputDataKeys.has(inflection.camelCase(col.name))
+                  )
                 ) ??
-                Object.entries(constraintColumns).find(
-                  ([key]) => key === primaryKeyConstraint.name
+                Object.entries(columnsByConstraintName).find(
+                  ([key]) => key === primaryKeyConstraint?.name
                 );
 
             if (!matchingConstraint) {
               throw new Error(
                 `Unable to determine upsert unique constraint for given upserted columns: ${[
-                  ...upsertedColumns,
+                  ...inputDataKeys,
                 ].join(", ")}`
               );
             }
@@ -327,13 +325,10 @@ function createUpsertField({
             attributes.forEach((attr) => {
               // where clause should override unknown "input" for the matching column to be a true upsert
               let hasWhereClauseValue = false;
-              let whereClauseValue = undefined;
+              let whereClauseValue: Primitive | undefined;
               if (
                 where &&
-                Object.prototype.hasOwnProperty.call(
-                  where,
-                  inflection.camelCase(attr.name)
-                )
+                hasOwnProperty(where, inflection.camelCase(attr.name))
               ) {
                 whereClauseValue = where[inflection.camelCase(attr.name)];
                 hasWhereClauseValue = true;
@@ -341,7 +336,7 @@ function createUpsertField({
 
               // Do we have a value for the field in input?
               const fieldName = inflection.column(attr);
-              if (Object.prototype.hasOwnProperty.call(inputData, fieldName)) {
+              if (hasOwnProperty(inputData, fieldName)) {
                 const val = inputData[fieldName];
 
                 // The user passed a where clause condition value that does not match the upsert input value for the same property
