@@ -8,7 +8,7 @@ specifiers:
   '@types/dockerode': 3.3.9
   '@types/nanographql': 2.0.1
   '@types/node': 16.11.39
-  '@types/node-fetch': 2.6.1
+  '@types/node-fetch': 2.6.2
   '@types/pg': 8.6.1
   '@types/wait-on': 5.3.1
   '@typescript-eslint/eslint-plugin': 5.28.0
@@ -44,7 +44,7 @@ devDependencies:
   '@types/dockerode': 3.3.9
   '@types/nanographql': 2.0.1
   '@types/node': 16.11.39
-  '@types/node-fetch': 2.6.1
+  '@types/node-fetch': 2.6.2
   '@types/pg': 8.6.1
   '@types/wait-on': 5.3.1
   '@typescript-eslint/eslint-plugin': 5.28.0_uw5pqibs63omyr37w7x7cpnja4
@@ -661,8 +661,8 @@ packages:
     resolution: {integrity: sha512-1WqTOVub3K/Hmym7bJnZP1jz5BT8JkINUv3sU+1A5IQY7OJZN8r+yfeczSbMD0MJlvDOLpcS81ykp94sHGdJhg==}
     dev: true
 
-  /@types/node-fetch/2.6.1:
-    resolution: {integrity: sha512-oMqjURCaxoSIsHSr1E47QHzbmzNR5rK8McHuNb11BOM9cHcIK3Avy0s/b2JlXHoQGTYS3NsvWzV1M0iK7l0wbA==}
+  /@types/node-fetch/2.6.2:
+    resolution: {integrity: sha512-DHqhlq5jeESLy19TYhLakJ07kNumXWjcDdxXsLUMJZ6ue8VZJj4kLPQVE/2mdHh3xZziNF1xppu5lwmS53HR+A==}
     dependencies:
       '@types/node': 16.11.39
       form-data: 3.0.1
