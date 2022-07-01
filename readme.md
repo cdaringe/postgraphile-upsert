@@ -64,7 +64,7 @@ mutation {
     input: {
       bike: {
         make: "kona"
-        model: "cool-ie deluxe"
+        model: "kula deluxe"
         serial_number: "abc123"
         weight: 25.6
       }

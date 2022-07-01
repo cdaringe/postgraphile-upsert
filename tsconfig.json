@@ -10,5 +10,8 @@
     "noImplicitAny": false,
     "skipLibCheck": true,
     "esModuleInterop": true
+  },
+  "ts-node": {
+    "transpileOnly": true
   }
 }
