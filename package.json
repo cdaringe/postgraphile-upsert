@@ -18,6 +18,7 @@
   "devDependencies": {
     "@commitlint/cli": "17.0.2",
     "@commitlint/config-conventional": "17.0.2",
+    "@timbeyer/commitlint-circle": "^4.1.1",
     "@types/bluebird": "3.5.36",
     "@types/dockerode": "3.3.9",
     "@types/nanographql": "2.0.1",
@@ -25,33 +26,49 @@
     "@types/node-fetch": "2.6.1",
     "@types/pg": "8.6.1",
     "@types/wait-on": "5.3.1",
+    "@typescript-eslint/eslint-plugin": "5.28.0",
     "@typescript-eslint/parser": "5.27.1",
     "ava": "4.3.0",
     "bluebird": "3.7.2",
-    "commitlint-circle": "1.0.0",
+    "c8": "7.11.3",
     "dockerode": "3.3.2",
+    "eslint": "^8.17.0",
     "execa": "5.1.1",
     "freeport": "1.0.5",
     "graphile-build": "4.12.2",
-    "graphql": "16.5.0",
+    "graphql": "15.8.0",
     "husky": "8.0.1",
+    "json-decycle": "2.0.1",
     "nanographql": "2.0.0",
     "node-fetch": "2.6.7",
     "pg": "8.7.1",
     "postgraphile": "4.12.9",
     "postgraphile-core": "4.12.2",
     "prettier": "2.6.2",
+    "prettier-plugin-organize-imports": "3.0.0",
     "semantic-release": "19.0.3",
     "standard": "17.0.0",
+    "ts-node": "10.8.1",
     "typescript": "4.3.5"
   },
   "scripts": {
     "build": "tsc",
     "format": "prettier --write .",
-    "test": "ava --timeout=2m build/**/*.test.js",
+    "test": "c8 -r=lcov -r=text-summary ava --timeout=2m",
     "semantic-release": "semantic-release",
-    "lint": "prettier --check .",
+    "lint": "prettier --check . && eslint '**/*.{ts,js}'",
     "prepare": "husky install"
+  },
+  "ava": {
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "files": [
+      "src/__tests__/**/*.test.ts"
+    ]
   },
   "repository": {
     "type": "git",
