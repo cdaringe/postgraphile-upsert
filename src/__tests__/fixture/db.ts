@@ -2,7 +2,7 @@ import { freeport } from "./freeport";
 import Docker from "dockerode";
 import execa from "execa";
 
-const DB_IMAGE = "postgres:11-alpine";
+const DB_IMAGE = "postgres:12-alpine";
 
 export interface DbContextDbConfig {
   port: number;
