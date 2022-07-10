@@ -13,7 +13,7 @@ specifiers:
   '@types/wait-on': 5.3.1
   '@typescript-eslint/eslint-plugin': 5.30.5
   '@typescript-eslint/parser': 5.30.5
-  ava: 4.3.0
+  ava: 4.3.1
   bluebird: 3.7.2
   c8: 7.11.3
   dockerode: 3.3.2
@@ -49,7 +49,7 @@ devDependencies:
   '@types/wait-on': 5.3.1
   '@typescript-eslint/eslint-plugin': 5.30.5_vyciyq3yx2zr5sqhd7ua7e7h5q
   '@typescript-eslint/parser': 5.30.5_gfymmbghv3rdpn7ib3kvuc5p6a
-  ava: 4.3.0
+  ava: 4.3.1
   bluebird: 3.7.2
   c8: 7.11.3
   dockerode: 3.3.2
@@ -1047,8 +1047,8 @@ packages:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
     dev: true
 
-  /ava/4.3.0:
-    resolution: {integrity: sha512-Ap0u8rp8wOBN6CxshgxrPSe191e8g52RWGoXeDB57ubo4fyZyStfI6OxQi/bl0yxIDEOYHhCiGwihbzlMNJw3Q==}
+  /ava/4.3.1:
+    resolution: {integrity: sha512-zdSp9QxRTmN5hJeGmg+ZjUKL5yHFLMcP/0KBla8GH25XD8Xm7Uc34CDFlwqGL6JXtjNbVkJ0Zw+DqcTf4ggCCA==}
     engines: {node: '>=12.22 <13 || >=14.17 <15 || >=16.4 <17 || >=18'}
     hasBin: true
     peerDependencies:
@@ -5070,7 +5070,7 @@ packages:
     dev: true
 
   /time-zone/1.0.0:
-    resolution: {integrity: sha1-mcW/VZWJZq9tBtg73zgA3IL67F0=}
+    resolution: {integrity: sha512-TIsDdtKo6+XrPtiTm1ssmMngN1sAhyKnTO2kunQWqNPWIVvCm15Wmw4SWInwTVgJ5u/Tr04+8Ei9TNcw4x4ONA==}
     engines: {node: '>=4'}
     dev: true
 
