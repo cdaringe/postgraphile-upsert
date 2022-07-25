@@ -15,7 +15,7 @@ specifiers:
   '@typescript-eslint/parser': 5.31.0
   ava: 4.3.1
   bluebird: 3.7.2
-  c8: 7.11.3
+  c8: 7.12.0
   dockerode: 3.3.2
   eslint: ^8.17.0
   execa: 5.1.1
@@ -51,7 +51,7 @@ devDependencies:
   '@typescript-eslint/parser': 5.31.0_gfymmbghv3rdpn7ib3kvuc5p6a
   ava: 4.3.1
   bluebird: 3.7.2
-  c8: 7.11.3
+  c8: 7.12.0
   dockerode: 3.3.2
   eslint: 8.17.0
   execa: 5.1.1
@@ -1228,8 +1228,8 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
-  /c8/7.11.3:
-    resolution: {integrity: sha512-6YBmsaNmqRm9OS3ZbIiL2EZgi1+Xc4O24jL3vMYGE6idixYuGdy76rIfIdltSKDj9DpLNrcXSonUTR1miBD0wA==}
+  /c8/7.12.0:
+    resolution: {integrity: sha512-CtgQrHOkyxr5koX1wEUmN/5cfDa2ckbHRA4Gy5LAL0zaCFtVWJS5++n+w4/sr2GWGerBxgTjpKeDclk/Qk6W/A==}
     engines: {node: '>=10.12.0'}
     hasBin: true
     dependencies:
@@ -5412,7 +5412,7 @@ packages:
     dev: true
 
   /wrappy/1.0.2:
-    resolution: {integrity: sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=}
+    resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
     dev: true
 
   /write-file-atomic/4.0.1:
