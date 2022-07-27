@@ -83,6 +83,7 @@ function createUpsertField({
       GraphQLInputObjectType,
       GraphQLNonNull,
       GraphQLString,
+      GraphQLBoolean,
     },
     inflection,
     newWithHooks,
@@ -154,6 +155,22 @@ function createUpsertField({
       name: `Upsert${tableTypeName}Where`,
       description: `Where conditions for the upsert \`${tableTypeName}\` mutation.`,
       fields: gqlInputTypesByFieldName,
+    },
+    {
+      isPgCreateInputType: false,
+      pgInflection: table,
+    }
+  );
+
+  const IgnoreType = newWithHooks(
+    GraphQLInputObjectType,
+    {
+      name: `Upsert${tableTypeName}Ignore`,
+      description: `Fields to skip when resolving conflicts upsert \`${tableTypeName}\` mutation.`,
+      fields: attributes.reduce((acc, attr) => {
+        acc[ inflection.camelCase(attr.name) ] = { type: GraphQLBoolean };
+        return acc;
+      }, {}),
     },
     {
       isPgCreateInputType: false,
@@ -233,10 +250,13 @@ function createUpsertField({
             input: {
               type: new GraphQLNonNull(InputType),
             },
+            ignore: {
+              type: IgnoreType,
+            },
           },
           async resolve(
             _data,
-            { where: whereRaw, input },
+            { where: whereRaw, input, ignore },
             { pgClient },
             resolveInfo
           ) {
@@ -321,6 +341,8 @@ function createUpsertField({
 
             const [constraintName] = matchingConstraint;
 
+            const ignoreUpdate = {};
+
             // Loop thru columns and "SQLify" them
             attributes.forEach((attr) => {
               // where clause should override unknown "input" for the matching column to be a true upsert
@@ -332,6 +354,15 @@ function createUpsertField({
               ) {
                 whereClauseValue = where[inflection.camelCase(attr.name)];
                 hasWhereClauseValue = true;
+              }
+
+              ignoreUpdate[attr.name] = omit(attr, "updateOnConflict");
+
+              if (ignore && Object.prototype.hasOwnProperty.call(
+                ignore,
+                inflection.camelCase(attr.name)
+              )) {
+                ignoreUpdate[attr.name] = ignore[inflection.camelCase(attr.name)];
               }
 
               // Do we have a value for the field in input?
@@ -358,7 +389,7 @@ function createUpsertField({
             });
 
             // Construct a array in case we need to do an update on conflict
-            const conflictUpdateArray = sqlColumns.map(
+            const conflictUpdateArray = sqlColumns.filter((col) => ignoreUpdate[col.names[0]] != true).map(
               (col) =>
                 sql.query`${sql.identifier(
                   col.names[0]

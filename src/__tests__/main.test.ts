@@ -47,6 +47,7 @@ test.beforeEach(async (t) => {
       unique (project_name, title)
     )
   `);
+  await t.context.client.query(`COMMENT ON COLUMN roles.rank IS E'@omit updateOnConflict'`);
   await t.context.client.query(`
       create table no_primary_keys(
         name text
@@ -304,7 +305,7 @@ test("upsert where clause", async (t) => {
   }) => {
     const query = nanographql(`
       mutation {
-        upsertRole(where: {
+        upsertRole(ignore: {rank: false}, where: {
           projectName: "sales",
           title: "director"
         },
@@ -340,6 +341,62 @@ test("upsert where clause", async (t) => {
     t.is(res.data.allRoles.edges[0].node.title, "director");
     t.is(res.data.allRoles.edges[0].node.name, "frank");
     t.is(res.data.allRoles.edges[0].node.rank, 2);
+
+    // assert only one record
+    t.is(res.data.allRoles.edges.length, 1);
+  }
+});
+
+test("upsert where clause omit onConflictUpdate", async (t) => {
+  const upsertDirector = async ({
+    projectName = "sales",
+    title = "director",
+    name = "jerry",
+    rank = 1,
+  }: {
+    projectName?: string;
+    title?: string;
+    name?: string;
+    rank?: number;
+  }) => {
+    const query = nanographql(`
+      mutation {
+        upsertRole(ignore: {name: true}, where: {
+          projectName: "sales",
+          title: "director"
+        },
+        input: {
+          role: {
+            projectName: "${projectName}",
+            title: "${title}",
+            name: "${name}",
+            rank: ${rank}
+          }
+        }) {
+          clientMutationId
+        }
+      }
+    `);
+    return execGqlOp(t, query);
+  };
+  {
+    // add director
+    await upsertDirector({ name: "jerry" });
+    const res = await fetchAllRoles(t);
+    t.is(res.data.allRoles.edges.length, 1);
+    t.is(res.data.allRoles.edges[0].node.projectName, "sales");
+    t.is(res.data.allRoles.edges[0].node.title, "director");
+    t.is(res.data.allRoles.edges[0].node.name, "jerry");
+  }
+
+  {
+    // update director
+    await upsertDirector({ name: "frank", rank: 2 });
+    const res = await fetchAllRoles(t);
+    t.is(res.data.allRoles.edges[0].node.projectName, "sales");
+    t.is(res.data.allRoles.edges[0].node.title, "director");
+    t.is(res.data.allRoles.edges[0].node.name, "jerry");
+    t.is(res.data.allRoles.edges[0].node.rank, 1); // rank is unchanged because it is @omit updateOnConflict
 
     // assert only one record
     t.is(res.data.allRoles.edges.length, 1);
