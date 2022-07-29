@@ -162,15 +162,41 @@ function createUpsertField({
     }
   );
 
-  const IgnoreType = newWithHooks(
+  const DoUpdateFieldType = newWithHooks(
     GraphQLInputObjectType,
     {
-      name: `Upsert${tableTypeName}Ignore`,
-      description: `Fields to skip when resolving conflicts upsert \`${tableTypeName}\` mutation.`,
+      name: `Upsert${tableTypeName}DoUpdateField`,
+      description: `Parameters to apply to a given field when resolving upsert conflicts`,
+      fields: { ignore: { type: GraphQLBoolean }, timestamp: { type: GraphQLBoolean } },
+    },
+    {
+      isPgCreateInputType: false,
+      pgInflection: table,
+    }
+  );
+
+  const DoUpdateType = newWithHooks(
+    GraphQLInputObjectType,
+    {
+      name: `Upsert${tableTypeName}DoUpdate`,
+      description: `Fields to apply when resolving upsert conflicts`,
       fields: attributes.reduce((acc, attr) => {
-        acc[ inflection.camelCase(attr.name) ] = { type: GraphQLBoolean };
+        acc[ inflection.camelCase(attr.name) ] = { type: DoUpdateFieldType };
         return acc;
       }, {}),
+    },
+    {
+      isPgCreateInputType: false,
+      pgInflection: table,
+    }
+  );
+
+  const OnConflictType = newWithHooks(
+    GraphQLInputObjectType,
+    {
+      name: `Upsert${tableTypeName}OnConflict`,
+      description: `Fields to skip when resolving conflicts upsert \`${tableTypeName}\` mutation.`,
+      fields: { doNothing: { type: GraphQLBoolean }, doUpdate: { type: DoUpdateType }},
     },
     {
       isPgCreateInputType: false,
@@ -250,13 +276,13 @@ function createUpsertField({
             input: {
               type: new GraphQLNonNull(InputType),
             },
-            ignore: {
-              type: IgnoreType,
+            onConflict: {
+              type: OnConflictType,
             },
           },
           async resolve(
             _data,
-            { where: whereRaw, input, ignore },
+            { where: whereRaw, input, onConflict },
             { pgClient },
             resolveInfo
           ) {
@@ -342,6 +368,7 @@ function createUpsertField({
             const [constraintName] = matchingConstraint;
 
             const ignoreUpdate = {};
+            const setTimestamp = {};
 
             // Loop thru columns and "SQLify" them
             attributes.forEach((attr) => {
@@ -357,12 +384,18 @@ function createUpsertField({
               }
 
               ignoreUpdate[attr.name] = omit(attr, "updateOnConflict");
-
-              if (ignore && Object.prototype.hasOwnProperty.call(
-                ignore,
+              if (onConflict && onConflict.doNothing) {
+                ignoreUpdate[attr.name] = true;
+              } else if (onConflict && onConflict.doUpdate && Object.prototype.hasOwnProperty.call(
+                onConflict.doUpdate,
                 inflection.camelCase(attr.name)
               )) {
-                ignoreUpdate[attr.name] = ignore[inflection.camelCase(attr.name)];
+                if (onConflict.doUpdate[inflection.camelCase(attr.name)].timestamp) {
+                  delete ignoreUpdate[attr.name]
+                  setTimestamp[attr.name] = true
+                } else {
+                  ignoreUpdate[attr.name] = onConflict.doUpdate[inflection.camelCase(attr.name)].ignore
+                }
               }
 
               // Do we have a value for the field in input?
@@ -393,12 +426,16 @@ function createUpsertField({
               (col) =>
                 sql.query`${sql.identifier(
                   col.names[0]
-                )} = excluded.${sql.identifier(col.names[0])}`
+                )} = ${setTimestamp[col.names[0]] ? sql.fragment`CURRENT_TIMESTAMP` : sql.fragment`excluded.${sql.identifier(col.names[0])}`}`
             );
             assert(table.namespace, "expected table namespace");
 
             // SQL query for upsert mutations
             // see: http://www.postgresqltutorial.com/postgresql-upsert/
+            const conflictAction = conflictUpdateArray.length == 0 ? sql.fragment`do nothing` : sql.fragment`on constraint ${sql.identifier(
+              constraintName
+            )}
+            do update set ${sql.join(conflictUpdateArray, ", ")}`
             const mutationQuery = sql.query`
                   insert into ${sql.identifier(
                     table.namespace.name,
@@ -408,10 +445,7 @@ function createUpsertField({
                     sqlColumns.length
                       ? sql.fragment`(${sql.join(sqlColumns, ", ")})
                       values (${sql.join(sqlValues, ", ")})
-                      on conflict on constraint ${sql.identifier(
-                        constraintName
-                      )}
-                      do update set ${sql.join(conflictUpdateArray, ", ")}`
+                      on conflict ${conflictAction}`
                       : sql.fragment`default values`
                   } returning *`;
             const rows = await viaTemporaryTable(
