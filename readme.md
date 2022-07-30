@@ -51,10 +51,11 @@ create table bikes (
   model varchar
   serial_number varchar unique not null,
   weight real,
+  last_updated timestamptz,
 )
 ```
 
-An upsert would look like this:
+A basic upsert would look like this:
 
 ```graphql
 mutation {
@@ -74,6 +75,55 @@ mutation {
 }
 ```
 
+An upsert that doesn't update anything that already exists would look like this:
+
+```graphql
+mutation {
+  upsertBike(
+    where: { serial_number: "abc123" }
+    input: {
+      bike: {
+        make: "kona"
+        model: "kula deluxe"
+        serial_number: "abc123"
+        weight: 25.6
+      }
+    }
+    onConflict: {
+      doNothing: true
+    }
+  ) {
+    clientMutationId
+  }
+}
+```
+
+An upsert with special conflict resolution would look like this:
+
+```graphql
+mutation {
+  upsertBike(
+    where: { serial_number: "abc123" }
+    input: {
+      bike: {
+        make: "kona"
+        model: "kula deluxe"
+        serial_number: "abc123"
+        weight: 25.6
+        lastUpdated: null
+      }
+    }
+    onConflict: {
+      doUpdate: {
+        make: { ignore: true }
+        lastUpdated: { timestamp: true }
+      }
+    }
+  ) {
+    clientMutationId
+  }
+}
+```
 ## Credits
 
 - This is a typescript-ified knock off of [the original upsert plugin](https://github.com/einarjegorov/graphile-upsert-plugin/blob/master/index.js)
