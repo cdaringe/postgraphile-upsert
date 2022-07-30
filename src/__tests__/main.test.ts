@@ -307,7 +307,7 @@ test("upsert where clause", async (t) => {
   }) => {
     const query = nanographql(`
       mutation {
-        upsertRole(onConflict: {doUpdate: {rank: {ignore: false}}}, where: {
+        upsertRole(where: {
           projectName: "sales",
           title: "director"
         },
@@ -342,7 +342,7 @@ test("upsert where clause", async (t) => {
     t.is(res.data.allRoles.edges[0].node.projectName, "sales");
     t.is(res.data.allRoles.edges[0].node.title, "director");
     t.is(res.data.allRoles.edges[0].node.name, "frank");
-    t.is(res.data.allRoles.edges[0].node.rank, 2);
+    t.is(res.data.allRoles.edges[0].node.rank, 1);
 
     // assert only one record
     t.is(res.data.allRoles.edges.length, 1);
@@ -363,7 +363,7 @@ test("upsert where clause omit onConflictUpdate", async (t) => {
   }) => {
     const query = nanographql(`
       mutation {
-        upsertRole(onConflict: {doUpdate: {name: {ignore: true}, updated: {timestamp: true}}}, where: {
+        upsertRole(onConflict: {doUpdate: {name: ignore, updated: current_timestamp}}, where: {
           projectName: "sales",
           title: "director"
         },

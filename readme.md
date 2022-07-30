@@ -115,8 +115,8 @@ mutation {
     }
     onConflict: {
       doUpdate: {
-        make: { ignore: true }
-        lastUpdated: { timestamp: true }
+        make: ignore
+        lastUpdated: current_timestamp
       }
     }
   ) {

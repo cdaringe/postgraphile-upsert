@@ -1,6 +1,7 @@
 import { Build, Context, Plugin } from "graphile-build";
 import type { Attribute, Constraint, PgTable } from "./types";
-import type {
+import {
+  GraphQLEnumType,
   GraphQLFieldConfigMap,
   GraphQLObjectType,
   GraphQLScalarType,
@@ -163,11 +164,14 @@ function createUpsertField({
   );
 
   const DoUpdateFieldType = newWithHooks(
-    GraphQLInputObjectType,
+    GraphQLEnumType,
     {
       name: `Upsert${tableTypeName}DoUpdateField`,
-      description: `Parameters to apply to a given field when resolving upsert conflicts`,
-      fields: { ignore: { type: GraphQLBoolean }, timestamp: { type: GraphQLBoolean } },
+      description: `Switch to apply to a given field when resolving upsert conflicts`,
+      values: {
+        "ignore": {},
+        "current_timestamp": {},
+      }
     },
     {
       isPgCreateInputType: false,
@@ -390,11 +394,11 @@ function createUpsertField({
                 onConflict.doUpdate,
                 inflection.camelCase(attr.name)
               )) {
-                if (onConflict.doUpdate[inflection.camelCase(attr.name)].timestamp) {
+                if (onConflict.doUpdate[inflection.camelCase(attr.name)] == 'current_timestamp') {
                   delete ignoreUpdate[attr.name]
                   setTimestamp[attr.name] = true
                 } else {
-                  ignoreUpdate[attr.name] = onConflict.doUpdate[inflection.camelCase(attr.name)].ignore
+                  ignoreUpdate[attr.name] = onConflict.doUpdate[inflection.camelCase(attr.name)] == 'ignore'
                 }
               }
 
