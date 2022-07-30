@@ -305,6 +305,7 @@ function createUpsertField({
             );
 
             const sqlColumns: { names: string[] }[] = [];
+            const conflictOnlyColumns: { names: string[] }[] = [];
             const sqlValues: unknown[] = [];
             const inputData: Record<string, unknown> =
               input[inflection.tableFieldName(table)];
@@ -422,11 +423,13 @@ function createUpsertField({
                 sqlValues.push(
                   gql2pg(whereClauseValue, attr.type, attr.typeModifier)
                 );
+              } else if (setTimestamp[attr.name]) {
+                conflictOnlyColumns.push(sql.identifier(attr.name))
               }
             });
 
             // Construct a array in case we need to do an update on conflict
-            const conflictUpdateArray = sqlColumns.filter((col) => ignoreUpdate[col.names[0]] != true).map(
+            const conflictUpdateArray = conflictOnlyColumns.concat(sqlColumns).filter((col) => ignoreUpdate[col.names[0]] != true).map(
               (col) =>
                 sql.query`${sql.identifier(
                   col.names[0]

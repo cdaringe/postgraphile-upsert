@@ -110,7 +110,6 @@ mutation {
         model: "kula deluxe"
         serial_number: "abc123"
         weight: 25.6
-        lastUpdated: null
       }
     }
     onConflict: {

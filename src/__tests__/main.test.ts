@@ -369,7 +369,6 @@ test("upsert where clause omit onConflictUpdate", async (t) => {
         },
         input: {
           role: {
-            updated: null,
             projectName: "${projectName}",
             title: "${title}",
             name: "${name}",
