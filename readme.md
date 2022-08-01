@@ -123,6 +123,12 @@ mutation {
   }
 }
 ```
+
+## Smart Tags
+
+- Add `@omit upsert` to column comments to prevent them from being insertable or updateable in an upsert mutation.
+- Add `@omit updateOnConflict` to column comments to prevent them from being modified on _existing_ rows in an upsert mutation.
+
 ## Credits
 
 - This is a typescript-ified knock off of [the original upsert plugin](https://github.com/einarjegorov/graphile-upsert-plugin/blob/master/index.js)
