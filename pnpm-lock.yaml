@@ -16,7 +16,7 @@ specifiers:
   ava: 4.3.1
   bluebird: 3.7.2
   c8: 7.12.0
-  dockerode: 3.3.2
+  dockerode: 3.3.3
   eslint: ^8.17.0
   execa: 5.1.1
   freeport: 1.0.5
@@ -52,7 +52,7 @@ devDependencies:
   ava: 4.3.1
   bluebird: 3.7.2
   c8: 7.12.0
-  dockerode: 3.3.2
+  dockerode: 3.3.3
   eslint: 8.17.0
   execa: 5.1.1
   freeport: 1.0.5
@@ -1756,8 +1756,8 @@ packages:
       - supports-color
     dev: true
 
-  /dockerode/3.3.2:
-    resolution: {integrity: sha512-oXN+1XVH2TeyE0Jj9Ci6Fim8ZIDxyqeJrkx9qhEOaRiA+nhLihKfd3M2L+Aqrj5C2ObPw8RVN2zPWvvk0x2dwg==}
+  /dockerode/3.3.3:
+    resolution: {integrity: sha512-lvKV6/NGf2/CYLt5V4c0fd6Fl9XZSCo1Z2HBT9ioKrKLMB2o+gA62Uza8RROpzGvYv57KJx2dKu+ZwSpB//OIA==}
     engines: {node: '>= 8.0'}
     dependencies:
       docker-modem: 3.0.5
@@ -5189,7 +5189,7 @@ packages:
     dev: true
 
   /tweetnacl/0.14.5:
-    resolution: {integrity: sha1-WuaBd/GS1EViadEIr6k/+HQ/T2Q=}
+    resolution: {integrity: sha512-KXXFFdAbFXY4geFIwoyNK+f5Z1b7swfXABfL7HXCmoIWMKU3dmS26672A4EeQtDzLKy7SXmfBu51JolvEKwtGA==}
     dev: true
 
   /type-check/0.4.0:
@@ -5318,7 +5318,7 @@ packages:
     dev: true
 
   /util-deprecate/1.0.2:
-    resolution: {integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=}
+    resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
     dev: true
 
   /v8-compile-cache-lib/3.0.1:
