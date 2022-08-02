@@ -124,7 +124,7 @@ mutation {
 }
 ```
 
-## Smart Tags
+## [Smart Tags](https://www.graphile.org/postgraphile/smart-tags/)
 
 - Add `@omit upsert` to column comments to prevent them from being insertable or updateable in an upsert mutation.
 - Add `@omit updateOnConflict` to column comments to prevent them from being modified on _existing_ rows in an upsert mutation.

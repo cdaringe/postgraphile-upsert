@@ -183,7 +183,7 @@ function createUpsertField({
     GraphQLInputObjectType,
     {
       name: `Upsert${tableTypeName}DoUpdate`,
-      description: `Fields to apply when resolving upsert conflicts`,
+      description: `Common values to apply when resolving upsert conflicts`,
       fields: attributes.reduce((acc, attr) => {
         acc[ inflection.camelCase(attr.name) ] = { type: DoUpdateFieldType };
         return acc;
