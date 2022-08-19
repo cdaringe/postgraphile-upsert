@@ -10,7 +10,18 @@ import assert from "assert";
 
 type Primitive = string | number | null;
 
-export const PgMutationUpsertPlugin: Plugin = (builder) => {
+export type PgMutationUpsertPluginOptions = {
+  enableQueryDefinedConflictResolutionTuning?: boolean;
+};
+
+export const PgMutationUpsertPlugin: Plugin = (
+  builder,
+  options: PgMutationUpsertPluginOptions
+) => {
+  const {
+    enableQueryDefinedConflictResolutionTuning: doUpdateEnabled = false,
+  } = options;
+
   builder.hook("GraphQLObjectType:fields", (fields, build, context) => {
     const {
       extend,
@@ -51,6 +62,7 @@ export const PgMutationUpsertPlugin: Plugin = (builder) => {
           context,
           gqlTable,
           gqlTableInput,
+          doUpdateEnabled,
         });
         fnsByName[upsertFnName] = fn;
         return fnsByName;
@@ -69,6 +81,7 @@ function createUpsertField({
   gqlTable,
   gqlTableInput,
   table,
+  doUpdateEnabled,
 }: {
   allUniqueConstraints: Constraint[];
   build: Build;
@@ -76,6 +89,7 @@ function createUpsertField({
   gqlTable: GraphQLObjectType;
   gqlTableInput: GraphQLObjectType;
   table: PgTable;
+  doUpdateEnabled: boolean;
 }) {
   const {
     gql2pg,
@@ -163,50 +177,56 @@ function createUpsertField({
     }
   );
 
-  const DoUpdateFieldType = newWithHooks(
-    GraphQLEnumType,
-    {
-      name: `Upsert${tableTypeName}DoUpdateField`,
-      description: `Switch to apply to a given field when resolving upsert conflicts`,
-      values: {
-        "ignore": {},
-        "current_timestamp": {},
+  let OnConflictType;
+  if (doUpdateEnabled) {
+    const DoUpdateFieldType = newWithHooks(
+      GraphQLEnumType,
+      {
+        name: `Upsert${tableTypeName}DoUpdateField`,
+        description: `Switch to apply to a given field when resolving upsert conflicts`,
+        values: {
+          ignore: {},
+          current_timestamp: {},
+        },
+      },
+      {
+        isPgCreateInputType: false,
+        pgInflection: table,
       }
-    },
-    {
-      isPgCreateInputType: false,
-      pgInflection: table,
-    }
-  );
+    );
 
-  const DoUpdateType = newWithHooks(
-    GraphQLInputObjectType,
-    {
-      name: `Upsert${tableTypeName}DoUpdate`,
-      description: `Fields to apply when resolving upsert conflicts`,
-      fields: attributes.reduce((acc, attr) => {
-        acc[ inflection.camelCase(attr.name) ] = { type: DoUpdateFieldType };
-        return acc;
-      }, {}),
-    },
-    {
-      isPgCreateInputType: false,
-      pgInflection: table,
-    }
-  );
+    const DoUpdateType = newWithHooks(
+      GraphQLInputObjectType,
+      {
+        name: `Upsert${tableTypeName}DoUpdate`,
+        description: `Common values to apply when resolving upsert conflicts`,
+        fields: attributes.reduce((acc, attr) => {
+          acc[inflection.camelCase(attr.name)] = { type: DoUpdateFieldType };
+          return acc;
+        }, {}),
+      },
+      {
+        isPgCreateInputType: false,
+        pgInflection: table,
+      }
+    );
 
-  const OnConflictType = newWithHooks(
-    GraphQLInputObjectType,
-    {
-      name: `Upsert${tableTypeName}OnConflict`,
-      description: `Fields to skip when resolving conflicts upsert \`${tableTypeName}\` mutation.`,
-      fields: { doNothing: { type: GraphQLBoolean }, doUpdate: { type: DoUpdateType }},
-    },
-    {
-      isPgCreateInputType: false,
-      pgInflection: table,
-    }
-  );
+    OnConflictType = newWithHooks(
+      GraphQLInputObjectType,
+      {
+        name: `Upsert${tableTypeName}OnConflict`,
+        description: `Fields to skip when resolving conflicts upsert \`${tableTypeName}\` mutation.`,
+        fields: {
+          doNothing: { type: GraphQLBoolean },
+          doUpdate: { type: DoUpdateType },
+        },
+      },
+      {
+        isPgCreateInputType: false,
+        pgInflection: table,
+      }
+    );
+  }
 
   // Standard input type that 'create' uses
   const InputType = newWithHooks(
@@ -280,9 +300,13 @@ function createUpsertField({
             input: {
               type: new GraphQLNonNull(InputType),
             },
-            onConflict: {
-              type: OnConflictType,
-            },
+            ...(doUpdateEnabled
+              ? {
+                  onConflict: {
+                    type: OnConflictType,
+                  },
+                }
+              : {}),
           },
           async resolve(
             _data,
@@ -388,18 +412,29 @@ function createUpsertField({
                 hasWhereClauseValue = true;
               }
 
-              ignoreUpdate[attr.name] = omit(attr, "updateOnConflict");
-              if (onConflict && onConflict.doNothing) {
-                ignoreUpdate[attr.name] = true;
-              } else if (onConflict && onConflict.doUpdate && Object.prototype.hasOwnProperty.call(
-                onConflict.doUpdate,
-                inflection.camelCase(attr.name)
-              )) {
-                if (onConflict.doUpdate[inflection.camelCase(attr.name)] == 'current_timestamp') {
-                  delete ignoreUpdate[attr.name]
-                  setTimestamp[attr.name] = true
-                } else {
-                  ignoreUpdate[attr.name] = onConflict.doUpdate[inflection.camelCase(attr.name)] == 'ignore'
+              if (doUpdateEnabled) {
+                ignoreUpdate[attr.name] = omit(attr, "updateOnConflict");
+                if (onConflict && onConflict.doNothing) {
+                  ignoreUpdate[attr.name] = true;
+                } else if (
+                  onConflict &&
+                  onConflict.doUpdate &&
+                  Object.prototype.hasOwnProperty.call(
+                    onConflict.doUpdate,
+                    inflection.camelCase(attr.name)
+                  )
+                ) {
+                  if (
+                    onConflict.doUpdate[inflection.camelCase(attr.name)] ==
+                    "current_timestamp"
+                  ) {
+                    delete ignoreUpdate[attr.name];
+                    setTimestamp[attr.name] = true;
+                  } else {
+                    ignoreUpdate[attr.name] =
+                      onConflict.doUpdate[inflection.camelCase(attr.name)] ==
+                      "ignore";
+                  }
                 }
               }
 
@@ -424,25 +459,31 @@ function createUpsertField({
                   gql2pg(whereClauseValue, attr.type, attr.typeModifier)
                 );
               } else if (setTimestamp[attr.name]) {
-                conflictOnlyColumns.push(sql.identifier(attr.name))
+                conflictOnlyColumns.push(sql.identifier(attr.name));
               }
             });
 
             // Construct a array in case we need to do an update on conflict
-            const conflictUpdateArray = conflictOnlyColumns.concat(sqlColumns).filter((col) => ignoreUpdate[col.names[0]] != true).map(
-              (col) =>
-                sql.query`${sql.identifier(
-                  col.names[0]
-                )} = ${setTimestamp[col.names[0]] ? sql.fragment`CURRENT_TIMESTAMP` : sql.fragment`excluded.${sql.identifier(col.names[0])}`}`
-            );
+            const conflictUpdateArray = conflictOnlyColumns
+              .concat(sqlColumns)
+              .filter((col) => ignoreUpdate[col.names[0]] != true)
+              .map(
+                (col) =>
+                  sql.query`${sql.identifier(col.names[0])} = ${
+                    setTimestamp[col.names[0]]
+                      ? sql.fragment`CURRENT_TIMESTAMP`
+                      : sql.fragment`excluded.${sql.identifier(col.names[0])}`
+                  }`
+              );
             assert(table.namespace, "expected table namespace");
 
             // SQL query for upsert mutations
             // see: http://www.postgresqltutorial.com/postgresql-upsert/
-            const conflictAction = conflictUpdateArray.length == 0 ? sql.fragment`do nothing` : sql.fragment`on constraint ${sql.identifier(
-              constraintName
-            )}
-            do update set ${sql.join(conflictUpdateArray, ", ")}`
+            const conflictAction =
+              conflictUpdateArray.length == 0
+                ? sql.fragment`do nothing`
+                : sql.fragment`on constraint ${sql.identifier(constraintName)}
+            do update set ${sql.join(conflictUpdateArray, ", ")}`;
             const mutationQuery = sql.query`
                   insert into ${sql.identifier(
                     table.namespace.name,

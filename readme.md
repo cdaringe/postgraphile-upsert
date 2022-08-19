@@ -89,9 +89,7 @@ mutation {
         weight: 25.6
       }
     }
-    onConflict: {
-      doNothing: true
-    }
+    onConflict: { doNothing: true }
   ) {
     clientMutationId
   }
@@ -112,19 +110,14 @@ mutation {
         weight: 25.6
       }
     }
-    onConflict: {
-      doUpdate: {
-        make: ignore
-        lastUpdated: current_timestamp
-      }
-    }
+    onConflict: { doUpdate: { make: ignore, lastUpdated: current_timestamp } }
   ) {
     clientMutationId
   }
 }
 ```
 
-## Smart Tags
+## [Smart Tags](https://www.graphile.org/postgraphile/smart-tags/) Support
 
 - Add `@omit upsert` to column comments to prevent them from being insertable or updateable in an upsert mutation.
 - Add `@omit updateOnConflict` to column comments to prevent them from being modified on _existing_ rows in an upsert mutation.
