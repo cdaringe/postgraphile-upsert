@@ -59,15 +59,6 @@ test.beforeEach(async (t) => {
         name text
       )
   `);
-  const middleware = postgraphile(t.context.client, "public", {
-    graphiql: true,
-    appendPlugins: [PgMutationUpsertPlugin],
-    exportGqlSchemaPath: "./postgraphile.graphql",
-  });
-  t.context.middleware = middleware;
-  const serverPort = await freeport();
-  t.context.serverPort = serverPort;
-  t.context.server = createServer(middleware).listen(serverPort);
 });
 
 test.afterEach(async (t) => {
