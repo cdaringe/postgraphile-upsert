@@ -1,7 +1,6 @@
 import { Build, Context, Plugin } from "graphile-build";
 import type { Attribute, Constraint, PgTable } from "./types";
 import {
-  GraphQLEnumType,
   GraphQLFieldConfigMap,
   GraphQLObjectType,
   GraphQLScalarType,
@@ -10,18 +9,7 @@ import assert from "assert";
 
 type Primitive = string | number | null;
 
-export type PgMutationUpsertPluginOptions = {
-  enableQueryDefinedConflictResolutionTuning?: boolean;
-};
-
-export const PgMutationUpsertPlugin: Plugin = (
-  builder,
-  options: PgMutationUpsertPluginOptions
-) => {
-  const {
-    enableQueryDefinedConflictResolutionTuning: doUpdateEnabled = false,
-  } = options;
-
+export const PgMutationUpsertPlugin: Plugin = (builder) => {
   builder.hook("GraphQLObjectType:fields", (fields, build, context) => {
     const {
       extend,
@@ -62,7 +50,6 @@ export const PgMutationUpsertPlugin: Plugin = (
           context,
           gqlTable,
           gqlTableInput,
-          doUpdateEnabled,
         });
         fnsByName[upsertFnName] = fn;
         return fnsByName;
@@ -81,7 +68,6 @@ function createUpsertField({
   gqlTable,
   gqlTableInput,
   table,
-  doUpdateEnabled,
 }: {
   allUniqueConstraints: Constraint[];
   build: Build;
@@ -89,7 +75,6 @@ function createUpsertField({
   gqlTable: GraphQLObjectType;
   gqlTableInput: GraphQLObjectType;
   table: PgTable;
-  doUpdateEnabled: boolean;
 }) {
   const {
     gql2pg,
@@ -98,7 +83,6 @@ function createUpsertField({
       GraphQLInputObjectType,
       GraphQLNonNull,
       GraphQLString,
-      GraphQLBoolean,
     },
     inflection,
     newWithHooks,
@@ -177,57 +161,6 @@ function createUpsertField({
     }
   );
 
-  let OnConflictType;
-  if (doUpdateEnabled) {
-    const DoUpdateFieldType = newWithHooks(
-      GraphQLEnumType,
-      {
-        name: `Upsert${tableTypeName}DoUpdateField`,
-        description: `Switch to apply to a given field when resolving upsert conflicts`,
-        values: {
-          ignore: {},
-          current_timestamp: {},
-        },
-      },
-      {
-        isPgCreateInputType: false,
-        pgInflection: table,
-      }
-    );
-
-    const DoUpdateType = newWithHooks(
-      GraphQLInputObjectType,
-      {
-        name: `Upsert${tableTypeName}DoUpdate`,
-        description: `Common values to apply when resolving upsert conflicts`,
-        fields: attributes.reduce((acc, attr) => {
-          acc[inflection.camelCase(attr.name)] = { type: DoUpdateFieldType };
-          return acc;
-        }, {}),
-      },
-      {
-        isPgCreateInputType: false,
-        pgInflection: table,
-      }
-    );
-
-    OnConflictType = newWithHooks(
-      GraphQLInputObjectType,
-      {
-        name: `Upsert${tableTypeName}OnConflict`,
-        description: `Fields to skip when resolving conflicts upsert \`${tableTypeName}\` mutation.`,
-        fields: {
-          doNothing: { type: GraphQLBoolean },
-          doUpdate: { type: DoUpdateType },
-        },
-      },
-      {
-        isPgCreateInputType: false,
-        pgInflection: table,
-      }
-    );
-  }
-
   // Standard input type that 'create' uses
   const InputType = newWithHooks(
     GraphQLInputObjectType,
@@ -300,17 +233,10 @@ function createUpsertField({
             input: {
               type: new GraphQLNonNull(InputType),
             },
-            ...(doUpdateEnabled
-              ? {
-                  onConflict: {
-                    type: OnConflictType,
-                  },
-                }
-              : {}),
           },
           async resolve(
             _data,
-            { where: whereRaw, input, onConflict },
+            { where: whereRaw, input },
             { pgClient },
             resolveInfo
           ) {
@@ -393,11 +319,10 @@ function createUpsertField({
                 ].join(", ")}`
               );
             }
+            assert(table.namespace, "expected table namespace");
 
             const [constraintName] = matchingConstraint;
-
             const ignoreUpdate = {};
-            const setTimestamp = {};
 
             // Loop thru columns and "SQLify" them
             attributes.forEach((attr) => {
@@ -412,31 +337,7 @@ function createUpsertField({
                 hasWhereClauseValue = true;
               }
 
-              if (doUpdateEnabled) {
-                ignoreUpdate[attr.name] = omit(attr, "updateOnConflict");
-                if (onConflict && onConflict.doNothing) {
-                  ignoreUpdate[attr.name] = true;
-                } else if (
-                  onConflict &&
-                  onConflict.doUpdate &&
-                  Object.prototype.hasOwnProperty.call(
-                    onConflict.doUpdate,
-                    inflection.camelCase(attr.name)
-                  )
-                ) {
-                  if (
-                    onConflict.doUpdate[inflection.camelCase(attr.name)] ==
-                    "current_timestamp"
-                  ) {
-                    delete ignoreUpdate[attr.name];
-                    setTimestamp[attr.name] = true;
-                  } else {
-                    ignoreUpdate[attr.name] =
-                      onConflict.doUpdate[inflection.camelCase(attr.name)] ==
-                      "ignore";
-                  }
-                }
-              }
+              ignoreUpdate[attr.name] = omit(attr, "updateOnConflict");
 
               // Do we have a value for the field in input?
               const fieldName = inflection.column(attr);
@@ -458,8 +359,6 @@ function createUpsertField({
                 sqlValues.push(
                   gql2pg(whereClauseValue, attr.type, attr.typeModifier)
                 );
-              } else if (setTimestamp[attr.name]) {
-                conflictOnlyColumns.push(sql.identifier(attr.name));
               }
             });
 
@@ -469,13 +368,10 @@ function createUpsertField({
               .filter((col) => ignoreUpdate[col.names[0]] != true)
               .map(
                 (col) =>
-                  sql.query`${sql.identifier(col.names[0])} = ${
-                    setTimestamp[col.names[0]]
-                      ? sql.fragment`CURRENT_TIMESTAMP`
-                      : sql.fragment`excluded.${sql.identifier(col.names[0])}`
-                  }`
+                  sql.query`${sql.identifier(
+                    col.names[0]
+                  )} = excluded.${sql.identifier(col.names[0])}`
               );
-            assert(table.namespace, "expected table namespace");
 
             // SQL query for upsert mutations
             // see: http://www.postgresqltutorial.com/postgresql-upsert/

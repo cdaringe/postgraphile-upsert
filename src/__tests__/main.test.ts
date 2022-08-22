@@ -2,10 +2,7 @@ import { container, DbContext } from "./fixture/db";
 import { createPool } from "./fixture/client";
 import { createServer, Server } from "http";
 import { freeport } from "./fixture/freeport";
-import {
-  PgMutationUpsertPlugin,
-  PgMutationUpsertPluginOptions,
-} from "../postgraphile-upsert";
+import { PgMutationUpsertPlugin } from "../postgraphile-upsert";
 import { Pool } from "pg";
 import { postgraphile } from "postgraphile";
 import ava, { TestFn, ExecutionContext } from "ava";
@@ -23,6 +20,24 @@ type TestContext = DbContext & {
 type PluginExecutionContext = ExecutionContext<TestContext>;
 
 const test = ava as TestFn<TestContext>;
+
+const initializePostgraphile = async (
+  t: PluginExecutionContext,
+  options: Record<string, unknown> = {}
+) => {
+  const middleware = postgraphile(t.context.client, "public", {
+    graphiql: true,
+    appendPlugins: [PgMutationUpsertPlugin],
+    exportGqlSchemaPath: "./postgraphile.graphql",
+    graphileBuildOptions: {
+      ...options,
+    },
+  });
+  t.context.middleware = middleware;
+  const serverPort = await freeport();
+  t.context.serverPort = serverPort;
+  t.context.server = createServer(middleware).listen(serverPort);
+};
 
 test.beforeEach(async (t) => {
   await container.setup(t.context);
@@ -47,7 +62,6 @@ test.beforeEach(async (t) => {
       title varchar,
       name varchar,
       rank integer,
-      updated timestamptz,
       unique (project_name, title)
     )
   `);
@@ -59,6 +73,7 @@ test.beforeEach(async (t) => {
         name text
       )
   `);
+  await initializePostgraphile(t);
 });
 
 test.afterEach(async (t) => {
@@ -67,24 +82,6 @@ test.afterEach(async (t) => {
   await t.context.middleware.release();
   await new Promise((res) => t.context.server.close(res));
 });
-
-const initializePostgraphile = async (
-  t: PluginExecutionContext,
-  options: PgMutationUpsertPluginOptions = {}
-) => {
-  const middleware = postgraphile(t.context.client, "public", {
-    graphiql: true,
-    appendPlugins: [PgMutationUpsertPlugin],
-    exportGqlSchemaPath: "./postgraphile.graphql",
-    graphileBuildOptions: {
-      ...options,
-    },
-  });
-  t.context.middleware = middleware;
-  const serverPort = await freeport();
-  t.context.serverPort = serverPort;
-  t.context.server = createServer(middleware).listen(serverPort);
-};
 
 const execGqlOp = (t: PluginExecutionContext, query: () => string) =>
   fetch(`http://localhost:${t.context.serverPort}/graphql`, {
@@ -161,7 +158,6 @@ const fetchAllRoles = async (t: PluginExecutionContext) => {
           title
           name
           rank
-          updated
         }
       }
     }
@@ -201,7 +197,6 @@ const create = async (
 };
 
 test("ignores tables without primary keys", async (t) => {
-  await initializePostgraphile(t);
   await create(t);
   const res = await fetchMutationTypes(t);
   const upsertMutations = new Set(
@@ -214,49 +209,7 @@ test("ignores tables without primary keys", async (t) => {
   t.assert(upsertMutations.has("upsertRole"));
 });
 
-test("does not create update/nothing specifications when enableQueryDefinedConflictResolutionTuning is false (default)", async (t) => {
-  await initializePostgraphile(
-    t /* { enableQueryDefinedConflictResolutionTuning: false } */
-  ); // defaults to false
-  await create(t, {});
-
-  t.like(await fetchType(t, "UpsertBikeOnConflict"), {
-    data: { __type: null },
-  });
-
-  const upsertBikeMutationArgs = new Set(
-    (await fetchMutationTypes(t)).data.__type.fields
-      .find(({ name }) => name.startsWith("upsertBike"))
-      .args.map(({ name }) => name)
-  );
-
-  t.deepEqual(upsertBikeMutationArgs, new Set(["where", "input"]));
-});
-
-test("creates update/nothing specifications when enableQueryDefinedConflictResolutionTuning is true", async (t) => {
-  await initializePostgraphile(t, {
-    enableQueryDefinedConflictResolutionTuning: true,
-  });
-  await create(t, {});
-
-  t.like(await fetchType(t, "UpsertBikeOnConflict"), {
-    data: { __type: { name: "UpsertBikeOnConflict", kind: "INPUT_OBJECT" } },
-  });
-
-  const upsertBikeMutationArgs = new Set(
-    (await fetchMutationTypes(t)).data.__type.fields
-      .find(({ name }) => name.startsWith("upsertBike"))
-      .args.map(({ name }) => name)
-  );
-
-  t.deepEqual(
-    upsertBikeMutationArgs,
-    new Set(["where", "input", "onConflict"])
-  );
-});
-
 test("upsert crud - match primary key constraint", async (t) => {
-  await initializePostgraphile(t);
   await create(t); // test upsert without where clause
   const res = await fetchAllBikes(t);
   t.is(res.data.allBikes.edges.length, 1);
@@ -264,7 +217,6 @@ test("upsert crud - match primary key constraint", async (t) => {
 });
 
 test("upsert crud - match unique constraint", async (t) => {
-  await initializePostgraphile(t);
   await create(t, { serialNumber: '"123"' }); // test upsert without where clause
   const res = await fetchAllBikes(t);
   t.is(res.data.allBikes.edges.length, 1);
@@ -272,7 +224,6 @@ test("upsert crud - match unique constraint", async (t) => {
 });
 
 test("upsert crud - update on unique constraint", async (t) => {
-  await initializePostgraphile(t);
   await create(t, { weight: 20, serialNumber: '"123"' }); // test upsert without where clause
   await create(t, {
     model: '"updated_model"',
@@ -285,7 +236,6 @@ test("upsert crud - update on unique constraint", async (t) => {
 });
 
 test("ensure valid values are included (i.e. 0.0 for numerics)", async (t) => {
-  await initializePostgraphile(t);
   await create(t, { serialNumber: '"123"' });
   const query = nanographql(`
     mutation {
@@ -312,7 +262,6 @@ test("ensure valid values are included (i.e. 0.0 for numerics)", async (t) => {
 });
 
 test("Includes where clause values if ommitted from input", async (t) => {
-  await initializePostgraphile(t);
   await create(t, { serialNumber: '"123"' });
 
   // Hit unique key with weight/serialNumber, but omit from input entry
@@ -339,7 +288,6 @@ test("Includes where clause values if ommitted from input", async (t) => {
 });
 
 test("throws an error if input values differ from where clause values", async (t) => {
-  await initializePostgraphile(t);
   try {
     await create(t, { serialNumber: '"123"' });
     const query = nanographql(`
@@ -372,9 +320,6 @@ test("throws an error if input values differ from where clause values", async (t
 });
 
 test("upsert where clause", async (t) => {
-  await initializePostgraphile(t, {
-    enableQueryDefinedConflictResolutionTuning: true,
-  });
   const upsertDirector = async ({
     projectName = "sales",
     title = "director",
@@ -435,93 +380,5 @@ test("upsert where clause", async (t) => {
 
     // assert only one record
     t.is(res.data.allRoles.edges.length, 1);
-  }
-});
-
-test("upsert where clause omit onConflictUpdate", async (t) => {
-  await initializePostgraphile(t, {
-    enableQueryDefinedConflictResolutionTuning: true,
-  });
-  const upsertDirector = async ({
-    projectName = "sales",
-    title = "director",
-    name = "jerry",
-    rank = 1,
-  }: {
-    projectName?: string;
-    title?: string;
-    name?: string;
-    rank?: number;
-  }) => {
-    const query = nanographql(`
-      mutation {
-        upsertRole(onConflict: {doUpdate: {name: ignore, updated: current_timestamp}}, where: {
-          projectName: "sales",
-          title: "director"
-        },
-        input: {
-          role: {
-            projectName: "${projectName}",
-            title: "${title}",
-            name: "${name}",
-            rank: ${rank}
-          }
-        }) {
-          clientMutationId
-        }
-      }
-    `);
-    return execGqlOp(t, query);
-  };
-  {
-    t.like(
-      await upsertDirector({ name: "jerry" }),
-      await upsertDirector({ name: "frank", rank: 2 }),
-      "omit onConflictUpdate should yield no upsert effect"
-    );
-  }
-});
-
-test("upsert where clause on conflict do nothing", async (t) => {
-  await initializePostgraphile(t, {
-    enableQueryDefinedConflictResolutionTuning: true,
-  });
-  const upsertDirector = async ({
-    projectName = "sales",
-    title = "director",
-    name = "jerry",
-    rank = 1,
-  }: {
-    projectName?: string;
-    title?: string;
-    name?: string;
-    rank?: number;
-  }) => {
-    const query = nanographql(`
-      mutation {
-        upsertRole(onConflict: {doNothing: true}, where: {
-          projectName: "sales",
-          title: "director"
-        },
-        input: {
-          role: {
-            projectName: "${projectName}",
-            title: "${title}",
-            name: "${name}",
-            rank: ${rank}
-          }
-        }) {
-          clientMutationId
-        }
-      }
-    `);
-    return execGqlOp(t, query);
-  };
-  {
-    t.like(
-      await upsertDirector({ name: "jerry" }),
-      await upsertDirector({ name: "frank", rank: 2 }),
-      "onConflict: {doNothing: true} should yield no upsert effect"
-    );
   }
 });

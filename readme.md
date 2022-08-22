@@ -50,8 +50,7 @@ create table bikes (
   make varchar,
   model varchar
   serial_number varchar unique not null,
-  weight real,
-  last_updated timestamptz,
+  weight real
 )
 ```
 
@@ -69,48 +68,6 @@ mutation {
         weight: 25.6
       }
     }
-  ) {
-    clientMutationId
-  }
-}
-```
-
-An upsert that doesn't update anything that already exists would look like this:
-
-```graphql
-mutation {
-  upsertBike(
-    where: { serial_number: "abc123" }
-    input: {
-      bike: {
-        make: "kona"
-        model: "kula deluxe"
-        serial_number: "abc123"
-        weight: 25.6
-      }
-    }
-    onConflict: { doNothing: true }
-  ) {
-    clientMutationId
-  }
-}
-```
-
-An upsert with special conflict resolution would look like this:
-
-```graphql
-mutation {
-  upsertBike(
-    where: { serial_number: "abc123" }
-    input: {
-      bike: {
-        make: "kona"
-        model: "kula deluxe"
-        serial_number: "abc123"
-        weight: 25.6
-      }
-    }
-    onConflict: { doUpdate: { make: ignore, lastUpdated: current_timestamp } }
   ) {
     clientMutationId
   }
