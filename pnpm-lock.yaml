@@ -9,7 +9,7 @@ specifiers:
   '@types/nanographql': 2.0.1
   '@types/node': 16.11.55
   '@types/node-fetch': 2.6.1
-  '@types/pg': 8.6.1
+  '@types/pg': 8.6.5
   '@types/wait-on': 5.3.1
   '@typescript-eslint/eslint-plugin': 5.34.0
   '@typescript-eslint/parser': 5.34.0
@@ -26,7 +26,7 @@ specifiers:
   json-decycle: 2.0.1
   nanographql: 2.0.0
   node-fetch: 2.6.7
-  pg: 8.7.1
+  pg: 8.8.0
   postgraphile: 4.12.9
   postgraphile-core: 4.12.2
   prettier: 2.6.2
@@ -45,7 +45,7 @@ devDependencies:
   '@types/nanographql': 2.0.1
   '@types/node': 16.11.55
   '@types/node-fetch': 2.6.1
-  '@types/pg': 8.6.1
+  '@types/pg': 8.6.5
   '@types/wait-on': 5.3.1
   '@typescript-eslint/eslint-plugin': 5.34.0_w42yyl5673af7ffinqaxzoeqrm
   '@typescript-eslint/parser': 5.34.0_365a3o75pejusssntt3nfdgxue
@@ -62,9 +62,9 @@ devDependencies:
   json-decycle: 2.0.1
   nanographql: 2.0.0
   node-fetch: 2.6.7
-  pg: 8.7.1
+  pg: 8.8.0
   postgraphile: 4.12.9
-  postgraphile-core: 4.12.2_graphql@15.8.0+pg@8.7.1
+  postgraphile-core: 4.12.2_graphql@15.8.0+pg@8.8.0
   prettier: 2.6.2
   prettier-plugin-organize-imports: 3.1.0_g47lo3dtan6dqg53xyqnwdvl2u
   semantic-release: 19.0.5
@@ -688,8 +688,8 @@ packages:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
     dev: true
 
-  /@types/pg/8.6.1:
-    resolution: {integrity: sha512-1Kc4oAGzAl7uqUStZCDvaLFqZrW9qWSjXOmBfdgyBP5La7Us6Mg4GBvRlSoaZMhQF/zSj1C8CtKMBkoiT8eL8w==}
+  /@types/pg/8.6.5:
+    resolution: {integrity: sha512-tOkGtAqRVkHa/PVZicq67zuujI4Oorfglsr2IbKofDwBSysnaqSx7W1mDqFqdkGE6Fbgh+PZAl0r/BWON/mozw==}
     dependencies:
       '@types/node': 16.11.55
       pg-protocol: 1.5.0
@@ -2635,7 +2635,7 @@ packages:
     resolution: {integrity: sha512-bzh50DW9kTPM00T8y4o8vQg89Di9oLJVLW/KaOGIXJWP/iqCN6WKYkbNOF04vFLJhwcpYUh9ydh/+5vpOqV4YQ==}
     dev: true
 
-  /graphile-build-pg/4.12.2_graphql@15.8.0+pg@8.7.1:
+  /graphile-build-pg/4.12.2_graphql@15.8.0+pg@8.8.0:
     resolution: {integrity: sha512-4zWS7yb2L3afNpzADX9iBc2do4UOd3abiHd/WG0ao8lharU4YxEDS5qKlE2/2s+gSNqW2okKXEuI1/ci9DXVbw==}
     engines: {node: '>=8.6'}
     peerDependencies:
@@ -2648,8 +2648,8 @@ packages:
       jsonwebtoken: 8.5.1
       lodash: 4.17.21
       lru-cache: 4.1.5
-      pg: 8.7.1
-      pg-sql2: 4.12.1_pg@8.7.1
+      pg: 8.8.0
+      pg-sql2: 4.12.1_pg@8.8.0
     transitivePeerDependencies:
       - graphql
       - supports-color
@@ -2684,7 +2684,7 @@ packages:
     dependencies:
       debug: 4.3.4
       graphile-build: 4.12.2_graphql@15.8.0
-      graphile-build-pg: 4.12.2_graphql@15.8.0+pg@8.7.1
+      graphile-build-pg: 4.12.2_graphql@15.8.0+pg@8.8.0
       graphql: 15.8.0
       tslib: 2.4.0
     transitivePeerDependencies:
@@ -4134,28 +4134,28 @@ packages:
     engines: {node: '>=4.0.0'}
     dev: true
 
-  /pg-pool/3.5.1_pg@8.7.1:
-    resolution: {integrity: sha512-6iCR0wVrro6OOHFsyavV+i6KYL4lVNyYAB9RD18w66xSzN+d8b66HiwuP30Gp1SH5O9T82fckkzsRjlrhD0ioQ==}
+  /pg-pool/3.5.2_pg@8.8.0:
+    resolution: {integrity: sha512-His3Fh17Z4eg7oANLob6ZvH8xIVen3phEZh2QuyrIl4dQSDVEabNducv6ysROKpDNPSD+12tONZVWfSgMvDD9w==}
     peerDependencies:
       pg: '>=8.0'
     dependencies:
-      pg: 8.7.1
+      pg: 8.8.0
     dev: true
 
   /pg-protocol/1.5.0:
     resolution: {integrity: sha512-muRttij7H8TqRNu/DxrAJQITO4Ac7RmX3Klyr/9mJEOBeIpgnF8f9jAfRz5d3XwQZl5qBjF9gLsUtMPJE0vezQ==}
     dev: true
 
-  /pg-sql2/4.12.1_pg@8.7.1:
+  /pg-sql2/4.12.1_pg@8.8.0:
     resolution: {integrity: sha512-3N6i0EIBYc3uKpGGJntZA7HG2cyphC2R3d00kOoc0H7MxeAP+5dN1VfHJjj9vFGlrUy40Ttq8z3UkNtWR6ySAA==}
     engines: {node: '>=8.6'}
     peerDependencies:
       pg: '>=6.1.0 <9'
     dependencies:
       '@graphile/lru': 4.11.0
-      '@types/pg': 8.6.1
+      '@types/pg': 8.6.5
       debug: 4.3.4
-      pg: 8.7.1
+      pg: 8.8.0
       tslib: 2.4.0
     transitivePeerDependencies:
       - supports-color
@@ -4172,11 +4172,11 @@ packages:
       postgres-interval: 1.2.0
     dev: true
 
-  /pg/8.7.1:
-    resolution: {integrity: sha512-7bdYcv7V6U3KAtWjpQJJBww0UEsWuh4yQ/EjNf2HeO/NnvKjpvhEIe/A/TleP6wtmSKnUnghs5A9jUoK6iDdkA==}
+  /pg/8.8.0:
+    resolution: {integrity: sha512-UXYN0ziKj+AeNNP7VDMwrehpACThH7LUl/p8TDFpEUuSejCUIwGSfxpHsPvtM6/WXFy6SU4E5RG4IJV/TZAGjw==}
     engines: {node: '>= 8.0.0'}
     peerDependencies:
-      pg-native: '>=2.0.0'
+      pg-native: '>=3.0.1'
     peerDependenciesMeta:
       pg-native:
         optional: true
@@ -4184,7 +4184,7 @@ packages:
       buffer-writer: 2.0.0
       packet-reader: 1.0.0
       pg-connection-string: 2.5.0
-      pg-pool: 3.5.1_pg@8.7.1
+      pg-pool: 3.5.2_pg@8.8.0
       pg-protocol: 1.5.0
       pg-types: 2.2.0
       pgpass: 1.0.5
@@ -4247,7 +4247,7 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /postgraphile-core/4.12.2_graphql@15.8.0+pg@8.7.1:
+  /postgraphile-core/4.12.2_graphql@15.8.0+pg@8.8.0:
     resolution: {integrity: sha512-+2OWlPVsMAVjYRMBSI/CT4GUB0mkSmPKGopKapfvhW40SCUBiPB/kqTylX2viRRnN8FuZtS3cRaTPiWr1K+DIg==}
     engines: {node: '>=8.6'}
     peerDependencies:
@@ -4255,9 +4255,9 @@ packages:
       pg: '>=6.1.0 <9'
     dependencies:
       graphile-build: 4.12.2_graphql@15.8.0
-      graphile-build-pg: 4.12.2_graphql@15.8.0+pg@8.7.1
+      graphile-build-pg: 4.12.2_graphql@15.8.0+pg@8.8.0
       graphql: 15.8.0
-      pg: 8.7.1
+      pg: 8.8.0
       tslib: 2.4.0
     transitivePeerDependencies:
       - supports-color
@@ -4271,7 +4271,7 @@ packages:
       '@graphile/lru': 4.11.0
       '@types/json5': 0.0.30
       '@types/jsonwebtoken': 8.5.8
-      '@types/pg': 8.6.1
+      '@types/pg': 8.6.5
       '@types/ws': 7.4.7
       body-parser: 1.20.0
       chalk: 2.4.2
@@ -4279,7 +4279,7 @@ packages:
       debug: 4.3.4
       finalhandler: 1.2.0
       graphile-build: 4.12.2_graphql@15.8.0
-      graphile-build-pg: 4.12.2_graphql@15.8.0+pg@8.7.1
+      graphile-build-pg: 4.12.2_graphql@15.8.0+pg@8.8.0
       graphile-utils: 4.12.2_o4dj3brrdh3eygqsae7ipwkhqq
       graphql: 15.8.0
       graphql-ws: 5.9.0_graphql@15.8.0
@@ -4288,10 +4288,10 @@ packages:
       json5: 2.2.1
       jsonwebtoken: 8.5.1
       parseurl: 1.3.3
-      pg: 8.7.1
+      pg: 8.8.0
       pg-connection-string: 2.5.0
-      pg-sql2: 4.12.1_pg@8.7.1
-      postgraphile-core: 4.12.2_graphql@15.8.0+pg@8.7.1
+      pg-sql2: 4.12.1_pg@8.8.0
+      postgraphile-core: 4.12.2_graphql@15.8.0+pg@8.8.0
       subscriptions-transport-ws: 0.9.19_graphql@15.8.0
       tslib: 2.4.0
       ws: 7.5.8
