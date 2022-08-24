@@ -322,7 +322,7 @@ function createUpsertField({
             assert(table.namespace, "expected table namespace");
 
             const [constraintName] = matchingConstraint;
-            const ignoreUpdate = {};
+            const columnNamesSkippingUpdate = new Set<string>();
 
             // Loop thru columns and "SQLify" them
             attributes.forEach((attr) => {
@@ -337,7 +337,9 @@ function createUpsertField({
                 hasWhereClauseValue = true;
               }
 
-              ignoreUpdate[attr.name] = omit(attr, "updateOnConflict");
+              if (omit(attr, "updateOnConflict")) {
+                columnNamesSkippingUpdate.add(attr.name);
+              }
 
               // Do we have a value for the field in input?
               const fieldName = inflection.column(attr);
@@ -365,7 +367,7 @@ function createUpsertField({
             // Construct a array in case we need to do an update on conflict
             const conflictUpdateArray = conflictOnlyColumns
               .concat(sqlColumns)
-              .filter((col) => ignoreUpdate[col.names[0]] != true)
+              .filter((col) => columnNamesSkippingUpdate.has(col.names[0]))
               .map(
                 (col) =>
                   sql.query`${sql.identifier(
@@ -376,7 +378,7 @@ function createUpsertField({
             // SQL query for upsert mutations
             // see: http://www.postgresqltutorial.com/postgresql-upsert/
             const conflictAction =
-              conflictUpdateArray.length == 0
+              conflictUpdateArray.length === 0
                 ? sql.fragment`do nothing`
                 : sql.fragment`on constraint ${sql.identifier(constraintName)}
             do update set ${sql.join(conflictUpdateArray, ", ")}`;
