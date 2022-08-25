@@ -10,8 +10,7 @@ env:
 jobs:
   checks:
     uses: "./.github/workflows/onchange.yml"
-    secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    secrets: inherit
   main:
     name: main
     runs-on: ubuntu-latest
@@ -29,4 +28,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm install pnpm@7 && pnpm semantic-release
+        run: |
+          npm install pnpm@7
+          pnpm semantic-release
