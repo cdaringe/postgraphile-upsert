@@ -1,5 +1,12 @@
 name: onchange
-on: [workflow_call, pull_request]
+on:
+  pull_request: {}
+  workflow_call:
+    secrets:
+      GITHUB_TOKEN:
+        required: true
+      NPM_TOKEN:
+        required: true
 
 jobs:
   build:
