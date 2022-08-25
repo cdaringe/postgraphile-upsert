@@ -40,7 +40,7 @@
     "json-decycle": "2.0.1",
     "nanographql": "2.0.0",
     "node-fetch": "2.6.7",
-    "p-retry": "4",
+    "p-retry": "5.1.1",
     "pg": "8.8.0",
     "postgraphile": "4.12.9",
     "postgraphile-core": "4.12.2",

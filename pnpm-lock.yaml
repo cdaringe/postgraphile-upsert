@@ -25,7 +25,7 @@ specifiers:
   json-decycle: 2.0.1
   nanographql: 2.0.0
   node-fetch: 2.6.7
-  p-retry: '4'
+  p-retry: 5.1.1
   pg: 8.8.0
   postgraphile: 4.12.9
   postgraphile-core: 4.12.2
@@ -61,7 +61,7 @@ devDependencies:
   json-decycle: 2.0.1
   nanographql: 2.0.0
   node-fetch: 2.6.7
-  p-retry: 4.6.2
+  p-retry: 5.1.1
   pg: 8.8.0
   postgraphile: 4.12.9
   postgraphile-core: 4.12.2_graphql@15.8.0+pg@8.8.0
@@ -665,6 +665,10 @@ packages:
 
   /@types/retry/0.12.0:
     resolution: {integrity: sha512-wWKOClTTiizcZhXnPY4wikVAwmdYHp8q6DmC+EJUzAMsycb7HB32Kh9RN4+0gExjmPmZSAQjgURXIGATPegAvA==}
+    dev: true
+
+  /@types/retry/0.12.1:
+    resolution: {integrity: sha512-xoDlM2S4ortawSWORYqsdU+2rxdh4LRW9ytc3zmT37RIKQh6IHyKwwtKhKis9ah8ol07DCkZxPt8BBvPjC6v4g==}
     dev: true
 
   /@types/ssh2-streams/0.1.9:
@@ -3857,6 +3861,14 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       '@types/retry': 0.12.0
+      retry: 0.13.1
+    dev: true
+
+  /p-retry/5.1.1:
+    resolution: {integrity: sha512-i69WkEU5ZAL8mrmdmVviWwU+DN+IUF8f4sSJThoJ3z5A7Nn5iuO5ROX3Boye0u+uYQLOSfgFl7SuFZCjlAVbQA==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dependencies:
+      '@types/retry': 0.12.1
       retry: 0.13.1
     dev: true
 
