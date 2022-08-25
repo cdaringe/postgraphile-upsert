@@ -18,7 +18,6 @@
   "devDependencies": {
     "@commitlint/cli": "17.0.2",
     "@commitlint/config-conventional": "17.0.2",
-    "@timbeyer/commitlint-circle": "4.1.1",
     "@types/bluebird": "3.5.36",
     "@types/dockerode": "3.3.9",
     "@types/nanographql": "2.0.1",
