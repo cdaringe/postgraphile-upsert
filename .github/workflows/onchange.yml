@@ -1,0 +1,27 @@
+name: pull-request
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout 🛎️
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - uses: wagoid/commitlint-github-action@v5
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.17.0
+      - name: Install pnpm
+        run: npm install -g pnpm@7
+      - name: checks
+        run: |
+          pnpm install
+          pnpm format --check
+          pnpm test
+          pnpm build
+      - name: Release Dry Run
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm semantic-release --dry-run
