@@ -10,6 +10,8 @@ env:
 jobs:
   checks:
     uses: "./.github/workflows/onchange.yml"
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   main:
     name: main
     runs-on: ubuntu-latest
