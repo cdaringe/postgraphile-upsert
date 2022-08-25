@@ -12,7 +12,7 @@ specifiers:
   '@types/wait-on': 5.3.1
   '@typescript-eslint/eslint-plugin': 5.35.1
   '@typescript-eslint/parser': 5.35.1
-  ava: 4.3.1
+  ava: 4.3.3
   bluebird: 3.7.2
   c8: 7.12.0
   dockerode: 3.3.4
@@ -48,7 +48,7 @@ devDependencies:
   '@types/wait-on': 5.3.1
   '@typescript-eslint/eslint-plugin': 5.35.1_jmhgczwpkwhmaeft23hzq7oxfu
   '@typescript-eslint/parser': 5.35.1_365a3o75pejusssntt3nfdgxue
-  ava: 4.3.1
+  ava: 4.3.3
   bluebird: 3.7.2
   c8: 7.12.0
   dockerode: 3.3.4
@@ -1021,8 +1021,8 @@ packages:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
     dev: true
 
-  /ava/4.3.1:
-    resolution: {integrity: sha512-zdSp9QxRTmN5hJeGmg+ZjUKL5yHFLMcP/0KBla8GH25XD8Xm7Uc34CDFlwqGL6JXtjNbVkJ0Zw+DqcTf4ggCCA==}
+  /ava/4.3.3:
+    resolution: {integrity: sha512-9Egq/d9R74ExrWohHeqUlexjDbgZJX5jA1Wq4KCTqc3wIfpGEK79zVy4rBtofJ9YKIxs4PzhJ8BgbW5PlAYe6w==}
     engines: {node: '>=12.22 <13 || >=14.17 <15 || >=16.4 <17 || >=18'}
     hasBin: true
     peerDependencies:
@@ -1031,7 +1031,7 @@ packages:
       '@ava/typescript':
         optional: true
     dependencies:
-      acorn: 8.7.1
+      acorn: 8.8.0
       acorn-walk: 8.2.0
       ansi-styles: 6.1.0
       arrgv: 1.0.2
