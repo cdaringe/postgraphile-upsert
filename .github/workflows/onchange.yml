@@ -19,7 +19,7 @@ jobs:
         run: |
           pnpm install
           pnpm format --check
-          pnpm test
+          pnpm test -- --no-worker-threads --fail-fast
           pnpm build
       - name: Release Dry Run
         env:
