@@ -7,7 +7,7 @@ import { Pool } from "pg";
 import { postgraphile } from "postgraphile";
 import ava, { TestFn, ExecutionContext } from "ava";
 import nanographql = require("nanographql");
-import Bluebird = require("bluebird");
+import pRetry from "p-retry";
 import fetch from "node-fetch";
 
 type TestContext = DbContext & {
@@ -23,8 +23,16 @@ const test = ava as TestFn<TestContext>;
 
 test.beforeEach(async (t) => {
   await container.setup(t.context);
-  await Bluebird.delay(5000);
-  t.context.client = await createPool(t.context.dbConfig);
+  t.context.client = await await pRetry(
+    async () => {
+      const pool = await createPool(t.context.dbConfig);
+      await pool.query("select 1");
+      return pool;
+    },
+    {
+      retries: 8,
+    }
+  );
   t.context.client.on("error", () => null);
   await t.context.client.query(`
     create table bikes (

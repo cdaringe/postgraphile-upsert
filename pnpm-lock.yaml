@@ -25,6 +25,7 @@ specifiers:
   json-decycle: 2.0.1
   nanographql: 2.0.0
   node-fetch: 2.6.7
+  p-retry: '4'
   pg: 8.8.0
   postgraphile: 4.12.9
   postgraphile-core: 4.12.2
@@ -60,6 +61,7 @@ devDependencies:
   json-decycle: 2.0.1
   nanographql: 2.0.0
   node-fetch: 2.6.7
+  p-retry: 4.6.2
   pg: 8.8.0
   postgraphile: 4.12.9
   postgraphile-core: 4.12.2_graphql@15.8.0+pg@8.8.0
