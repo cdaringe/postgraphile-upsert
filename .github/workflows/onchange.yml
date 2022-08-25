@@ -1,5 +1,5 @@
-name: pull-request
-on: [pull_request]
+name: onchange
+on: [workflow_call, pull_request]
 
 jobs:
   build:
