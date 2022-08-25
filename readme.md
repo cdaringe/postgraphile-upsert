@@ -18,8 +18,7 @@ pnpm install --save postgraphile-upsert-plugin
 postgraphile --append-plugins postgraphile-upsert-plugin:PgMutationUpsertPlugin
 ```
 
-See [here](https://www.graphile.org/postgraphile/extending/#loading-additional-plugins) for
-more information about loading plugins with PostGraphile.
+See [here](https://www.graphile.org/postgraphile/extending/#loading-additional-plugins) for more information about loading plugins with PostGraphile.
 
 ### Library
 
