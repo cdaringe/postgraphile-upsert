@@ -3,8 +3,6 @@ on: [pull_request]
 
 jobs:
   build:
-    env:
-      NEXT_PUBLIC_BASE_PATH: /airmap
     runs-on: ubuntu-latest
     steps:
       - name: checkout 🛎️
