@@ -30,4 +30,5 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           npm install -g pnpm@7
+          pnpm install
           pnpm semantic-release
