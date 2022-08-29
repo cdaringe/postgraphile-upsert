@@ -288,29 +288,66 @@ function createUpsertField({
               {}
             );
 
-            // Depending on whether a where clause was passed, we want to determine which
-            // constraint to use in the upsert ON CONFLICT cause.
-            // If where clause: Check for the first constraint that the where clause provides all matching unique columns
-            // If no where clause: Check for the first constraint that our upsert columns provides all matching unique columns
-            //     or default to primary key constraint (existing functionality).
+            const fieldToAttributeMap = attributes.reduce(
+              (acc, attr) => ({
+                ...acc,
+                [inflection.camelCase(attr.name)]: attr,
+              }),
+              {}
+            );
+
+            // Pre-process our primary key constraint
             const primaryKeyConstraint = uniqueConstraints.find(
               (con) => con.type === "p"
             );
+            const primaryKeyConstraintCols = new Set(
+              primaryKeyConstraint?.keyAttributes.map(({ name }) => name) ?? []
+            );
+
+            // Pre-process our data inputs from the payload (what was manually passed in)
             const inputDataKeys = new Set(Object.keys(inputData));
-            const matchingConstraint = where
-              ? Object.entries(columnsByConstraintName).find(([, columns]) =>
-                  [...columns].every(
-                    (col) => inflection.camelCase(col.name) in where
-                  )
+            const inputDataColumns = new Set(
+              [...inputDataKeys].map((key) => fieldToAttributeMap[key].name)
+            );
+
+            // Construct a super-set of fields passed up plus columns with default values
+            // (as these can be set before the constraint kicks into place)
+            const inputDataColumnsWithDefaults = new Set([
+              ...inputDataColumns,
+              ...attributes
+                .filter(
+                  (a) => a.hasDefault && !primaryKeyConstraintCols.has(a.name)
                 )
-              : Object.entries(columnsByConstraintName).find(([, columns]) =>
-                  [...columns].every((col) =>
-                    inputDataKeys.has(inflection.camelCase(col.name))
+                .map(({ name }) => name),
+            ]);
+
+            /**
+             * Depending on whether a where clause was passed, we want to determine which
+             * constraint to use in the upsert ON CONFLICT cause.
+             * Decision flow:
+             * 1. if we have a where clause, attempt to find matching constraint
+             * 2. attempt to find a matching constraint given our data input
+             * 3. attempt to find a matching constraint given our data input + defaulted columns
+             * 4. else, use the primary key constraint if it exists
+             */
+            const matchingConstraint =
+              (where
+                ? Object.entries(columnsByConstraintName).find(([, columns]) =>
+                    [...columns].every(
+                      (col) => inflection.camelCase(col.name) in where
+                    )
                   )
-                ) ??
-                Object.entries(columnsByConstraintName).find(
-                  ([key]) => key === primaryKeyConstraint?.name
-                );
+                : Object.entries(columnsByConstraintName).find(([, columns]) =>
+                    [...columns].every((col) => inputDataColumns.has(col.name))
+                  )) ??
+              Object.entries(columnsByConstraintName).find(([, columns]) =>
+                [...columns].every((col) =>
+                  inputDataColumnsWithDefaults.has(col.name)
+                )
+              ) ??
+              Object.entries(columnsByConstraintName).find(
+                ([key]) => key === primaryKeyConstraint?.name
+              );
 
             if (!matchingConstraint) {
               throw new Error(

@@ -1,6 +1,7 @@
 export type Tags = unknown;
 export interface KeyAttribute {
   $ref: string;
+  name: string;
 }
 export interface Constraint {
   kind: string;
