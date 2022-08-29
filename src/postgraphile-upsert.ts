@@ -367,7 +367,7 @@ function createUpsertField({
             // Construct a array in case we need to do an update on conflict
             const conflictUpdateArray = conflictOnlyColumns
               .concat(sqlColumns)
-              .filter((col) => columnNamesSkippingUpdate.has(col.names[0]))
+              .filter((col) => !columnNamesSkippingUpdate.has(col.names[0]))
               .map(
                 (col) =>
                   sql.query`${sql.identifier(
