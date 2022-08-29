@@ -1,6 +1,6 @@
 import { Build, Context, Plugin } from "graphile-build";
 import type { Attribute, Constraint, PgTable } from "./types";
-import type {
+import {
   GraphQLFieldConfigMap,
   GraphQLObjectType,
   GraphQLScalarType,
@@ -255,6 +255,7 @@ function createUpsertField({
             );
 
             const sqlColumns: { names: string[] }[] = [];
+            const conflictOnlyColumns: { names: string[] }[] = [];
             const sqlValues: unknown[] = [];
             const inputData: Record<string, unknown> =
               input[inflection.tableFieldName(table)];
@@ -318,8 +319,10 @@ function createUpsertField({
                 ].join(", ")}`
               );
             }
+            assert(table.namespace, "expected table namespace");
 
             const [constraintName] = matchingConstraint;
+            const columnNamesSkippingUpdate = new Set<string>();
 
             // Loop thru columns and "SQLify" them
             attributes.forEach((attr) => {
@@ -332,6 +335,10 @@ function createUpsertField({
               ) {
                 whereClauseValue = where[inflection.camelCase(attr.name)];
                 hasWhereClauseValue = true;
+              }
+
+              if (omit(attr, "updateOnConflict")) {
+                columnNamesSkippingUpdate.add(attr.name);
               }
 
               // Do we have a value for the field in input?
@@ -358,16 +365,23 @@ function createUpsertField({
             });
 
             // Construct a array in case we need to do an update on conflict
-            const conflictUpdateArray = sqlColumns.map(
-              (col) =>
-                sql.query`${sql.identifier(
-                  col.names[0]
-                )} = excluded.${sql.identifier(col.names[0])}`
-            );
-            assert(table.namespace, "expected table namespace");
+            const conflictUpdateArray = conflictOnlyColumns
+              .concat(sqlColumns)
+              .filter((col) => !columnNamesSkippingUpdate.has(col.names[0]))
+              .map(
+                (col) =>
+                  sql.query`${sql.identifier(
+                    col.names[0]
+                  )} = excluded.${sql.identifier(col.names[0])}`
+              );
 
             // SQL query for upsert mutations
             // see: http://www.postgresqltutorial.com/postgresql-upsert/
+            const conflictAction =
+              conflictUpdateArray.length === 0
+                ? sql.fragment`do nothing`
+                : sql.fragment`on constraint ${sql.identifier(constraintName)}
+            do update set ${sql.join(conflictUpdateArray, ", ")}`;
             const mutationQuery = sql.query`
                   insert into ${sql.identifier(
                     table.namespace.name,
@@ -377,10 +391,7 @@ function createUpsertField({
                     sqlColumns.length
                       ? sql.fragment`(${sql.join(sqlColumns, ", ")})
                       values (${sql.join(sqlValues, ", ")})
-                      on conflict on constraint ${sql.identifier(
-                        constraintName
-                      )}
-                      do update set ${sql.join(conflictUpdateArray, ", ")}`
+                      on conflict ${conflictAction}`
                       : sql.fragment`default values`
                   } returning *`;
             const rows = await viaTemporaryTable(

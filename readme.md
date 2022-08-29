@@ -51,11 +51,11 @@ create table bikes (
   make varchar,
   model varchar
   serial_number varchar unique not null,
-  weight real,
+  weight real
 )
 ```
 
-An upsert would look like this:
+A basic upsert would look like this:
 
 ```graphql
 mutation {
@@ -74,6 +74,10 @@ mutation {
   }
 }
 ```
+
+## [Smart Tags](https://www.graphile.org/postgraphile/smart-tags/) Support
+
+- Add `@omit updateOnConflict` to column comments to prevent them from being modified on _existing_ rows in an upsert mutation.
 
 ## Credits
 

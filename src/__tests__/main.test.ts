@@ -21,6 +21,24 @@ type PluginExecutionContext = ExecutionContext<TestContext>;
 
 const test = ava as TestFn<TestContext>;
 
+const initializePostgraphile = async (
+  t: PluginExecutionContext,
+  options: Record<string, unknown> = {}
+) => {
+  const middleware = postgraphile(t.context.client, "public", {
+    graphiql: true,
+    appendPlugins: [PgMutationUpsertPlugin],
+    exportGqlSchemaPath: "./postgraphile.graphql",
+    graphileBuildOptions: {
+      ...options,
+    },
+  });
+  t.context.middleware = middleware;
+  const serverPort = await freeport();
+  t.context.serverPort = serverPort;
+  t.context.server = createServer(middleware).listen(serverPort);
+};
+
 test.beforeEach(async (t) => {
   await container.setup(t.context);
   t.context.client = await await pRetry(
@@ -55,20 +73,15 @@ test.beforeEach(async (t) => {
       unique (project_name, title)
     )
   `);
+  await t.context.client.query(
+    `COMMENT ON COLUMN roles.rank IS E'@omit updateOnConflict'`
+  );
   await t.context.client.query(`
       create table no_primary_keys(
         name text
       )
   `);
-  const middleware = postgraphile(t.context.client, "public", {
-    graphiql: true,
-    appendPlugins: [PgMutationUpsertPlugin],
-    exportGqlSchemaPath: "./postgraphile.graphql",
-  });
-  t.context.middleware = middleware;
-  const serverPort = await freeport();
-  t.context.serverPort = serverPort;
-  t.context.server = createServer(middleware).listen(serverPort);
+  await initializePostgraphile(t);
 });
 
 test.afterEach(async (t) => {
@@ -95,6 +108,19 @@ const execGqlOp = (t: PluginExecutionContext, query: () => string) =>
     return json;
   });
 
+const fetchType = async (t: PluginExecutionContext, name: string) => {
+  const queryString = `
+    {
+      __type(name: "${name}") {
+        name
+        kind
+      }
+    }
+    `;
+  const query = nanographql(queryString);
+  return execGqlOp(t, query);
+};
+
 const fetchMutationTypes = async (t: PluginExecutionContext) => {
   const query = nanographql`
     query {
@@ -102,6 +128,9 @@ const fetchMutationTypes = async (t: PluginExecutionContext) => {
         name
         fields {
           name
+          args { 
+            name
+          }
         }
       }
     }
@@ -146,7 +175,7 @@ const fetchAllRoles = async (t: PluginExecutionContext) => {
 
 const create = async (
   t: PluginExecutionContext,
-  extraProperties: { [key: string]: unknown } = {}
+  extraProperties: Record<string, unknown> = {}
 ) => {
   const defaultRecordFields = {
     make: '"kona"',
@@ -335,19 +364,27 @@ test("upsert where clause", async (t) => {
     await upsertDirector({ name: "jerry" });
     const res = await fetchAllRoles(t);
     t.is(res.data.allRoles.edges.length, 1);
-    t.is(res.data.allRoles.edges[0].node.projectName, "sales");
-    t.is(res.data.allRoles.edges[0].node.title, "director");
-    t.is(res.data.allRoles.edges[0].node.name, "jerry");
+    t.like(res.data.allRoles.edges[0], {
+      node: {
+        projectName: "sales",
+        title: "director",
+        name: "jerry",
+      },
+    });
   }
 
   {
     // update director
     await upsertDirector({ name: "frank", rank: 2 });
     const res = await fetchAllRoles(t);
-    t.is(res.data.allRoles.edges[0].node.projectName, "sales");
-    t.is(res.data.allRoles.edges[0].node.title, "director");
-    t.is(res.data.allRoles.edges[0].node.name, "frank");
-    t.is(res.data.allRoles.edges[0].node.rank, 2);
+    t.like(res.data.allRoles.edges[0], {
+      node: {
+        projectName: "sales",
+        title: "director",
+        name: "frank",
+        rank: 1,
+      },
+    });
 
     // assert only one record
     t.is(res.data.allRoles.edges.length, 1);
