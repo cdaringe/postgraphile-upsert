@@ -31,4 +31,5 @@ jobs:
         run: |
           npm install -g pnpm@7
           pnpm install
+          pnpm build
           pnpm semantic-release
