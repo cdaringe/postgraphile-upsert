@@ -448,6 +448,7 @@ function createUpsertField({
       {
         pgFieldIntrospection: table,
         isPgCreateMutationField: false,
+        isPgUpsertMutationField: true,
       }
     ),
   };
