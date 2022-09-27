@@ -28,7 +28,7 @@ specifiers:
   p-retry: 4.6.2
   pg: 8.8.0
   postgraphile: 4.12.11
-  postgraphile-core: 4.12.2
+  postgraphile-core: 4.12.3
   prettier: 2.7.1
   prettier-plugin-organize-imports: 3.1.1
   semantic-release: 19.0.5
@@ -64,7 +64,7 @@ devDependencies:
   p-retry: 4.6.2
   pg: 8.8.0
   postgraphile: 4.12.11
-  postgraphile-core: 4.12.2_graphql@15.8.0+pg@8.8.0
+  postgraphile-core: 4.12.3_graphql@15.8.0+pg@8.8.0
   prettier: 2.7.1
   prettier-plugin-organize-imports: 3.1.1_igyrqqmkb7dgjptxnntravt2kq
   semantic-release: 19.0.5
@@ -2532,26 +2532,6 @@ packages:
     resolution: {integrity: sha512-bzh50DW9kTPM00T8y4o8vQg89Di9oLJVLW/KaOGIXJWP/iqCN6WKYkbNOF04vFLJhwcpYUh9ydh/+5vpOqV4YQ==}
     dev: true
 
-  /graphile-build-pg/4.12.2_graphql@15.8.0+pg@8.8.0:
-    resolution: {integrity: sha512-4zWS7yb2L3afNpzADX9iBc2do4UOd3abiHd/WG0ao8lharU4YxEDS5qKlE2/2s+gSNqW2okKXEuI1/ci9DXVbw==}
-    engines: {node: '>=8.6'}
-    peerDependencies:
-      pg: '>=6.1.0 <9'
-    dependencies:
-      '@graphile/lru': 4.11.0
-      chalk: 2.4.2
-      debug: 4.3.4
-      graphile-build: 4.12.2_graphql@15.8.0
-      jsonwebtoken: 8.5.1
-      lodash: 4.17.21
-      lru-cache: 4.1.5
-      pg: 8.8.0
-      pg-sql2: 4.12.1_pg@8.8.0
-    transitivePeerDependencies:
-      - graphql
-      - supports-color
-    dev: true
-
   /graphile-build-pg/4.12.3_graphql@15.8.0+pg@8.8.0:
     resolution: {integrity: sha512-Gnwwxm2NRuyxOx5xchU+Po9a6XagRJpEgoezzHmfBRHwFBY2zprCMYdLvllqRrPJBBWdYAjx7H1NxctBiYiIoQ==}
     engines: {node: '>=8.6'}
@@ -2569,26 +2549,6 @@ packages:
       pg-sql2: 4.12.3_pg@8.8.0
     transitivePeerDependencies:
       - graphql
-      - supports-color
-    dev: true
-
-  /graphile-build/4.12.2_graphql@15.8.0:
-    resolution: {integrity: sha512-UqomiSnWPj4pjO6Q6PzT1YeH96k7e0JzCBI3X8kkELG+PP2BOQCNE5e+xLJvohJmUr0YBTgflPQo7P1ZESPwww==}
-    engines: {node: '>=8.6'}
-    peerDependencies:
-      graphql: '>=0.9 <0.14 || ^14.0.2 || ^15.4.0'
-    dependencies:
-      '@graphile/lru': 4.11.0
-      chalk: 2.4.2
-      debug: 4.3.4
-      graphql: 15.8.0
-      graphql-parse-resolve-info: 4.12.0_graphql@15.8.0
-      iterall: 1.3.0
-      lodash: 4.17.21
-      lru-cache: 5.1.1
-      pluralize: 7.0.0
-      semver: 6.3.0
-    transitivePeerDependencies:
       - supports-color
     dev: true
 
@@ -2622,19 +2582,6 @@ packages:
       debug: 4.3.4
       graphile-build: 4.12.3_graphql@15.8.0
       graphile-build-pg: 4.12.3_graphql@15.8.0+pg@8.8.0
-      graphql: 15.8.0
-      tslib: 2.4.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
-  /graphql-parse-resolve-info/4.12.0_graphql@15.8.0:
-    resolution: {integrity: sha512-sQyJeWCzFQwLj8SdgrWeAQG46Nc+VLxof91/AtvEVdbvFCvb+S6OoA4OtIp5OpWBrFo+JzW6LIKifNHXtRKPpA==}
-    engines: {node: '>=8.6'}
-    peerDependencies:
-      graphql: '>=0.9 <0.14 || ^14.0.2 || ^15.4.0'
-    dependencies:
-      debug: 4.3.4
       graphql: 15.8.0
       tslib: 2.4.0
     transitivePeerDependencies:
@@ -4045,21 +3992,6 @@ packages:
     resolution: {integrity: sha512-muRttij7H8TqRNu/DxrAJQITO4Ac7RmX3Klyr/9mJEOBeIpgnF8f9jAfRz5d3XwQZl5qBjF9gLsUtMPJE0vezQ==}
     dev: true
 
-  /pg-sql2/4.12.1_pg@8.8.0:
-    resolution: {integrity: sha512-3N6i0EIBYc3uKpGGJntZA7HG2cyphC2R3d00kOoc0H7MxeAP+5dN1VfHJjj9vFGlrUy40Ttq8z3UkNtWR6ySAA==}
-    engines: {node: '>=8.6'}
-    peerDependencies:
-      pg: '>=6.1.0 <9'
-    dependencies:
-      '@graphile/lru': 4.11.0
-      '@types/pg': 8.6.5
-      debug: 4.3.4
-      pg: 8.8.0
-      tslib: 2.4.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
   /pg-sql2/4.12.3_pg@8.8.0:
     resolution: {integrity: sha512-xPVNoN7O5fT9ssq+j/IRbq0OOtD7Sagz0Xbzb5Z6M3T5cU1pi43QdBv6nvZ7wIuvi/iSq2/02wYridSp7B69EQ==}
     engines: {node: '>=8.6'}
@@ -4159,22 +4091,6 @@ packages:
   /pluralize/7.0.0:
     resolution: {integrity: sha512-ARhBOdzS3e41FbkW/XWrTEtukqqLoK5+Z/4UeDaLuSW+39JPeFgs4gCGqsrJHVZX0fUrx//4OF0K1CUGwlIFow==}
     engines: {node: '>=4'}
-    dev: true
-
-  /postgraphile-core/4.12.2_graphql@15.8.0+pg@8.8.0:
-    resolution: {integrity: sha512-+2OWlPVsMAVjYRMBSI/CT4GUB0mkSmPKGopKapfvhW40SCUBiPB/kqTylX2viRRnN8FuZtS3cRaTPiWr1K+DIg==}
-    engines: {node: '>=8.6'}
-    peerDependencies:
-      graphql: '>=0.9 <0.14 || ^14.0.2 || ^15.4.0'
-      pg: '>=6.1.0 <9'
-    dependencies:
-      graphile-build: 4.12.2_graphql@15.8.0
-      graphile-build-pg: 4.12.2_graphql@15.8.0+pg@8.8.0
-      graphql: 15.8.0
-      pg: 8.8.0
-      tslib: 2.4.0
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /postgraphile-core/4.12.3_graphql@15.8.0+pg@8.8.0:
