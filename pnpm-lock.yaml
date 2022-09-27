@@ -27,7 +27,7 @@ specifiers:
   node-fetch: 2.6.7
   p-retry: 4.6.2
   pg: 8.8.0
-  postgraphile: 4.12.9
+  postgraphile: 4.12.11
   postgraphile-core: 4.12.2
   prettier: 2.7.1
   prettier-plugin-organize-imports: 3.1.1
@@ -63,7 +63,7 @@ devDependencies:
   node-fetch: 2.6.7
   p-retry: 4.6.2
   pg: 8.8.0
-  postgraphile: 4.12.9
+  postgraphile: 4.12.11
   postgraphile-core: 4.12.2_graphql@15.8.0+pg@8.8.0
   prettier: 2.7.1
   prettier-plugin-organize-imports: 3.1.1_igyrqqmkb7dgjptxnntravt2kq
@@ -1182,7 +1182,7 @@ packages:
     dev: true
 
   /buffer-equal-constant-time/1.0.1:
-    resolution: {integrity: sha1-+OcRMvf/5uAaXJaXpMbz5I1cyBk=}
+    resolution: {integrity: sha512-zRpUiDwd/xk6ADqPMATG8vc9VPrkck7T07OIx0gnjmJAnHnTVXNQG3vfvWNuiZIkwu9KrKdA1iJKfsfTVxE6NA==}
     dev: true
 
   /buffer-writer/2.0.0:
@@ -1768,7 +1768,7 @@ packages:
     dev: true
 
   /ee-first/1.1.1:
-    resolution: {integrity: sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=}
+    resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: true
 
   /emittery/0.11.0:
@@ -2552,6 +2552,26 @@ packages:
       - supports-color
     dev: true
 
+  /graphile-build-pg/4.12.3_graphql@15.8.0+pg@8.8.0:
+    resolution: {integrity: sha512-Gnwwxm2NRuyxOx5xchU+Po9a6XagRJpEgoezzHmfBRHwFBY2zprCMYdLvllqRrPJBBWdYAjx7H1NxctBiYiIoQ==}
+    engines: {node: '>=8.6'}
+    peerDependencies:
+      pg: '>=6.1.0 <9'
+    dependencies:
+      '@graphile/lru': 4.11.0
+      chalk: 2.4.2
+      debug: 4.3.4
+      graphile-build: 4.12.3_graphql@15.8.0
+      jsonwebtoken: 8.5.1
+      lodash: 4.17.21
+      lru-cache: 4.1.5
+      pg: 8.8.0
+      pg-sql2: 4.12.3_pg@8.8.0
+    transitivePeerDependencies:
+      - graphql
+      - supports-color
+    dev: true
+
   /graphile-build/4.12.2_graphql@15.8.0:
     resolution: {integrity: sha512-UqomiSnWPj4pjO6Q6PzT1YeH96k7e0JzCBI3X8kkELG+PP2BOQCNE5e+xLJvohJmUr0YBTgflPQo7P1ZESPwww==}
     engines: {node: '>=8.6'}
@@ -2592,16 +2612,16 @@ packages:
       - supports-color
     dev: true
 
-  /graphile-utils/4.12.2_o4dj3brrdh3eygqsae7ipwkhqq:
-    resolution: {integrity: sha512-2UcTWWMFLFkKwbDLqlN0mF5sxLqz9y0p7I3zNOJpXtHVjrHyp7oQZsWComPsit/PWIrIgtDUagP+HPkypBRrqA==}
+  /graphile-utils/4.12.3_3ewg7ajbs66pjsbb3ypkakvjdy:
+    resolution: {integrity: sha512-Kls1TNZnPAZ3iLphTTagB+xM+EP+ry33o+4s1vEkl0JE1c0B8ztVTfs3fUl04vyQ2q1K24QTwLYrJ4LN8+Xbuw==}
     engines: {node: '>=8.6'}
     peerDependencies:
       graphile-build: ^4.5.0
       graphile-build-pg: ^4.5.0
     dependencies:
       debug: 4.3.4
-      graphile-build: 4.12.2_graphql@15.8.0
-      graphile-build-pg: 4.12.2_graphql@15.8.0+pg@8.8.0
+      graphile-build: 4.12.3_graphql@15.8.0
+      graphile-build-pg: 4.12.3_graphql@15.8.0+pg@8.8.0
       graphql: 15.8.0
       tslib: 2.4.0
     transitivePeerDependencies:
@@ -3426,7 +3446,7 @@ packages:
     dev: true
 
   /media-typer/0.3.0:
-    resolution: {integrity: sha1-hxDXrwqmJvj/+hzgAWhUUmMlV0g=}
+    resolution: {integrity: sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==}
     engines: {node: '>= 0.6'}
     dev: true
 
@@ -4040,6 +4060,21 @@ packages:
       - supports-color
     dev: true
 
+  /pg-sql2/4.12.3_pg@8.8.0:
+    resolution: {integrity: sha512-xPVNoN7O5fT9ssq+j/IRbq0OOtD7Sagz0Xbzb5Z6M3T5cU1pi43QdBv6nvZ7wIuvi/iSq2/02wYridSp7B69EQ==}
+    engines: {node: '>=8.6'}
+    peerDependencies:
+      pg: '>=6.1.0 <9'
+    dependencies:
+      '@graphile/lru': 4.11.0
+      '@types/pg': 8.6.5
+      debug: 4.3.4
+      pg: 8.8.0
+      tslib: 2.4.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /pg-types/2.2.0:
     resolution: {integrity: sha512-qTAAlrEsl8s4OiEQY69wDvcMIdQN6wdz5ojQiOy6YRMuynxenON0O5oCpJI6lshc6scgAY8qvJ2On/p+CXY0GA==}
     engines: {node: '>=4'}
@@ -4142,8 +4177,24 @@ packages:
       - supports-color
     dev: true
 
-  /postgraphile/4.12.9:
-    resolution: {integrity: sha512-4yxCleFqLH3o0eyM1ybMDCyDJvKNsYQ/d7VKtU8l62B12iNNL/xGipYYoYrLkEdEQdXlOwRxXxagRrvbZU1nIw==}
+  /postgraphile-core/4.12.3_graphql@15.8.0+pg@8.8.0:
+    resolution: {integrity: sha512-rr/UCIWQ0o0qXwynTPZbMhEzexdSUtcgmnktfAhr4V8StlexKIaYzg8oiW2ihI/DVWS9NkzD+eNF2EpcyqXAPA==}
+    engines: {node: '>=8.6'}
+    peerDependencies:
+      graphql: '>=0.9 <0.14 || ^14.0.2 || ^15.4.0'
+      pg: '>=6.1.0 <9'
+    dependencies:
+      graphile-build: 4.12.3_graphql@15.8.0
+      graphile-build-pg: 4.12.3_graphql@15.8.0+pg@8.8.0
+      graphql: 15.8.0
+      pg: 8.8.0
+      tslib: 2.4.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /postgraphile/4.12.11:
+    resolution: {integrity: sha512-rESMT7ZyQe2zeYT75/6/nbsOwnF5e20YBzZGu2EZqbNS6zcUNEvyClJuwSdpVP4Q9hnNvE2xc7khUyniEAucQw==}
     engines: {node: '>=8.6'}
     hasBin: true
     dependencies:
@@ -4157,9 +4208,9 @@ packages:
       commander: 2.20.3
       debug: 4.3.4
       finalhandler: 1.2.0
-      graphile-build: 4.12.2_graphql@15.8.0
-      graphile-build-pg: 4.12.2_graphql@15.8.0+pg@8.8.0
-      graphile-utils: 4.12.2_o4dj3brrdh3eygqsae7ipwkhqq
+      graphile-build: 4.12.3_graphql@15.8.0
+      graphile-build-pg: 4.12.3_graphql@15.8.0+pg@8.8.0
+      graphile-utils: 4.12.3_3ewg7ajbs66pjsbb3ypkakvjdy
       graphql: 15.8.0
       graphql-ws: 5.9.0_graphql@15.8.0
       http-errors: 1.8.1
@@ -4169,8 +4220,8 @@ packages:
       parseurl: 1.3.3
       pg: 8.8.0
       pg-connection-string: 2.5.0
-      pg-sql2: 4.12.1_pg@8.8.0
-      postgraphile-core: 4.12.2_graphql@15.8.0+pg@8.8.0
+      pg-sql2: 4.12.3_pg@8.8.0
+      postgraphile-core: 4.12.3_graphql@15.8.0+pg@8.8.0
       subscriptions-transport-ws: 0.9.19_graphql@15.8.0
       tslib: 2.4.0
       ws: 7.5.8
@@ -5181,7 +5232,7 @@ packages:
     dev: true
 
   /unpipe/1.0.0:
-    resolution: {integrity: sha1-sr9O6FFKrmFltIF4KdIbLvSZBOw=}
+    resolution: {integrity: sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==}
     engines: {node: '>= 0.8'}
     dev: true
 
