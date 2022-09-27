@@ -42,7 +42,7 @@
     "node-fetch": "2.6.7",
     "p-retry": "4.6.2",
     "pg": "8.8.0",
-    "postgraphile": "4.12.9",
+    "postgraphile": "4.12.11",
     "postgraphile-core": "4.12.2",
     "prettier": "2.7.1",
     "prettier-plugin-organize-imports": "3.1.1",
