@@ -1,11 +1,11 @@
+import assert from "assert";
 import { Build, Context, Plugin } from "graphile-build";
-import type { Attribute, Constraint, PgTable } from "./types";
 import {
   GraphQLFieldConfigMap,
   GraphQLObjectType,
   GraphQLScalarType,
 } from "graphql";
-import assert from "assert";
+import type { Attribute, Constraint, PgTable } from "./types";
 
 type Primitive = string | number | null;
 
@@ -83,6 +83,7 @@ function createUpsertField({
       GraphQLInputObjectType,
       GraphQLNonNull,
       GraphQLString,
+      GraphQLList,
     },
     inflection,
     newWithHooks,
@@ -177,7 +178,9 @@ function createUpsertField({
           ? {
               [inflection.tableFieldName(table)]: {
                 description: `The \`${tableTypeName}\` to be upserted by this mutation.`,
-                type: new GraphQLNonNull(gqlTableInput),
+                type: new GraphQLNonNull(
+                  new GraphQLList(new GraphQLNonNull(gqlTableInput))
+                ),
               },
             }
           : null),
@@ -257,8 +260,10 @@ function createUpsertField({
             const sqlColumns: { names: string[] }[] = [];
             const conflictOnlyColumns: { names: string[] }[] = [];
             const sqlValues: unknown[] = [];
-            const inputData: Record<string, unknown> =
+            const inputData: Record<string, unknown>[] =
               input[inflection.tableFieldName(table)];
+
+            console.log("inputData", inputData);
 
             // Find the unique constraints
             const uniqueConstraints = allUniqueConstraints.filter(
@@ -304,11 +309,16 @@ function createUpsertField({
               primaryKeyConstraint?.keyAttributes.map(({ name }) => name) ?? []
             );
 
+            console.log("inputData", inputData);
+
             // Pre-process our data inputs from the payload (what was manually passed in)
-            const inputDataKeys = new Set(Object.keys(inputData));
+            const inputDataKeys = new Set(Object.keys(inputData[0]));
+            console.log("inputDataKeys", inputDataKeys);
+
             const inputDataColumns = new Set(
               [...inputDataKeys].map((key) => fieldToAttributeMap[key].name)
             );
+            console.log("inputDataColumns", inputDataColumns);
 
             // Construct a super-set of fields passed up plus columns with default values
             // (as these can be set before the constraint kicks into place)
@@ -320,6 +330,8 @@ function createUpsertField({
                 )
                 .map(({ name }) => name),
             ]);
+
+            console.log("inputDataColumnsWithDefaults", inputDataColumns);
 
             /**
              * Depending on whether a where clause was passed, we want to determine which
@@ -361,44 +373,55 @@ function createUpsertField({
             const [constraintName] = matchingConstraint;
             const columnNamesSkippingUpdate = new Set<string>();
 
-            // Loop thru columns and "SQLify" them
-            attributes.forEach((attr) => {
-              // where clause should override unknown "input" for the matching column to be a true upsert
-              let hasWhereClauseValue = false;
-              let whereClauseValue: Primitive | undefined;
-              if (
-                where &&
-                hasOwnProperty(where, inflection.camelCase(attr.name))
-              ) {
-                whereClauseValue = where[inflection.camelCase(attr.name)];
-                hasWhereClauseValue = true;
-              }
+            inputData.forEach((singleInputData, index) => {
+              const rowValues: unknown[] = [];
 
-              if (omit(attr, "updateOnConflict")) {
-                columnNamesSkippingUpdate.add(attr.name);
-              }
-
-              // Do we have a value for the field in input?
-              const fieldName = inflection.column(attr);
-              if (hasOwnProperty(inputData, fieldName)) {
-                const val = inputData[fieldName];
-
-                // The user passed a where clause condition value that does not match the upsert input value for the same property
-                if (hasWhereClauseValue && whereClauseValue !== val) {
-                  throw new Error(
-                    `Value passed in the input for ${fieldName} does not match the where clause value.`
-                  );
+              // Loop thru columns and "SQLify" them
+              attributes.forEach((attr) => {
+                // where clause should override unknown "input" for the matching column to be a true upsert
+                let hasWhereClauseValue = false;
+                let whereClauseValue: Primitive | undefined;
+                if (
+                  where &&
+                  hasOwnProperty(where, inflection.camelCase(attr.name))
+                ) {
+                  whereClauseValue = where[inflection.camelCase(attr.name)];
+                  hasWhereClauseValue = true;
                 }
 
-                sqlColumns.push(sql.identifier(attr.name));
-                sqlValues.push(gql2pg(val, attr.type, attr.typeModifier));
-              } else if (hasWhereClauseValue) {
-                // If it was ommitted in the input, we should add it
-                sqlColumns.push(sql.identifier(attr.name));
-                sqlValues.push(
-                  gql2pg(whereClauseValue, attr.type, attr.typeModifier)
-                );
-              }
+                if (omit(attr, "updateOnConflict")) {
+                  columnNamesSkippingUpdate.add(attr.name);
+                }
+
+                // Do we have a value for the field in input?
+                const fieldName = inflection.column(attr);
+
+                if (hasOwnProperty(singleInputData, fieldName)) {
+                  const val = singleInputData[fieldName];
+                  console.log("val", val);
+
+                  // The user passed a where clause condition value that does not match the upsert input value for the same property
+                  if (hasWhereClauseValue && whereClauseValue !== val) {
+                    throw new Error(
+                      `Value passed in the input for ${fieldName} does not match the where clause value.`
+                    );
+                  }
+
+                  if (index === 0) {
+                    sqlColumns.push(sql.identifier(attr.name));
+                  }
+                  rowValues.push(gql2pg(val, attr.type, attr.typeModifier));
+                } else if (hasWhereClauseValue) {
+                  // If it was ommitted in the input, we should add it
+                  if (index === 0) {
+                    sqlColumns.push(sql.identifier(attr.name));
+                  }
+                  rowValues.push(
+                    gql2pg(whereClauseValue, attr.type, attr.typeModifier)
+                  );
+                }
+              });
+              sqlValues.push(rowValues);
             });
 
             // Construct a array in case we need to do an update on conflict
@@ -411,6 +434,8 @@ function createUpsertField({
                     col.names[0]
                   )} = excluded.${sql.identifier(col.names[0])}`
               );
+
+            console.log(sqlValues.map((val) => sql.join(val, ", ")).join(","));
 
             // SQL query for upsert mutations
             // see: http://www.postgresqltutorial.com/postgresql-upsert/
@@ -427,10 +452,15 @@ function createUpsertField({
                   ${
                     sqlColumns.length
                       ? sql.fragment`(${sql.join(sqlColumns, ", ")})
-                      values (${sql.join(sqlValues, ", ")})
+                      values 
+                        (${sql.join(sqlValues[0], ", ")}),
+                        (${sql.join(sqlValues[1], ", ")})
                       on conflict ${conflictAction}`
                       : sql.fragment`default values`
                   } returning *`;
+
+            console.log("mutationQuery", mutationQuery);
+
             const rows = await viaTemporaryTable(
               pgClient,
               sql.identifier(table.namespace.name, table.name),

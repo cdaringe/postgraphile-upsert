@@ -53,6 +53,7 @@
   },
   "scripts": {
     "build": "tsc",
+    "build:watch": "tsc --watch",
     "format": "prettier --write .",
     "test": "c8 -r=lcov -r=text-summary ava --timeout=2m",
     "semantic-release": "semantic-release",
