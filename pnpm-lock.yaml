@@ -4,7 +4,7 @@ specifiers:
   '@commitlint/cli': 17.1.2
   '@commitlint/config-conventional': 17.1.0
   '@types/bluebird': 3.5.37
-  '@types/dockerode': 3.3.11
+  '@types/dockerode': 3.3.12
   '@types/nanographql': 2.0.1
   '@types/node': 18.11.7
   '@types/node-fetch': 2.6.2
@@ -40,7 +40,7 @@ devDependencies:
   '@commitlint/cli': 17.1.2
   '@commitlint/config-conventional': 17.1.0
   '@types/bluebird': 3.5.37
-  '@types/dockerode': 3.3.11
+  '@types/dockerode': 3.3.12
   '@types/nanographql': 2.0.1
   '@types/node': 18.11.7
   '@types/node-fetch': 2.6.2
@@ -602,8 +602,8 @@ packages:
       '@types/ssh2': 0.5.52
     dev: true
 
-  /@types/dockerode/3.3.11:
-    resolution: {integrity: sha512-aokz8xlZoq+ShZ5UkDmVZFwOrzuxK2ufFxK8WcQ4PuCPlQmUWl7kyHAv6ahKI7furWAysLtQnO7xX0jNDJdQTw==}
+  /@types/dockerode/3.3.12:
+    resolution: {integrity: sha512-9dCtVq6Nr4XkkJmjyiDYOfZWVQ8MpJ35RZNawJYFLjd1VuaFLboDoIcyar23BkpMLeYzp6+vT8Vp3GHjhhlY+w==}
     dependencies:
       '@types/docker-modem': 3.0.2
       '@types/node': 18.11.7
