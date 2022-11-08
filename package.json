@@ -36,7 +36,7 @@
     "freeport": "1.0.5",
     "graphile-build": "4.12.3",
     "graphql": "16.6.0",
-    "husky": "8.0.1",
+    "husky": "8.0.2",
     "json-decycle": "2.0.1",
     "nanographql": "2.0.0",
     "node-fetch": "2.6.7",
