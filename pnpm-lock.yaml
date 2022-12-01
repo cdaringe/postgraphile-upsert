@@ -27,7 +27,7 @@ specifiers:
   node-fetch: 2.6.7
   p-retry: 4.6.2
   pg: 8.8.0
-  postgraphile: 4.12.11
+  postgraphile: 4.12.12
   postgraphile-core: 4.12.3
   prettier: 2.8.0
   prettier-plugin-organize-imports: 3.2.1
@@ -63,7 +63,7 @@ devDependencies:
   node-fetch: 2.6.7
   p-retry: 4.6.2
   pg: 8.8.0
-  postgraphile: 4.12.11
+  postgraphile: 4.12.12
   postgraphile-core: 4.12.3_graphql@16.6.0+pg@8.8.0
   prettier: 2.8.0
   prettier-plugin-organize-imports: 3.2.1_brpckf4sz23pco3jyty2eys3iq
@@ -4262,8 +4262,8 @@ packages:
       - supports-color
     dev: true
 
-  /postgraphile/4.12.11:
-    resolution: {integrity: sha512-rESMT7ZyQe2zeYT75/6/nbsOwnF5e20YBzZGu2EZqbNS6zcUNEvyClJuwSdpVP4Q9hnNvE2xc7khUyniEAucQw==}
+  /postgraphile/4.12.12:
+    resolution: {integrity: sha512-bHXmr7hvA82TaU0gfO/W/5hYdAsRsQMf3QtmIdPRb51LxYanlYwzJm/c0Ca8/amzt9jTKk62q/lv0TqYoCr7Bg==}
     engines: {node: '>=8.6'}
     hasBin: true
     dependencies:
