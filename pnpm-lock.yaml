@@ -22,7 +22,7 @@ specifiers:
   graphile-build: 4.12.3
   graphql: 16.6.0
   husky: 8.0.2
-  json-decycle: 2.0.1
+  json-decycle: 3.0.0
   nanographql: 2.0.0
   node-fetch: 2.6.7
   p-retry: 4.6.2
@@ -58,7 +58,7 @@ devDependencies:
   graphile-build: 4.12.3_graphql@16.6.0
   graphql: 16.6.0
   husky: 8.0.2
-  json-decycle: 2.0.1
+  json-decycle: 3.0.0
   nanographql: 2.0.0
   node-fetch: 2.6.7
   p-retry: 4.6.2
@@ -3177,8 +3177,8 @@ packages:
       argparse: 2.0.1
     dev: true
 
-  /json-decycle/2.0.1:
-    resolution: {integrity: sha512-AONW7uc5/PHtqfOvJOPY1yPPEbJL+ZKeWXclkukRYRoVeNnm4Kyf5+SCezza/TXsqEHCFVp3M/SuSl1fUPmo6w==}
+  /json-decycle/3.0.0:
+    resolution: {integrity: sha512-biPYneQmoSBHh1zYt5Bw4kKUM51e2biUe1FUq4E4/+RtxDhS53r7bZ1xUs4bdGV4PtWA68TaKqc9PNGkQ4v9sg==}
     engines: {node: '>= 16.13.2'}
     dev: true
 
