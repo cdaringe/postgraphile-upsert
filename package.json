@@ -31,7 +31,7 @@
     "bluebird": "3.7.2",
     "c8": "7.12.0",
     "dockerode": "3.3.4",
-    "eslint": "8.29.0",
+    "eslint": "8.30.0",
     "execa": "5.1.1",
     "freeport": "1.0.5",
     "graphile-build": "4.12.3",
