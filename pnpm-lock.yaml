@@ -8,7 +8,7 @@ specifiers:
   '@types/nanographql': 2.0.1
   '@types/node': 18.11.17
   '@types/node-fetch': 2.6.2
-  '@types/pg': 8.6.5
+  '@types/pg': 8.6.6
   '@types/wait-on': 5.3.1
   '@typescript-eslint/eslint-plugin': 5.47.0
   '@typescript-eslint/parser': 5.47.0
@@ -44,7 +44,7 @@ devDependencies:
   '@types/nanographql': 2.0.1
   '@types/node': 18.11.17
   '@types/node-fetch': 2.6.2
-  '@types/pg': 8.6.5
+  '@types/pg': 8.6.6
   '@types/wait-on': 5.3.1
   '@typescript-eslint/eslint-plugin': 5.47.0_ncmi6noazr3nzas7jxykisekym
   '@typescript-eslint/parser': 5.47.0_lzzuuodtsqwxnvqeq4g4likcqa
@@ -668,8 +668,8 @@ packages:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
     dev: true
 
-  /@types/pg/8.6.5:
-    resolution: {integrity: sha512-tOkGtAqRVkHa/PVZicq67zuujI4Oorfglsr2IbKofDwBSysnaqSx7W1mDqFqdkGE6Fbgh+PZAl0r/BWON/mozw==}
+  /@types/pg/8.6.6:
+    resolution: {integrity: sha512-O2xNmXebtwVekJDD+02udOncjVcMZQuTEQEMpKJ0ZRf5E7/9JJX3izhKUcUifBkyKpljyUM6BTgy2trmviKlpw==}
     dependencies:
       '@types/node': 18.11.17
       pg-protocol: 1.5.0
@@ -4136,7 +4136,7 @@ packages:
       pg: '>=6.1.0 <9'
     dependencies:
       '@graphile/lru': 4.11.0
-      '@types/pg': 8.6.5
+      '@types/pg': 8.6.6
       debug: 4.3.4
       pg: 8.8.0
       tslib: 2.4.0
@@ -4270,7 +4270,7 @@ packages:
       '@graphile/lru': 4.11.0
       '@types/json5': 0.0.30
       '@types/jsonwebtoken': 8.5.8
-      '@types/pg': 8.6.5
+      '@types/pg': 8.6.6
       '@types/ws': 7.4.7
       body-parser: 1.20.0
       chalk: 2.4.2
