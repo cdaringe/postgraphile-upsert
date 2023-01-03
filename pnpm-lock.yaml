@@ -21,7 +21,7 @@ specifiers:
   freeport: 1.0.5
   graphile-build: 4.12.3
   graphql: 16.6.0
-  husky: 8.0.2
+  husky: 8.0.3
   json-decycle: 3.0.0
   nanographql: 2.0.0
   node-fetch: 2.6.7
@@ -57,7 +57,7 @@ devDependencies:
   freeport: 1.0.5
   graphile-build: 4.12.3_graphql@16.6.0
   graphql: 16.6.0
-  husky: 8.0.2
+  husky: 8.0.3
   json-decycle: 3.0.0
   nanographql: 2.0.0
   node-fetch: 2.6.7
@@ -2831,8 +2831,8 @@ packages:
     engines: {node: '>=10.17.0'}
     dev: true
 
-  /husky/8.0.2:
-    resolution: {integrity: sha512-Tkv80jtvbnkK3mYWxPZePGFpQ/tT3HNSs/sasF9P2YfkMezDl3ON37YN6jUUI4eTg5LcyVynlb6r4eyvOmspvg==}
+  /husky/8.0.3:
+    resolution: {integrity: sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==}
     engines: {node: '>=14'}
     hasBin: true
     dev: true
