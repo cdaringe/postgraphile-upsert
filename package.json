@@ -16,8 +16,8 @@
   "author": "cdaringe <cdaringe@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@commitlint/cli": "17.4.1",
-    "@commitlint/config-conventional": "17.4.0",
+    "@commitlint/cli": "17.4.2",
+    "@commitlint/config-conventional": "17.4.2",
     "@types/bluebird": "3.5.38",
     "@types/dockerode": "3.3.14",
     "@types/nanographql": "2.0.1",
