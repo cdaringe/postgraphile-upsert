@@ -45,7 +45,7 @@
     "postgraphile": "4.12.12",
     "postgraphile-core": "4.12.3",
     "prettier": "2.8.2",
-    "prettier-plugin-organize-imports": "3.2.1",
+    "prettier-plugin-organize-imports": "3.2.2",
     "semantic-release": "19.0.5",
     "standard": "17.0.0",
     "ts-node": "10.9.1",
