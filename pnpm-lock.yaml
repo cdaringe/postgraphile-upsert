@@ -19,7 +19,7 @@ specifiers:
   eslint: 8.32.0
   execa: 5.1.1
   freeport: 1.0.5
-  graphile-build: 4.12.3
+  graphile-build: 4.13.0
   graphql: 16.6.0
   husky: 8.0.3
   json-decycle: 3.0.0
@@ -55,7 +55,7 @@ devDependencies:
   eslint: 8.32.0
   execa: 5.1.1
   freeport: 1.0.5
-  graphile-build: 4.12.3_graphql@16.6.0
+  graphile-build: 4.13.0_graphql@16.6.0
   graphql: 16.6.0
   husky: 8.0.3
   json-decycle: 3.0.0
@@ -2640,26 +2640,6 @@ packages:
       - supports-color
     dev: true
 
-  /graphile-build/4.12.3_graphql@16.6.0:
-    resolution: {integrity: sha512-xwNNNrieWm78DVkB29epKLBAMEd5U9nXY1tQQn2n5pMisbqYMtIQOnfZzLhwM6AsNEyAfaQYyV0fD6wCkyYQpA==}
-    engines: {node: '>=8.6'}
-    peerDependencies:
-      graphql: '>=0.9 <0.14 || ^14.0.2 || ^15.4.0'
-    dependencies:
-      '@graphile/lru': 4.11.0
-      chalk: 2.4.2
-      debug: 4.3.4
-      graphql: 16.6.0
-      graphql-parse-resolve-info: 4.12.3_graphql@16.6.0
-      iterall: 1.3.0
-      lodash: 4.17.21
-      lru-cache: 5.1.1
-      pluralize: 7.0.0
-      semver: 6.3.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
   /graphile-build/4.13.0_graphql@16.6.0:
     resolution: {integrity: sha512-KPBrHgRw5fury6l9WEQH6ys1UtnxrRrG+Ehnr68NvfNELp4T+QsekTSVFi5LWoJOaXvdYMqP2L8MFBRQP2vKsw==}
     engines: {node: '>=8.6'}
@@ -2704,19 +2684,6 @@ packages:
     dependencies:
       debug: 4.3.4
       graphql: 15.8.0
-      tslib: 2.4.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
-  /graphql-parse-resolve-info/4.12.3_graphql@16.6.0:
-    resolution: {integrity: sha512-Lxb+v+SCxzBZHKohK4xje3CBQ1iZ968DiKuFtmwzSaI45oP8FgPJjJv35TOzgv73QLijEdgH4NDZGwIvwJM7Kw==}
-    engines: {node: '>=8.6'}
-    peerDependencies:
-      graphql: '>=0.9 <0.14 || ^14.0.2 || ^15.4.0'
-    dependencies:
-      debug: 4.3.4
-      graphql: 16.6.0
       tslib: 2.4.0
     transitivePeerDependencies:
       - supports-color
