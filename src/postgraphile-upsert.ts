@@ -57,6 +57,7 @@ export const PgMutationUpsertPlugin: Plugin = (builder) => {
     return extend(fields, upsertFieldsByName);
   });
 };
+PgMutationUpsertPlugin.displayName = "upsert";
 
 const hasOwnProperty = (x: unknown, key: string) =>
   Object.prototype.hasOwnProperty.call(x, key);
