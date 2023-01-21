@@ -33,16 +33,14 @@
     "dockerode": "3.3.4",
     "eslint": "8.32.0",
     "execa": "5.1.1",
-    "freeport": "1.0.5",
-    "graphile-build": "4.12.3",
+    "graphile-build": "4.13.0",
     "graphql": "16.6.0",
     "husky": "8.0.3",
     "json-decycle": "3.0.0",
-    "nanographql": "2.0.0",
     "node-fetch": "2.6.8",
     "p-retry": "4.6.2",
     "pg": "8.8.0",
-    "postgraphile": "4.12.12",
+    "postgraphile": "4.13.0",
     "postgraphile-core": "4.13.0",
     "prettier": "2.8.3",
     "prettier-plugin-organize-imports": "3.2.2",
@@ -95,5 +93,8 @@
     "branches": [
       "main"
     ]
+  },
+  "dependencies": {
+    "build": "^0.1.4"
   }
 }
