@@ -1,12 +1,12 @@
-import { container, DbContext } from "./fixture/db";
 import { createPool } from "./fixture/client";
+import { container, DbContext } from "./fixture/db";
 import { createServer, Server } from "http";
 import { freeport } from "./fixture/freeport";
 import { PgMutationUpsertPlugin } from "../postgraphile-upsert";
 import { Pool } from "pg";
 import { postgraphile } from "postgraphile";
 import ava, { TestFn, ExecutionContext } from "ava";
-import nanographql = require("nanographql");
+import { nanographql } from "./fixture/nanographql";
 import pRetry from "p-retry";
 import fetch from "node-fetch";
 
@@ -103,7 +103,7 @@ const execGqlOp = (t: PluginExecutionContext, query: () => string) =>
       const text = await res.text();
       throw new Error(`op failed: ${res.statusText}\n\n${text}`);
     }
-    const json = await res.json();
+    const json = (await res.json()) as { errors: any; data: any };
     if (json.errors) throw new Error(JSON.stringify(json.errors));
     return json;
   });
@@ -122,24 +122,24 @@ const fetchType = async (t: PluginExecutionContext, name: string) => {
 };
 
 const fetchMutationTypes = async (t: PluginExecutionContext) => {
-  const query = nanographql`
+  const query = nanographql(`
     query {
       __type(name: "Mutation") {
         name
         fields {
           name
-          args { 
+          args {
             name
           }
         }
       }
     }
-  `;
+  `);
   return execGqlOp(t, query);
 };
 
 const fetchAllBikes = async (t: PluginExecutionContext) => {
-  const query = nanographql`
+  const query = nanographql(`
     query {
       allBikes {
         edges {
@@ -151,12 +151,12 @@ const fetchAllBikes = async (t: PluginExecutionContext) => {
         }
       }
     }
-  `;
+  `);
   return execGqlOp(t, query);
 };
 
 const fetchAllRoles = async (t: PluginExecutionContext) => {
-  const query = nanographql`
+  const query = nanographql(`
   query {
     allRoles(orderBy: RANK_ASC) {
       edges {
@@ -169,12 +169,12 @@ const fetchAllRoles = async (t: PluginExecutionContext) => {
         }
       }
     }
-  }`;
+  }`);
   return execGqlOp(t, query);
 };
 
 const fetchAllCars = async (t: PluginExecutionContext) => {
-  const query = nanographql`
+  const query = nanographql(`
   query {
     allCars {
       edges {
@@ -186,7 +186,7 @@ const fetchAllCars = async (t: PluginExecutionContext) => {
         }
       }
     }
-  }`;
+  }`);
   return execGqlOp(t, query);
 };
 

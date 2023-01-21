@@ -19,12 +19,10 @@ specifiers:
   dockerode: 3.3.4
   eslint: 8.32.0
   execa: 5.1.1
-  freeport: 1.0.5
   graphile-build: 4.13.0
   graphql: 16.6.0
   husky: 8.0.3
   json-decycle: 3.0.0
-  nanographql: 2.0.0
   node-fetch: 2.6.8
   p-retry: 4.6.2
   pg: 8.8.0
@@ -58,12 +56,10 @@ devDependencies:
   dockerode: 3.3.4
   eslint: 8.32.0
   execa: 5.1.1
-  freeport: 1.0.5
   graphile-build: 4.13.0_graphql@16.6.0
   graphql: 16.6.0
   husky: 8.0.3
   json-decycle: 3.0.0
-  nanographql: 2.0.0
   node-fetch: 2.6.8
   p-retry: 4.6.2
   pg: 8.8.0
@@ -2454,10 +2450,6 @@ packages:
       mime-types: 2.1.35
     dev: true
 
-  /freeport/1.0.5:
-    resolution: {integrity: sha512-1+iRfba5tXzQAF83Tvvw5ZuhqDzyACfM+v13SZkdq8xKdaj/WR0Bke4sw9HsO1nU143+Hn0JxIleHEct+xbz9A==}
-    dev: true
-
   /from2/2.3.0:
     resolution: {integrity: sha512-OMcX/4IC/uqEPVgGeyfN22LJk6AZrMkRZHxcHBMBvHScDGgwTm2GT2Wkgtocyd3JfZffjj2kYUDXXII0Fk9W0g==}
     dependencies:
@@ -3750,10 +3742,6 @@ packages:
     resolution: {integrity: sha512-UdAqHyFngu7TfQKsCBgAA6pWDkT8MAO7d0jyOecVhN5354xbLqdn8mV9Tat9gepAupm0bt2DbeaSC8vS52MuFA==}
     dev: true
     optional: true
-
-  /nanographql/2.0.0:
-    resolution: {integrity: sha512-Ze4qVPPG9yGmPzaM0LTKGGEkYQ9BQvvKwOkrrw4iqHVTByuVE02l50XZV+bCfABHLLs+Fm2+vJ+H9eXxFKtavQ==}
-    dev: true
 
   /natural-compare-lite/1.4.0:
     resolution: {integrity: sha512-Tj+HTDSJJKaZnfiuw+iaF9skdPpTo2GtEly5JHnWV/hfv2Qj/9RKsGISQtLh2ox3l5EAGw487hnBee0sIJ6v2g==}
