@@ -28,7 +28,7 @@ specifiers:
   pg: 8.9.0
   postgraphile: 4.13.0
   postgraphile-core: 4.13.0
-  prettier: 2.8.3
+  prettier: 2.8.4
   prettier-plugin-organize-imports: 3.2.2
   semantic-release: 20.1.0
   standard: 17.0.0
@@ -65,8 +65,8 @@ devDependencies:
   pg: 8.9.0
   postgraphile: 4.13.0
   postgraphile-core: 4.13.0_graphql@16.6.0+pg@8.9.0
-  prettier: 2.8.3
-  prettier-plugin-organize-imports: 3.2.2_ioxdq35luteszuxmt2jhnqjeca
+  prettier: 2.8.4
+  prettier-plugin-organize-imports: 3.2.2_silln3pw57har7jydmecgzoypa
   semantic-release: 20.1.0
   standard: 17.0.0_eygauoactempwaq5usy4yjhpgu
   ts-node: 10.9.1_4bewfcp2iebiwuold25d6rgcsy
@@ -4461,7 +4461,7 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
-  /prettier-plugin-organize-imports/3.2.2_ioxdq35luteszuxmt2jhnqjeca:
+  /prettier-plugin-organize-imports/3.2.2_silln3pw57har7jydmecgzoypa:
     resolution: {integrity: sha512-e97lE6odGSiHonHJMTYC0q0iLXQyw0u5z/PJpvP/3vRy6/Zi9kLBwFAbEGjDzIowpjQv8b+J04PDamoUSQbzGA==}
     peerDependencies:
       '@volar/vue-language-plugin-pug': ^1.0.4
@@ -4474,12 +4474,12 @@ packages:
       '@volar/vue-typescript':
         optional: true
     dependencies:
-      prettier: 2.8.3
+      prettier: 2.8.4
       typescript: 4.9.5
     dev: true
 
-  /prettier/2.8.3:
-    resolution: {integrity: sha512-tJ/oJ4amDihPoufT5sM0Z1SKEuKay8LfVAMlbbhnnkvt6BUserZylqo2PN+p9KeljLr0OHa2rXHU1T8reeoTrw==}
+  /prettier/2.8.4:
+    resolution: {integrity: sha512-vIS4Rlc2FNh0BySk3Wkd6xmwxB0FpOndW5fisM5H8hsZSxU2VWVB5CWIkIjWvrHjIhxk2g3bfMKM87zNTrZddw==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true
