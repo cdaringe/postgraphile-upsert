@@ -94,6 +94,6 @@
     ]
   },
   "dependencies": {
-    "graphile-build": "^4.13"
+    "graphile-build": "4"
   }
 }
