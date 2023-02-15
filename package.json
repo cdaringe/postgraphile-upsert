@@ -33,7 +33,6 @@
     "dockerode": "3.3.4",
     "eslint": "8.34.0",
     "execa": "5.1.1",
-    "graphile-build": "4.13.0",
     "graphql": "16.6.0",
     "husky": "8.0.3",
     "json-decycle": "3.0.0",
@@ -95,6 +94,6 @@
     ]
   },
   "dependencies": {
-    "build": "^0.1.4"
+    "graphile-build": "4"
   }
 }
