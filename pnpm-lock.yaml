@@ -14,7 +14,7 @@ specifiers:
   '@typescript-eslint/parser': 5.52.0
   ava: 5.2.0
   bluebird: 3.7.2
-  c8: 7.12.0
+  c8: 7.13.0
   dockerode: 3.3.4
   eslint: 8.34.0
   execa: 5.1.1
@@ -51,7 +51,7 @@ devDependencies:
   '@typescript-eslint/parser': 5.52.0_7kw3g6rralp5ps6mg3uyzz6azm
   ava: 5.2.0
   bluebird: 3.7.2
-  c8: 7.12.0
+  c8: 7.13.0
   dockerode: 3.3.4
   eslint: 8.34.0
   execa: 5.1.1
@@ -1212,8 +1212,8 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
-  /c8/7.12.0:
-    resolution: {integrity: sha512-CtgQrHOkyxr5koX1wEUmN/5cfDa2ckbHRA4Gy5LAL0zaCFtVWJS5++n+w4/sr2GWGerBxgTjpKeDclk/Qk6W/A==}
+  /c8/7.13.0:
+    resolution: {integrity: sha512-/NL4hQTv1gBL6J6ei80zu3IiTrmePDKXKXOTLpHvcIWZTVYQlDhVWjjWvkhICylE8EwwnMVzDZugCvdx0/DIIA==}
     engines: {node: '>=10.12.0'}
     hasBin: true
     dependencies:
