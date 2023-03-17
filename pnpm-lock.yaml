@@ -29,7 +29,7 @@ specifiers:
   postgraphile-core: 4.13.0
   prettier: 2.8.4
   prettier-plugin-organize-imports: 3.2.2
-  semantic-release: 20.1.1
+  semantic-release: 20.1.3
   standard: 17.0.0
   ts-node: 10.9.1
   typescript: 5.0.2
@@ -65,7 +65,7 @@ devDependencies:
   postgraphile-core: 4.13.0_graphql@16.6.0+pg@8.10.0
   prettier: 2.8.4
   prettier-plugin-organize-imports: 3.2.2_za2cb7z32ksq5gw6txs6br4sn4
-  semantic-release: 20.1.1
+  semantic-release: 20.1.3
   standard: 17.0.0_xfvdqyopd6lx2ukydhbamzgsxm
   ts-node: 10.9.1_sxidjv3cojnrggmso45tj7hldi
   typescript: 5.0.2
@@ -495,7 +495,7 @@ packages:
       '@octokit/openapi-types': 11.2.0
     dev: true
 
-  /@semantic-release/commit-analyzer/9.0.2_semantic-release@20.1.1:
+  /@semantic-release/commit-analyzer/9.0.2_semantic-release@20.1.3:
     resolution: {integrity: sha512-E+dr6L+xIHZkX4zNMe6Rnwg4YQrWNXK+rNsvwOPpdFppvZO1olE2fIgWhv89TkQErygevbjsZFSIxp+u6w2e5g==}
     engines: {node: '>=14.17'}
     peerDependencies:
@@ -508,7 +508,7 @@ packages:
       import-from: 4.0.0
       lodash: 4.17.21
       micromatch: 4.0.5
-      semantic-release: 20.1.1
+      semantic-release: 20.1.3
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -522,7 +522,7 @@ packages:
     engines: {node: '>=14.17'}
     dev: true
 
-  /@semantic-release/github/8.0.4_semantic-release@20.1.1:
+  /@semantic-release/github/8.0.4_semantic-release@20.1.3:
     resolution: {integrity: sha512-But4e8oqqP3anZI5tjzZssZc2J6eoUdeeE0s7LVKKwyiAXJiQDWNNvtPOpgG2DsIz4+Exuse7cEQgjGMxwtLmg==}
     engines: {node: '>=14.17'}
     peerDependencies:
@@ -543,14 +543,14 @@ packages:
       mime: 3.0.0
       p-filter: 2.1.0
       p-retry: 4.6.2
-      semantic-release: 20.1.1
+      semantic-release: 20.1.3
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
       - supports-color
     dev: true
 
-  /@semantic-release/npm/9.0.1_semantic-release@20.1.1:
+  /@semantic-release/npm/9.0.1_semantic-release@20.1.3:
     resolution: {integrity: sha512-I5nVZklxBzfMFwemhRNbSrkiN/dsH3c7K9+KSk6jUnq0rdLFUuJt7EBsysq4Ir3moajQgFkfEryEHPqiKJj20g==}
     engines: {node: '>=16 || ^14.17'}
     peerDependencies:
@@ -567,12 +567,12 @@ packages:
       rc: 1.2.8
       read-pkg: 5.2.0
       registry-auth-token: 4.2.1
-      semantic-release: 20.1.1
+      semantic-release: 20.1.3
       semver: 7.3.8
       tempy: 1.0.1
     dev: true
 
-  /@semantic-release/release-notes-generator/10.0.3_semantic-release@20.1.1:
+  /@semantic-release/release-notes-generator/10.0.3_semantic-release@20.1.3:
     resolution: {integrity: sha512-k4x4VhIKneOWoBGHkx0qZogNjCldLPRiAjnIpMnlUh6PtaWXp/T+C9U7/TaNDDtgDa5HMbHl4WlREdxHio6/3w==}
     engines: {node: '>=14.17'}
     peerDependencies:
@@ -588,7 +588,7 @@ packages:
       into-stream: 6.0.0
       lodash: 4.17.21
       read-pkg-up: 7.0.1
-      semantic-release: 20.1.1
+      semantic-release: 20.1.3
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -4659,16 +4659,16 @@ packages:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
     dev: true
 
-  /semantic-release/20.1.1:
-    resolution: {integrity: sha512-jXDr8y7ozo42N4+G9m/P5Qyx5oQO4aOS66a+Up8XECzEOFIpEoo3ngnr4R5lSix/sVJW69/fgNkOUZhsGFiQ5g==}
+  /semantic-release/20.1.3:
+    resolution: {integrity: sha512-sMIK9IaOdLP9hxzTxdTVHxINsazlDgv2gjZ1yeyRZXpIT3xAnuQUDEez8k+AC+lFUtGnfzA2Ct3V5lDyiMestw==}
     engines: {node: '>=18'}
     hasBin: true
     dependencies:
-      '@semantic-release/commit-analyzer': 9.0.2_semantic-release@20.1.1
+      '@semantic-release/commit-analyzer': 9.0.2_semantic-release@20.1.3
       '@semantic-release/error': 3.0.0
-      '@semantic-release/github': 8.0.4_semantic-release@20.1.1
-      '@semantic-release/npm': 9.0.1_semantic-release@20.1.1
-      '@semantic-release/release-notes-generator': 10.0.3_semantic-release@20.1.1
+      '@semantic-release/github': 8.0.4_semantic-release@20.1.3
+      '@semantic-release/npm': 9.0.1_semantic-release@20.1.3
+      '@semantic-release/release-notes-generator': 10.0.3_semantic-release@20.1.3
       aggregate-error: 4.0.1
       cosmiconfig: 8.0.0
       debug: 4.3.4
