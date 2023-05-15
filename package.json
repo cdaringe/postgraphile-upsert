@@ -38,7 +38,7 @@
     "json-decycle": "3.0.0",
     "node-fetch": "2.6.11",
     "p-retry": "4.6.2",
-    "pg": "8.10.0",
+    "pg": "8.11.0",
     "postgraphile": "4.13.0",
     "postgraphile-core": "4.13.0",
     "prettier": "2.8.8",
