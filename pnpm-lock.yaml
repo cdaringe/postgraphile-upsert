@@ -25,8 +25,8 @@ devDependencies:
     specifier: 18.16.10
     version: 18.16.10
   '@types/node-fetch':
-    specifier: 2.6.3
-    version: 2.6.3
+    specifier: 2.6.4
+    version: 2.6.4
   '@types/pg':
     specifier: 8.6.6
     version: 8.6.6
@@ -713,8 +713,8 @@ packages:
     resolution: {integrity: sha512-1WqTOVub3K/Hmym7bJnZP1jz5BT8JkINUv3sU+1A5IQY7OJZN8r+yfeczSbMD0MJlvDOLpcS81ykp94sHGdJhg==}
     dev: true
 
-  /@types/node-fetch@2.6.3:
-    resolution: {integrity: sha512-ETTL1mOEdq/sxUtgtOhKjyB2Irra4cjxksvcMUR5Zr4n+PxVhsCD9WS46oPbHL3et9Zde7CNRr+WUNlcHvsX+w==}
+  /@types/node-fetch@2.6.4:
+    resolution: {integrity: sha512-1ZX9fcN4Rvkvgv4E6PAY5WXUFWFcRWxZa3EW83UjycOB9ljJCedb2CupIP4RZMEwF/M3eTcCihbBRgwtGbg5Rg==}
     dependencies:
       '@types/node': 18.16.10
       form-data: 3.0.1
