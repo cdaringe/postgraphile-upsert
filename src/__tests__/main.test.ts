@@ -84,7 +84,7 @@ test.beforeEach(async (t) => {
   await t.context.client.query(`
     create table just_unique_constraints (
       name text,
-      unique (text)
+      unique (name)
     )
   `);
   await initializePostgraphile(t);
