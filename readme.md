@@ -79,6 +79,10 @@ mutation {
 
 - Add `@omit updateOnConflict` to column comments to prevent them from being modified on _existing_ rows in an upsert mutation.
 
+## Contributing
+
+See [`CONTRIBUTING.md`](./.github/CONTRIBUTING.md).
+
 ## Credits
 
 - This is a typescript-ified knock off of [the original upsert plugin](https://github.com/einarjegorov/graphile-upsert-plugin/blob/master/index.js)
