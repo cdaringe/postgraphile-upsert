@@ -27,14 +27,15 @@ export const PgMutationUpsertPlugin: Plugin = (builder) => {
     ).filter((con) => con.type === "u" || con.type === "p");
     const upsertFieldsByName = (pgIntrospectionResultsByKind.class as PgTable[])
       .filter(
-        (table) =>
-          !!table.namespace &&
-          !!table.primaryKeyConstraint &&
-          !omit(table, "upsert") &&
-          table.isSelectable &&
-          table.isInsertable &&
-          table.isUpdatable
-      )
+        (table) => {
+          const hasUniqueConstraint = allUniqueConstraints.some((c) => c.classId === table.id);
+          return !!table.namespace &&
+            (!!table.primaryKeyConstraint || hasUniqueConstraint) &&
+            !omit(table, "upsert") &&
+            table.isSelectable &&
+            table.isInsertable &&
+            table.isUpdatable
+      })
       .reduce<GraphQLFieldConfigMap<unknown, unknown>>((fnsByName, table) => {
         const gqlTable = pgGetGqlTypeByTypeIdAndModifier(table.type.id, null);
         if (!gqlTable) return fnsByName;

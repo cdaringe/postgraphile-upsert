@@ -81,6 +81,12 @@ test.beforeEach(async (t) => {
         name text
       )
   `);
+  await t.context.client.query(`
+    create table just_unique_constraints (
+      name text,
+      unique (name)
+    )
+  `);
   await initializePostgraphile(t);
 });
 
@@ -221,7 +227,7 @@ const create = async (
   return execGqlOp(t, nanographql(mutation));
 };
 
-test("ignores tables without primary keys", async (t) => {
+test("ignores tables without primary keys or unique constraints", async (t) => {
   await create(t);
   const res = await fetchMutationTypes(t);
   const upsertMutations = new Set(
@@ -229,9 +235,10 @@ test("ignores tables without primary keys", async (t) => {
       .map(({ name }) => name)
       .filter((name) => name.startsWith("upsert"))
   );
-  t.assert(upsertMutations.size === 2);
+  t.assert(upsertMutations.size === 3);
   t.assert(upsertMutations.has("upsertBike"));
   t.assert(upsertMutations.has("upsertRole"));
+  t.assert(upsertMutations.has("upsertJustUniqueConstraint"));
 });
 
 test("upsert crud - match primary key constraint", async (t) => {
