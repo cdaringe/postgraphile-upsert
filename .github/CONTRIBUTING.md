@@ -9,6 +9,7 @@ To bootstrap development, please
 - fork & clone this repo
 - install node to match the `.nvmrc`
 - do great work
+- ensure Docker is running with socket at `/var/run/docker.sock`
 - `pnpm test`, and add tests as needed
 - commit your work using [conventional commits](https://www.conventionalcommits.org/). this allows for automated releases when your work is merged.
 
