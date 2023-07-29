@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   graphile-build:
     specifier: '4'
@@ -16,8 +20,8 @@ devDependencies:
     specifier: 3.5.38
     version: 3.5.38
   '@types/dockerode':
-    specifier: 3.3.18
-    version: 3.3.18
+    specifier: 3.3.19
+    version: 3.3.19
   '@types/nanographql':
     specifier: 2.0.1
     version: 2.0.1
@@ -676,8 +680,8 @@ packages:
       '@types/ssh2': 0.5.52
     dev: true
 
-  /@types/dockerode@3.3.18:
-    resolution: {integrity: sha512-4EcP136jNMBZQ4zTHlI1VP2RpIQ2uJvRpjta3W2Cc7Ti7rk2r3TgVKjxR0Tb3NrT9ObXvl7Tv5nxra6BHEpkWg==}
+  /@types/dockerode@3.3.19:
+    resolution: {integrity: sha512-7CC5yIpQi+bHXwDK43b/deYXteP3Lem9gdocVVHJPSRJJLMfbiOchQV3rDmAPkMw+n3GIVj7m1six3JW+VcwwA==}
     dependencies:
       '@types/docker-modem': 3.0.2
       '@types/node': 18.16.16
@@ -1267,6 +1271,7 @@ packages:
   /buildcheck@0.0.3:
     resolution: {integrity: sha512-pziaA+p/wdVImfcbsZLNF32EiWyujlQLwolMqUQE8xpKNOH7KmZQaY8sXN7DGOEzPAElo9QTaeNRfGnf3iOJbA==}
     engines: {node: '>=10.0.0'}
+    requiresBuild: true
     dev: true
     optional: true
 
@@ -3665,6 +3670,7 @@ packages:
 
   /nan@2.16.0:
     resolution: {integrity: sha512-UdAqHyFngu7TfQKsCBgAA6pWDkT8MAO7d0jyOecVhN5354xbLqdn8mV9Tat9gepAupm0bt2DbeaSC8vS52MuFA==}
+    requiresBuild: true
     dev: true
     optional: true
 
