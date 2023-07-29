@@ -235,7 +235,7 @@ test("ignores tables without primary keys or unique constraints", async (t) => {
       .map(({ name }) => name)
       .filter((name) => name.startsWith("upsert"))
   );
-  t.assert(upsertMutations.size === 2);
+  t.assert(upsertMutations.size === 3);
   t.assert(upsertMutations.has("upsertBike"));
   t.assert(upsertMutations.has("upsertRole"));
   t.assert(upsertMutations.has("upsertJustUniqueConstraint"));
