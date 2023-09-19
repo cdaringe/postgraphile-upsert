@@ -33,7 +33,7 @@
     "dockerode": "3.3.5",
     "eslint": "8.41.0",
     "execa": "5.1.1",
-    "graphql": "16.6.0",
+    "graphql": "16.8.1",
     "husky": "8.0.3",
     "json-decycle": "3.0.0",
     "node-fetch": "2.6.11",
