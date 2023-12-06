@@ -26,7 +26,7 @@ See [here](https://www.graphile.org/postgraphile/extending/#loading-additional-p
 ```ts
 import express from "express";
 import { postgraphile } from "postgraphile";
-import PgMutationUpsertPlugin from "postgraphile-upsert-plugin";
+import { PgMutationUpsertPlugin } from "postgraphile-upsert-plugin";
 
 const app = express();
 
