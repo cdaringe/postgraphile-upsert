@@ -23,8 +23,8 @@ devDependencies:
     specifier: 3.3.23
     version: 3.3.23
   '@types/nanographql':
-    specifier: 2.0.1
-    version: 2.0.1
+    specifier: 2.0.3
+    version: 2.0.3
   '@types/node':
     specifier: 18.16.16
     version: 18.16.16
@@ -713,8 +713,8 @@ packages:
     resolution: {integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==}
     dev: true
 
-  /@types/nanographql@2.0.1:
-    resolution: {integrity: sha512-1WqTOVub3K/Hmym7bJnZP1jz5BT8JkINUv3sU+1A5IQY7OJZN8r+yfeczSbMD0MJlvDOLpcS81ykp94sHGdJhg==}
+  /@types/nanographql@2.0.3:
+    resolution: {integrity: sha512-xgAuRcbrQr/nOM7bRh85AN7xKuHxyAMo60zAbQl8OTgJLq9bWsEQsIBKHwNSYTNiSR+QVnKtHAFp2013iE5hIw==}
     dev: true
 
   /@types/node-fetch@2.6.4:
