@@ -23,13 +23,13 @@ jobs:
       - name: setup-node
         uses: actions/setup-node@v3
         with:
-          node-version: 18.13.0
+          node-version: 18.16.0
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          npm install -g pnpm@7
+          npm install -g pnpm@8
           pnpm install
           pnpm build
           pnpm semantic-release

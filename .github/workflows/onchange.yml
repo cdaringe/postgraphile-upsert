@@ -17,9 +17,9 @@ jobs:
       # - uses: wagoid/commitlint-github-action@v5
       - uses: actions/setup-node@v3
         with:
-          node-version: 18.13.0
+          node-version: 18.16.0
       - name: Install pnpm
-        run: npm install -g pnpm@7
+        run: npm install -g pnpm@8
       - name: checks
         run: |
           pnpm install
