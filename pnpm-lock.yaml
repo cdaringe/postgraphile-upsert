@@ -35,8 +35,8 @@ devDependencies:
     specifier: 8.10.1
     version: 8.10.1
   '@types/wait-on':
-    specifier: 5.3.1
-    version: 5.3.1
+    specifier: 5.3.4
+    version: 5.3.4
   '@typescript-eslint/eslint-plugin':
     specifier: 5.59.7
     version: 5.59.7(@typescript-eslint/parser@5.59.7)(eslint@8.41.0)(typescript@5.0.4)
@@ -761,8 +761,8 @@ packages:
       '@types/ssh2-streams': 0.1.9
     dev: true
 
-  /@types/wait-on@5.3.1:
-    resolution: {integrity: sha512-2FFOKCF/YydrMUaqg+fkk49qf0e5rDgwt6aQsMzFQzbS419h2gNOXyiwp/o2yYy27bi/C1z+HgfncryjGzlvgQ==}
+  /@types/wait-on@5.3.4:
+    resolution: {integrity: sha512-EBsPjFMrFlMbbUFf9D1Fp+PAB2TwmUn7a3YtHyD9RLuTIk1jDd8SxXVAoez2Ciy+8Jsceo2MYEYZzJ/DvorOKw==}
     dependencies:
       '@types/node': 18.16.16
     dev: true
