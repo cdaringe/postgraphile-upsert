@@ -46,7 +46,7 @@
     "semantic-release": "21.1.2",
     "standard": "17.0.0",
     "ts-node": "10.9.2",
-    "typescript": "5.0.4"
+    "typescript": "5.3.3"
   },
   "scripts": {
     "build": "tsc",
