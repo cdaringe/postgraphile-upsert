@@ -22,7 +22,7 @@
     "@types/dockerode": "3.3.23",
     "@types/nanographql": "2.0.3",
     "@types/node": "20.11.4",
-    "@types/node-fetch": "2.6.10",
+    "@types/node-fetch": "2.6.11",
     "@types/pg": "8.10.9",
     "@types/wait-on": "5.3.4",
     "@typescript-eslint/eslint-plugin": "6.19.0",
