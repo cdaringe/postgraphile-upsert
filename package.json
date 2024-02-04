@@ -41,7 +41,7 @@
     "pg": "8.11.3",
     "postgraphile": "4.13.0",
     "postgraphile-core": "4.13.0",
-    "prettier": "3.2.4",
+    "prettier": "3.2.5",
     "prettier-plugin-organize-imports": "3.2.4",
     "semantic-release": "21.1.2",
     "standard": "17.0.0",
