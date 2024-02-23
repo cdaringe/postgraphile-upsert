@@ -20,8 +20,8 @@ devDependencies:
     specifier: 3.5.42
     version: 3.5.42
   '@types/dockerode':
-    specifier: 3.3.23
-    version: 3.3.23
+    specifier: 3.3.24
+    version: 3.3.24
   '@types/nanographql':
     specifier: 2.0.3
     version: 2.0.3
@@ -673,8 +673,8 @@ packages:
       '@types/ssh2': 0.5.52
     dev: true
 
-  /@types/dockerode@3.3.23:
-    resolution: {integrity: sha512-Lz5J+NFgZS4cEVhquwjIGH4oQwlVn2h7LXD3boitujBnzOE5o7s9H8hchEjoDK2SlRsJTogdKnQeiJgPPKLIEw==}
+  /@types/dockerode@3.3.24:
+    resolution: {integrity: sha512-679y69OYusf7Fr2HtdjXPUF6hnHxSA9K4EsuagsMuPno/XpJHjXxCOy2I5YL8POnWbzjsQAi0pyKIYM9HSpQog==}
     dependencies:
       '@types/docker-modem': 3.0.2
       '@types/node': 20.11.20
