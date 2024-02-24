@@ -32,8 +32,8 @@ devDependencies:
     specifier: 2.6.11
     version: 2.6.11
   '@types/pg':
-    specifier: 8.11.0
-    version: 8.11.0
+    specifier: 8.11.1
+    version: 8.11.1
   '@types/wait-on':
     specifier: 5.3.4
     version: 5.3.4
@@ -727,8 +727,8 @@ packages:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
     dev: true
 
-  /@types/pg@8.11.0:
-    resolution: {integrity: sha512-sDAlRiBNthGjNFfvt0k6mtotoVYVQ63pA8R4EMWka7crawSR60waVYR0HAgmPRs/e2YaeJTD/43OoZ3PFw80pw==}
+  /@types/pg@8.11.1:
+    resolution: {integrity: sha512-tUMU6HRvsosqH0qov7YH0Kj6EnziKoqmHUcREBPlDEQLWT+TxDUBT1MmQ53byHXs171xn3YFPIPwVTkVb16mVg==}
     dependencies:
       '@types/node': 20.11.20
       pg-protocol: 1.6.0
@@ -4289,7 +4289,7 @@ packages:
       pg: '>=6.1.0 <9'
     dependencies:
       '@graphile/lru': 4.11.0
-      '@types/pg': 8.11.0
+      '@types/pg': 8.11.1
       debug: 4.3.4
       pg: 8.11.3
       tslib: 2.4.0
@@ -4437,7 +4437,7 @@ packages:
       '@graphile/lru': 4.11.0
       '@types/json5': 0.0.30
       '@types/jsonwebtoken': 9.0.1
-      '@types/pg': 8.11.0
+      '@types/pg': 8.11.1
       '@types/ws': 7.4.7
       body-parser: 1.20.0
       chalk: 2.4.2
