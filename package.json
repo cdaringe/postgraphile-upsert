@@ -19,7 +19,7 @@
     "@commitlint/cli": "19.2.1",
     "@commitlint/config-conventional": "19.1.0",
     "@types/bluebird": "3.5.42",
-    "@types/dockerode": "3.3.27",
+    "@types/dockerode": "3.3.28",
     "@types/nanographql": "2.0.3",
     "@types/node": "20.12.4",
     "@types/node-fetch": "2.6.11",
