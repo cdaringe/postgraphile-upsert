@@ -22,8 +22,8 @@ importers:
         specifier: 3.5.42
         version: 3.5.42
       '@types/dockerode':
-        specifier: 3.3.28
-        version: 3.3.28
+        specifier: 3.3.29
+        version: 3.3.29
       '@types/nanographql':
         specifier: 2.0.3
         version: 2.0.3
@@ -399,8 +399,8 @@ packages:
   '@types/docker-modem@3.0.2':
     resolution: {integrity: sha512-qC7prjoEYR2QEe6SmCVfB1x3rfcQtUr1n4x89+3e0wSTMQ/KYCyf+/RAA9n2tllkkNc6//JMUZePdFRiGIWfaQ==}
 
-  '@types/dockerode@3.3.28':
-    resolution: {integrity: sha512-RjY96chW88t2QvSebCsec+mQYo3/nyOr+/tVcE+0ynlOg2m/i9wPE52DhptzF75QDlhv2uDYVPqKfHKeGTn6Fg==}
+  '@types/dockerode@3.3.29':
+    resolution: {integrity: sha512-5PRRq/yt5OT/Jf77ltIdz4EiR9+VLnPF+HpU4xGFwUqmV24Co2HKBNW3w+slqZ1CYchbcDeqJASHDYWzZCcMiQ==}
 
   '@types/istanbul-lib-coverage@2.0.4':
     resolution: {integrity: sha512-z/QT1XN4K4KYuslS23k62yDIDLwLFkzxOuMplDtObz0+y7VqJCaO2o+SPwHCvLFZh7xazvvoor2tA/hPz9ee7g==}
@@ -3639,7 +3639,7 @@ snapshots:
       '@types/node': 20.12.7
       '@types/ssh2': 0.5.52
 
-  '@types/dockerode@3.3.28':
+  '@types/dockerode@3.3.29':
     dependencies:
       '@types/docker-modem': 3.0.2
       '@types/node': 20.12.7
