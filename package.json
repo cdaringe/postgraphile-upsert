@@ -31,7 +31,7 @@
     "bluebird": "3.7.2",
     "c8": "9.1.0",
     "dockerode": "4.0.2",
-    "eslint": "9.2.0",
+    "eslint": "9.3.0",
     "execa": "5.1.1",
     "graphql": "16.8.1",
     "husky": "9.0.11",
