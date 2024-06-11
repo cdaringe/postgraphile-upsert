@@ -88,11 +88,11 @@ importers:
         specifier: 4.13.0
         version: 4.13.0(graphql@16.8.1)(pg@8.12.0)
       prettier:
-        specifier: 3.3.1
-        version: 3.3.1
+        specifier: 3.3.2
+        version: 3.3.2
       prettier-plugin-organize-imports:
         specifier: 3.2.4
-        version: 3.2.4(prettier@3.3.1)(typescript@5.4.5)
+        version: 3.2.4(prettier@3.3.2)(typescript@5.4.5)
       semantic-release:
         specifier: 21.1.2
         version: 21.1.2
@@ -2601,8 +2601,8 @@ packages:
       '@volar/vue-typescript':
         optional: true
 
-  prettier@3.3.1:
-    resolution: {integrity: sha512-7CAwy5dRsxs8PHXT3twixW9/OEll8MLE0VRPCJyl7CkS6VHGPSlsVaWTiASPTyGyYRyApxlaWTzwUxVNrhcwDg==}
+  prettier@3.3.2:
+    resolution: {integrity: sha512-rAVeHYMcv8ATV5d508CFdn+8/pHPpXeIid1DdrPwXnaAdH7cqjVbpJaT5eq4yRAFU/lsbwYwSF/n5iNrdJHPQA==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -5040,7 +5040,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  graphile-utils@4.13.0(graphile-build-pg@4.13.0(graphql@16.8.1)(pg@8.12.0))(graphile-build@4.13.0(graphql@15.8.0)):
+  graphile-utils@4.13.0(graphile-build-pg@4.13.0(graphql@15.8.0)(pg@8.12.0))(graphile-build@4.13.0(graphql@15.8.0)):
     dependencies:
       debug: 4.3.4
       graphile-build: 4.13.0(graphql@15.8.0)
@@ -5971,7 +5971,7 @@ snapshots:
       finalhandler: 1.2.0
       graphile-build: 4.13.0(graphql@15.8.0)
       graphile-build-pg: 4.13.0(graphql@15.8.0)(pg@8.12.0)
-      graphile-utils: 4.13.0(graphile-build-pg@4.13.0(graphql@16.8.1)(pg@8.12.0))(graphile-build@4.13.0(graphql@15.8.0))
+      graphile-utils: 4.13.0(graphile-build-pg@4.13.0(graphql@15.8.0)(pg@8.12.0))(graphile-build@4.13.0(graphql@15.8.0))
       graphql: 15.8.0
       graphql-ws: 5.9.0(graphql@15.8.0)
       http-errors: 1.8.1
@@ -6016,12 +6016,12 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-organize-imports@3.2.4(prettier@3.3.1)(typescript@5.4.5):
+  prettier-plugin-organize-imports@3.2.4(prettier@3.3.2)(typescript@5.4.5):
     dependencies:
-      prettier: 3.3.1
+      prettier: 3.3.2
       typescript: 5.4.5
 
-  prettier@3.3.1: {}
+  prettier@3.3.2: {}
 
   pretty-ms@8.0.0:
     dependencies:
