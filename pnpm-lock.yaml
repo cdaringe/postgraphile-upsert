@@ -52,8 +52,8 @@ importers:
         specifier: 3.7.2
         version: 3.7.2
       c8:
-        specifier: 10.0.0
-        version: 10.0.0
+        specifier: 10.1.1
+        version: 10.1.1
       dockerode:
         specifier: 4.0.2
         version: 4.0.2
@@ -724,8 +724,8 @@ packages:
     resolution: {integrity: sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==}
     engines: {node: '>= 0.8'}
 
-  c8@10.0.0:
-    resolution: {integrity: sha512-rdQecjxw16P8kwgMBjruaQyfF+R2o/mucCCK4VPktwq2HFMWLOHGyUasb46+WlUOVJX94d6dZolcJxzjCzWmXg==}
+  c8@10.1.1:
+    resolution: {integrity: sha512-+aAvpNMwnzncW27XsEf2eMrGTF8HXIGZ24UQ1dW679+8SQ/UvDXxHNoKwMohcI9ZVj0xl/bI4/meqxvIWOBYaw==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -2632,6 +2632,10 @@ packages:
   q@1.5.1:
     resolution: {integrity: sha512-kV/CThkXo6xyFEZUugw/+pIOywXcDbFYgSct5cT3gqlbkBE1SJdwy6UQoZvodiWF/ckQLZyDE/Bu1M6gVu5lVw==}
     engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
+    deprecated: |-
+      You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+
+      (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
 
   qs@6.10.3:
     resolution: {integrity: sha512-wr7M2E0OFRfIfJZjKGieI8lBKb7fRCH4Fv5KNPEs7gJ8jadvotdsS08PzOKR7opXhZ/Xkjtt3WF9g38drmyRqQ==}
@@ -4070,7 +4074,7 @@ snapshots:
 
   bytes@3.1.2: {}
 
-  c8@10.0.0:
+  c8@10.1.1:
     dependencies:
       '@bcoe/v8-coverage': 0.2.3
       '@istanbuljs/schema': 0.1.3
