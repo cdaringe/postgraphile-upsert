@@ -43,7 +43,7 @@
     "postgraphile-core": "4.13.0",
     "prettier": "3.3.3",
     "prettier-plugin-organize-imports": "4.0.0",
-    "semantic-release": "21.1.2",
+    "semantic-release": "24.0.0",
     "standard": "17.0.0",
     "ts-node": "10.9.2",
     "typescript": "5.4.5"
